@@ -321,6 +321,13 @@ class Series(pyleo.Series):
                Automatic detection of abrupt transitions in paleoclimate records. 
                Chaos: An Interdisciplinary Journal of Nonlinear Science, 31(11), 113129.
                https://doi.org/10.1063/5.0062543
+               
+                      
+        .. [2] Kolmogorov, A. (1933). Sulla determinazione empirica di una legge 
+               di distribuzione. Giornale dell'Istituto Italiano degli Attuari, 4, 83-91.
+               
+        .. [3] Smirnov, N. (1948). Table for estimating the goodness of fit of 
+               empirical distributions. The Annals of Mathematical Statistics, 19(2), 279-281.
         '''
         # Apply KS test algorithm
         jumps, d_statistics, p_values = KS_test(self, w_min, w_max, n_w, d_c, n_c, s_c, x_c)
