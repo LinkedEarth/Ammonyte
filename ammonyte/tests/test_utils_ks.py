@@ -30,6 +30,7 @@ class TestUtilsKsBasic:
 
     def test_ks_return_types_t0(self, gen_series_with_transitions):
         '''Test KS_test returns correct data types and structures'''
+        ts = gen_series_with_transitions(add_transitions=True)
         
         jumps, d_statistics, p_values = KS_test(ts, w_min=0.5, w_max=2.0, n_w=15, 
                                                d_c=0.75, n_c=3, s_c=1.5, x_c=None)

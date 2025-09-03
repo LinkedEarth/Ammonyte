@@ -85,10 +85,6 @@ class DeterministicTransitions:
     Series.kstest : Detect transitions
     ClimatePhases : Climate phase boundaries
     
-    References
-    ----------
-    Bagniewski, W., et al. (2021). Automatic detection of abrupt transitions in paleoclimate records. Chaos, 31(11), 113129.
-    
     '''
     
     def __init__(self, series, jump_times, jump_values, method, method_args=None, label=None, 
