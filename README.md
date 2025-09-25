@@ -2,20 +2,24 @@
 
 # Ammonyte
 
-Python package designed for conducting non-linear time series analysis of paleoclimate data. Recommended for usage in tandem with [Pyleoclim](https://github.com/LinkedEarth/Pyleoclim_util). Developed by [Alexander James](https://alexkjames.github.io/) with the [University of Southern California Climate Dynamics Lab Group](https://climdyn.usc.edu/). Currently under heavy construction.
+Python package designed for conducting non-linear time series analysis of paleoclimate data. Recommended for usage in tandem with [Pyleoclim](https://github.com/LinkedEarth/Pyleoclim_util). Developed by [Alexander James](https://alexkjames.github.io/) and Maryam Niati with the [University of Southern California Climate Dynamics Lab Group](https://climdyn.usc.edu/). Currently under heavy construction.
 
-Much of Ammonyte's capability is enabled by [PyRQA](https://pypi.org/project/PyRQA/), a tool designed to conduct recurrence analysis in a massively parallel manner. Many of our functions are essentially wrappers around PyRQA functions, so we recommend looking into that package if you're curious about the bones of how recurrence analysis is done in Ammonyte.
+Much of Ammonyte's capabilities with recurrence networks are enabled by [PyRQA](https://pypi.org/project/PyRQA/), a tool designed to conduct recurrence analysis in a massively parallel manner. Many of our functions are essentially wrappers around PyRQA functions, so we recommend looking into that package if you're curious about the bones of how recurrence analysis is done within Ammonyte.
 
-## Install instructions:
+## Installation:
 
-1) It's recommended you create a new environment using anaconda before installing.
+1) It is recommended you create a new environment using anaconda before installing.
 
 2) Inside your environment install cartopy with the command `conda install -c conda-forge cartopy`
 
 3) Run `pip install ammonyte`
 
+## Documentation
 
-Things to note:
+- A proper documentation on ReadTheDocs is under construction
+- Please refer to the [PaleoBook Gallery](https://linked.earth/PaleoBooks/) for examples of scientific use. 
+
+## Notes:
 
 * Current releases of Ammonyte are highly experimental. These are mainly done to facilitate our research, though others are welcome to use the functionality. Just be aware that the package is currently subject to constant change and will remain unstable for some time.
 
