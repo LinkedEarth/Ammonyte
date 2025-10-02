@@ -193,11 +193,11 @@ class DeterministicTransitions:
                 
         return ""
     
-    def plot(self, figsize=(12, 8), ylabel=None, xlabel=None, title=None, 
-             upward_color='red', downward_color='blue', ax=None, **kwargs):
+    def plot(self, figsize=(12, 8), ylabel=None, xlabel=None, title=None,
+             upward_color='red', downward_color='blue', show_transitions='both', ax=None, **kwargs):
         '''
         Plot the time series with detected transitions.
-        
+
         Parameters
         ----------
         figsize : tuple, optional
@@ -212,23 +212,28 @@ class DeterministicTransitions:
             Color for upward transition markers. Default is 'red'.
         downward_color : str, optional
             Color for downward transition markers. Default is 'blue'.
+        show_transitions : str, optional
+            Which transitions to show: 'both', 'upward', or 'downward'. Default is 'both'.
         **kwargs
             Additional arguments passed to matplotlib plot functions.
-            
+
         Returns
         -------
         fig : matplotlib.figure.Figure
             The figure object.
         ax : matplotlib.axes.Axes
             The axes object.
-            
+
         Examples
         --------
         >>> # Basic plot
         >>> result.plot()
-        >>> 
+        >>>
         >>> # Custom colors and size
         >>> result.plot(figsize=(15, 10), upward_color='green', downward_color='purple')
+        >>>
+        >>> # Show only upward transitions
+        >>> result.plot(show_transitions='upward')
         '''
         if ax is None:
             fig, ax = plt.subplots(figsize=figsize)
@@ -260,33 +265,38 @@ class DeterministicTransitions:
         ax.set_ylabel(ylabel)
         ax.set_title(title)
         
+        # Validate show_transitions parameter
+        if show_transitions not in ['both', 'upward', 'downward']:
+            raise ValueError(f"show_transitions must be 'both', 'upward', or 'downward', got '{show_transitions}'")
+
         # Plot transitions if any detected
         if len(self.jump_times) > 0 and not (len(self.jump_times) == 1 and np.isnan(self.jump_times[0])):
             # Separate upward and downward jumps
             upward_mask = self.jump_values == 1
             downward_mask = self.jump_values == -1
-            
+
             upward_times = self.jump_times[upward_mask]
             downward_times = self.jump_times[downward_mask]
-            
-            # Plot vertical lines for transitions
-            for time in upward_times:
-                ax.axvline(time, color=upward_color, linestyle='-', linewidth=2, alpha=0.8)
-                
-            for time in downward_times:
-                ax.axvline(time, color=downward_color, linestyle='-', linewidth=2, alpha=0.8)
-            
-            # Add legend
-            legend_elements = []
-            if len(upward_times) > 0:
-                legend_elements.append(plt.Line2D([0], [0], color=upward_color, 
-                                                linewidth=2, label=f'Upward Transitions ({len(upward_times)})'))
-            if len(downward_times) > 0:
-                legend_elements.append(plt.Line2D([0], [0], color=downward_color, 
-                                                linewidth=2, label=f'Downward Transitions ({len(downward_times)})'))
-            
-            if legend_elements:
-                ax.legend(handles=legend_elements, loc='best')
+
+            # Plot vertical lines for transitions based on show_transitions parameter
+            if show_transitions in ['both', 'upward']:
+                for time in upward_times:
+                    ax.axvline(time, color=upward_color, linestyle='-', linewidth=2, alpha=0.8)
+
+            if show_transitions in ['both', 'downward']:
+                for time in downward_times:
+                    ax.axvline(time, color=downward_color, linestyle='-', linewidth=2, alpha=0.8)
+
+            # Add invisible legend artists so they can be picked up by ax.legend() later
+            if len(upward_times) > 0 and show_transitions in ['both', 'upward']:
+                ax.plot([], [], color=upward_color, linestyle='-', linewidth=2,
+                       label=f'Upward Transitions ({len(upward_times)})')
+            if len(downward_times) > 0 and show_transitions in ['both', 'downward']:
+                ax.plot([], [], color=downward_color, linestyle='-', linewidth=2,
+                       label=f'Downward Transitions ({len(downward_times)})')
+
+            # Create legend with all labeled artists
+            ax.legend(loc='best')
         else:
             # Add text indicating no transitions found
             ax.text(0.5, 0.95, 'No transitions detected', transform=ax.transAxes, 
