@@ -194,7 +194,8 @@ class DeterministicTransitions:
         return ""
     
     def plot(self, figsize=(12, 8), ylabel=None, xlabel=None, title=None,
-             upward_color='red', downward_color='blue', show_transitions='both', ax=None, **kwargs):
+             upward_color='red', downward_color='blue', show_transitions='both', ax=None,
+             title_fontsize=14, label_fontsize=12, tick_fontsize=10, legend_fontsize=10, **kwargs):
         '''
         Plot the time series with detected transitions.
 
@@ -214,6 +215,14 @@ class DeterministicTransitions:
             Color for downward transition markers. Default is 'blue'.
         show_transitions : str, optional
             Which transitions to show: 'both', 'upward', or 'downward'. Default is 'both'.
+        title_fontsize : int, optional
+            Font size for plot title. Default is 14.
+        label_fontsize : int, optional
+            Font size for axis labels. Default is 12.
+        tick_fontsize : int, optional
+            Font size for tick labels (numbers on axes). Default is 10.
+        legend_fontsize : int, optional
+            Font size for legend. Default is 10.
         **kwargs
             Additional arguments passed to matplotlib plot functions.
 
@@ -234,6 +243,9 @@ class DeterministicTransitions:
         >>>
         >>> # Show only upward transitions
         >>> result.plot(show_transitions='upward')
+        >>>
+        >>> # Custom font sizes
+        >>> result.plot(title_fontsize=18, label_fontsize=16, tick_fontsize=14, legend_fontsize=14)
         '''
         if ax is None:
             fig, ax = plt.subplots(figsize=figsize)
@@ -260,11 +272,12 @@ class DeterministicTransitions:
             title = f'Transition Detection'
             if hasattr(self.series, 'label') and self.series.label:
                 title += f' - {self.series.label}'
-        
-        ax.set_xlabel(xlabel)
-        ax.set_ylabel(ylabel)
-        ax.set_title(title)
-        
+
+        ax.set_xlabel(xlabel, fontsize=label_fontsize)
+        ax.set_ylabel(ylabel, fontsize=label_fontsize)
+        ax.set_title(title, fontsize=title_fontsize)
+        ax.tick_params(axis='both', labelsize=tick_fontsize)
+
         # Validate show_transitions parameter
         if show_transitions not in ['both', 'upward', 'downward']:
             raise ValueError(f"show_transitions must be 'both', 'upward', or 'downward', got '{show_transitions}'")
@@ -296,7 +309,7 @@ class DeterministicTransitions:
                        label=f'Downward Transitions ({len(downward_times)})')
 
             # Create legend with all labeled artists
-            ax.legend(loc='best')
+            ax.legend(loc='best', fontsize=legend_fontsize)
         else:
             # Add text indicating no transitions found
             ax.text(0.5, 0.95, 'No transitions detected', transform=ax.transAxes, 
