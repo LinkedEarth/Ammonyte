@@ -15,8 +15,9 @@ from ..utils.sampling import confidence_interval
 from ..utils.fisher import smooth_series
 from ..utils.lerm_transitions import lerm_transition
 from .transitions import DeterministicTransitions
+from .series import Series
 
-class RQARes(pyleo.Series):
+class RQARes(Series):
     '''Class for storing the result of various RQA techniques'''
 
     def __init__(self, time, value, time_name=None, time_unit=None, value_name=None, value_unit=None, series=None,label=None, m=None,

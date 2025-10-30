@@ -15,7 +15,6 @@ from pyrqa.neighbourhood import FixedRadius
 from pyrqa.metric import EuclideanMetric
 from pyrqa.computation import RQAComputation
 
-from ..core.rqa_res import RQARes
 from ..core.time_embedded_series import TimeEmbeddedSeries
 from ..core.recurrence_matrix import RecurrenceMatrix
 from ..utils.parameters import tau_search
@@ -97,24 +96,24 @@ class Series(pyleo.Series):
 
         Note that series must be evenly spaced for this method.
         See interp, bin, and gkernel methods in parent class pyleoclim.Series for details.
-        
+
         Parameters
         ----------
-        
+
         window_size : int
             Size of window to use when calculating recurrence plots for determinism statistic.
             Note this is in units of the time axis.
-        
+
         overlap : int
             Amount of overlap to allow between windows.
             Note this is in units of the time axis.
 
         m : int
             Embedding dimension to use when performing time delay embedding,
-            
+
         tau : int
             Time delay to use when performing time delay embedding
-            
+
         eps : float
             Size of radius to use to calculate recurrence matrix
 
@@ -124,7 +123,8 @@ class Series(pyleo.Series):
         det_series : ammonyte.Series
             Ammonyte.Series object containing time series of the determinism statistic
         '''
-       
+        from ..core.rqa_res import RQARes
+
         series = self
         windows = np.arange(int(min(series.time)),int(max(series.time)),int(overlap/2))
 
@@ -176,24 +176,24 @@ class Series(pyleo.Series):
 
         Note that series must be evenly spaced for this method.
         See interp, bin, and gkernel methods in parent class pyleoclim.Series for details.
-        
+
         Parameters
         ----------
-        
+
         window_size : int
             Size of window to use when calculating recurrence plots for determinism statistic.
             Note this is in units of the time axis.
-        
+
         overlap : int
             Amount of overlap to allow between windows
             Note this is in units of the time axis.
 
         m : int
             Embedding dimension to use when performing time delay embedding,
-            
+
         tau : int
             Time delay to use when performing time delay embedding
-            
+
         eps : float
             Size of radius to use to calculate recurrence matrix
 
@@ -203,6 +203,7 @@ class Series(pyleo.Series):
         lam_series : ammonyte.Series
             Ammonyte.Series object containing time series of the laminarity statistic
         '''
+        from ..core.rqa_res import RQARes
 
         series = self
         windows = np.arange(int(min(series.time)),int(max(series.time)),int(overlap/2))
@@ -247,7 +248,7 @@ class Series(pyleo.Series):
             m = m,
             tau = tau,
             eps = eps)
-        
+
         return lam_series
 
     def kstest(self, w_min, w_max, n_w=15, d_c=0.75, n_c=3, s_c=1.5, x_c=None):
@@ -484,7 +485,7 @@ class Series(pyleo.Series):
         res = ClimatePhases(
             series=self,
             interstadial_bounds=G_I,
-            stadial_bounds=G_S, 
+            stadial_bounds=G_S,
             method_args={'window': window, 'interp_method': interp_method},
             label=getattr(self, 'label', None)
         )
