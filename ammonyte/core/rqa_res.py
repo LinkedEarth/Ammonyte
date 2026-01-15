@@ -316,10 +316,13 @@ class RQARes(Series):
             xlabel = f'{self.time_name} [{self.time_unit}]'
 
         if ylabel is None:
-            ylabel = f'{self.value_name} [{self.value_unit}]'
+            if self.value_unit:
+                ylabel = f'{self.value_name} [{self.value_unit}]'
+            else:
+                ylabel = f'{self.value_name}'
 
         if label is None:
-            label = self.label
+            label = self.value_name
 
         if label is not None:
             plot_kwargs.update({'label': label})
@@ -342,7 +345,7 @@ class RQARes(Series):
         if zorder is not None:
             plot_kwargs.update({'zorder': zorder})
 
-        series.plot(ax=ax,color=line_color,xlabel=xlabel,ylabel=ylabel,title=title,plot_kwargs=plot_kwargs,lgd_kwargs=lgd_kwargs,legend=legend)
+        series.plot(ax=ax,color=line_color,xlabel=xlabel,ylabel=ylabel,label=label,title=title,plot_kwargs=plot_kwargs,lgd_kwargs=lgd_kwargs,legend=legend)
             
         ufill_values = np.zeros(len(time)) + upper
         lfill_values = np.zeros(len(time)) + lower

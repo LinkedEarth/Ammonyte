@@ -10,3 +10,7 @@ from .rm import *
 from .ks import *
 from .climate_phases import *
 from .lerm_transitions import *
+from .metrics import *
+
+# Note: ruptures_transitions not imported here to avoid requiring ruptures installation
+# It is imported lazily when Series.ruptures() is called

@@ -170,4 +170,8 @@ def lerm_transition(series, transition_interval=None,
     jump_times = series_fine.time[1:][transition_mask]
     jump_directions = trans_directions[transition_mask].astype(int)
 
+    # Reverse directions for backward time axes (e.g., kyr b2k)
+    if np.mean(np.diff(series.time)) > 0:
+        jump_directions = -jump_directions
+
     return jump_times, jump_directions, upper_bound, lower_bound
