@@ -13,8 +13,11 @@ from mpl_toolkits.mplot3d import Axes3D
 
 from ..utils.sampling import confidence_interval
 from ..utils.fisher import smooth_series
+from ..utils.lerm_transitions import lerm_transition
+from .transitions import DeterministicTransitions
+from .series import Series
 
-class RQARes(pyleo.Series):
+class RQARes(Series):
     '''Class for storing the result of various RQA techniques'''
 
     def __init__(self, time, value, time_name=None, time_unit=None, value_name=None, value_unit=None, series=None,label=None, m=None,
@@ -63,6 +66,99 @@ class RQARes(pyleo.Series):
             smoothed_series = smooth_series(self,block_size)
 
         return smoothed_series
+
+    def lerm_transitions(self, transition_interval=None, upper=95, lower=5, w=50, n_samples=10000):
+        ''' Detect transitions using LERM Fisher Information threshold crossings
+
+        This method should be applied to a Fisher Information series (RQARes object)
+        obtained from LERM analysis, typically after smoothing.
+
+        Parameters
+        ----------
+        transition_interval : tuple, optional
+            (upper_bound, lower_bound) for detecting transitions.
+            If None, automatically computes via bootstrapping.
+
+        upper : int, optional
+            Upper percentile for confidence interval. Default is 95
+            Only used if transition_interval is None.
+
+        lower : int, optional
+            Lower percentile for confidence interval. Default is 5
+            Only used if transition_interval is None.
+
+        w : int, optional
+            Bootstrap sample size. Default is 50
+
+        n_samples : int, optional
+            Number of bootstrap samples. Default is 10000
+
+        Returns
+        -------
+        DeterministicTransitions
+            Object containing detected transitions with plotting methods
+
+        Examples
+        --------
+
+        Complete LERM workflow:
+
+        .. jupyter-execute::
+
+            import ammonyte as amt
+
+            # Load data
+            ngrip = amt.Series.from_csv('../data/NGRIP.csv')
+
+            # LERM analysis
+            NGRIP_td = amt.TimeEmbeddedSeries(ngrip, m=11)
+            NGRIP_epsilon = NGRIP_td.find_epsilon(eps=1, target_density=0.05)
+            NGRIP_lp = NGRIP_epsilon.laplacian_eigenmaps(w_size=20, w_incre=4)
+            NGRIP_lp_smooth = amt.utils.fisher.smooth_series(NGRIP_lp, block_size=3)
+
+            # Detect transitions
+            transitions = NGRIP_lp_smooth.lerm_transitions()
+            print(transitions)
+            transitions.plot()
+
+        Custom confidence bounds:
+
+        .. jupyter-execute::
+
+            transitions = NGRIP_lp_smooth.lerm_transitions(
+                transition_interval=(0.025, 0.010)
+            )
+        '''
+
+        # Call the detection function from utils
+        jump_times, jump_directions, upper_bound, lower_bound = lerm_transition(
+            series=self,
+            transition_interval=transition_interval,
+            upper=upper,
+            lower=lower,
+            w=w,
+            n_samples=n_samples
+        )
+
+        # Create result object with comprehensive metadata
+        result = DeterministicTransitions(
+            series=self,
+            jump_times=jump_times,
+            jump_values=jump_directions,
+            method='LERM',
+            method_args={
+                'transition_interval': (upper_bound, lower_bound),
+                'upper_bound': upper_bound,
+                'lower_bound': lower_bound,
+                'upper_percentile': upper,
+                'lower_percentile': lower,
+                'bootstrap_window': w,
+                'bootstrap_samples': n_samples
+            },
+            label=getattr(self, 'label', None)
+        )
+
+        return result
 
     def confidence_fill_plot(self,ax=None,line_color=None,fill_color=None,fill_alpha=None,transition_interval=None,xlabel=None,ylabel=None,marker=None,
                      markersize=None,linestyle=None,linewidth=None,alpha=None,label=None,title=None,zorder=None,plot_kwargs=None,ci_kwargs=None,
@@ -220,10 +316,13 @@ class RQARes(pyleo.Series):
             xlabel = f'{self.time_name} [{self.time_unit}]'
 
         if ylabel is None:
-            ylabel = f'{self.value_name} [{self.value_unit}]'
+            if self.value_unit:
+                ylabel = f'{self.value_name} [{self.value_unit}]'
+            else:
+                ylabel = f'{self.value_name}'
 
         if label is None:
-            label = self.label
+            label = self.value_name
 
         if label is not None:
             plot_kwargs.update({'label': label})
@@ -246,7 +345,7 @@ class RQARes(pyleo.Series):
         if zorder is not None:
             plot_kwargs.update({'zorder': zorder})
 
-        series.plot(ax=ax,color=line_color,xlabel=xlabel,ylabel=ylabel,title=title,plot_kwargs=plot_kwargs,lgd_kwargs=lgd_kwargs,legend=legend)
+        series.plot(ax=ax,color=line_color,xlabel=xlabel,ylabel=ylabel,label=label,title=title,plot_kwargs=plot_kwargs,lgd_kwargs=lgd_kwargs,legend=legend)
             
         ufill_values = np.zeros(len(time)) + upper
         lfill_values = np.zeros(len(time)) + lower

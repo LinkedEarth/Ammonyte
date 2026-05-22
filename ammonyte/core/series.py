@@ -15,7 +15,6 @@ from pyrqa.neighbourhood import FixedRadius
 from pyrqa.metric import EuclideanMetric
 from pyrqa.computation import RQAComputation
 
-from ..core.rqa_res import RQARes
 from ..core.time_embedded_series import TimeEmbeddedSeries
 from ..core.recurrence_matrix import RecurrenceMatrix
 from ..utils.parameters import tau_search
@@ -50,15 +49,24 @@ class Series(pyleo.Series):
         '''
         # Use pyleoclim's from_csv to load the data
         pyleo_series = pyleo.Series.from_csv(file_path)
-        
+
+        # Decode Unicode escapes in units (e.g., \u2030 → ‰)
+        value_unit = pyleo_series.value_unit
+        if value_unit and '\\u' in value_unit:
+            value_unit = value_unit.encode().decode('unicode_escape')
+
+        time_unit = pyleo_series.time_unit
+        if time_unit and '\\u' in time_unit:
+            time_unit = time_unit.encode().decode('unicode_escape')
+
         # Convert to ammonyte Series
         return cls(
-            time=pyleo_series.time, 
+            time=pyleo_series.time,
             value=pyleo_series.value,
-            time_name=pyleo_series.time_name, 
+            time_name=pyleo_series.time_name,
             value_name=pyleo_series.value_name,
-            value_unit=pyleo_series.value_unit, 
-            time_unit=pyleo_series.time_unit,
+            value_unit=value_unit,
+            time_unit=time_unit,
             label=pyleo_series.label
         )
 
@@ -97,24 +105,24 @@ class Series(pyleo.Series):
 
         Note that series must be evenly spaced for this method.
         See interp, bin, and gkernel methods in parent class pyleoclim.Series for details.
-        
+
         Parameters
         ----------
-        
+
         window_size : int
             Size of window to use when calculating recurrence plots for determinism statistic.
             Note this is in units of the time axis.
-        
+
         overlap : int
             Amount of overlap to allow between windows.
             Note this is in units of the time axis.
 
         m : int
             Embedding dimension to use when performing time delay embedding,
-            
+
         tau : int
             Time delay to use when performing time delay embedding
-            
+
         eps : float
             Size of radius to use to calculate recurrence matrix
 
@@ -124,7 +132,8 @@ class Series(pyleo.Series):
         det_series : ammonyte.Series
             Ammonyte.Series object containing time series of the determinism statistic
         '''
-       
+        from ..core.rqa_res import RQARes
+
         series = self
         windows = np.arange(int(min(series.time)),int(max(series.time)),int(overlap/2))
 
@@ -176,24 +185,24 @@ class Series(pyleo.Series):
 
         Note that series must be evenly spaced for this method.
         See interp, bin, and gkernel methods in parent class pyleoclim.Series for details.
-        
+
         Parameters
         ----------
-        
+
         window_size : int
             Size of window to use when calculating recurrence plots for determinism statistic.
             Note this is in units of the time axis.
-        
+
         overlap : int
             Amount of overlap to allow between windows
             Note this is in units of the time axis.
 
         m : int
             Embedding dimension to use when performing time delay embedding,
-            
+
         tau : int
             Time delay to use when performing time delay embedding
-            
+
         eps : float
             Size of radius to use to calculate recurrence matrix
 
@@ -203,6 +212,7 @@ class Series(pyleo.Series):
         lam_series : ammonyte.Series
             Ammonyte.Series object containing time series of the laminarity statistic
         '''
+        from ..core.rqa_res import RQARes
 
         series = self
         windows = np.arange(int(min(series.time)),int(max(series.time)),int(overlap/2))
@@ -247,7 +257,7 @@ class Series(pyleo.Series):
             m = m,
             tau = tau,
             eps = eps)
-        
+
         return lam_series
 
     def kstest(self, w_min, w_max, n_w=15, d_c=0.75, n_c=3, s_c=1.5, x_c=None):
@@ -484,9 +494,110 @@ class Series(pyleo.Series):
         res = ClimatePhases(
             series=self,
             interstadial_bounds=G_I,
-            stadial_bounds=G_S, 
+            stadial_bounds=G_S,
             method_args={'window': window, 'interp_method': interp_method},
             label=getattr(self, 'label', None)
         )
         return res
+
+    def ruptures(self, algo='Pelt', cost='rbf', pen=None, n_bkps=None,
+                 min_size=2, jump=1, width=None, params=None):
+        ''' Detect transitions using ruptures change point detection
+
+        Applies ruptures algorithms for offline change point detection. 
+
+        Parameters
+        ----------
+        algo : str
+            Search algorithm. Default is 'Pelt'
+            Options: 'Pelt', 'Dynp', 'Binseg', 'BottomUp', 'Window', 'KernelCPD'
+
+        cost : str
+            Cost function (type of change to detect). Default is 'rbf'
+            Options: 'l1', 'l2', 'rbf', 'normal', 'ar', 'linear', 'rank', 'mahalanobis', 'cosine', 'clinear'
+
+        pen : float, optional
+            Penalty parameter controlling sensitivity to changepoints (higher = fewer changepoints)
+
+            **What is penalty?**
+            The algorithm minimizes: [fit error] + [number of changepoints × pen]
+            - Low penalty → more changepoints (risk: overfitting, detecting noise as transitions)
+            - High penalty → fewer changepoints (risk: missing real transitions)
+
+            **Choosing penalty is a user decision** based on your data characteristics,
+            expected transition frequency, and tolerance for false positives vs. false negatives.
+            There is no single "correct" penalty value - it requires experimentation and
+            domain knowledge.
+
+            **Example approaches for selecting penalty:**
+            1. **Fixed empirical values**: pen = 5, 10, 20, etc. (experiment to find what works)
+            2. **Information criteria** (linear penalties that balance fit vs. complexity):
+               - AIC (Akaike Information Criterion) - more liberal, detects more changepoints
+               - BIC (Bayesian Information Criterion) - more conservative, sample-size dependent
+               - mBIC (modified BIC) - even more conservative
+
+               **Note**: The exact formula for each criterion depends on the statistical model
+               and cost function used. For theoretical details, see ruptures documentation.
+
+        n_bkps : int, optional
+            Exact number of breakpoints to detect (alternative to penalty-based approach)
+            Use when you know how many transitions to expect
+            **Note**: Cannot be used together with 'pen' - choose one or the other
+
+        min_size : int
+            Minimum samples between change points. Default is 2
+
+        jump : int
+            Subsample (1=all data, 5=every 5th point). Default is 1
+
+        width : int, optional
+            Window size (required for Window algorithm)
+
+        params : dict, optional
+            Additional algorithm-specific parameters
+
+        Returns
+        -------
+        DeterministicTransitions
+            Object containing detected transitions with plot() and to_csv() methods
+
+        Examples
+        --------
+
+        Basic transition detection:
+
+        .. jupyter-execute::
+
+            import ammonyte as amt
+            ngrip = amt.Series.from_csv('ammonyte/data/NGRIP.csv')
+            transitions = ngrip.ruptures()
+            print(transitions)
+
+        Plot the results:
+
+        .. jupyter-execute::
+
+            transitions.plot()
+
+
+        References
+        ----------
+
+        .. [1] Truong, C., Oudre, L., & Vayatis, N. (2020).
+               Selective review of offline change point detection methods.
+               Signal Processing, 167, 107299.
+        '''
+        from ..utils.ruptures_transitions import ruptures_transition
+
+        return ruptures_transition(
+            series=self,
+            algo=algo,
+            cost=cost,
+            pen=pen,
+            n_bkps=n_bkps,
+            min_size=min_size,
+            jump=jump,
+            width=width,
+            params=params
+        )
 

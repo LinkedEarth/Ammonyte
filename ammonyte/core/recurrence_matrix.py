@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 
 from ..utils.fisher import fisher_information
 from ..utils.plotting import get_labels
-from ..core.rqa_res import RQARes
 
 class RecurrenceMatrix:
     '''Recurrence matrix object. Used for Recurrence Quantification Analysis (RQA).
@@ -27,22 +26,24 @@ class RecurrenceMatrix:
 
     def laplacian_eigenmaps(self,w_size, w_incre):
         '''Function to run regime change detection workflow
-        
+
         Parameters
         ----------
-            
+
         w_size : int
-            Window size for the fisher information 
-        
-        w_incre : int 
-            Window increment for the fisher information 
+            Window size for the fisher information
+
+        w_incre : int
+            Window increment for the fisher information
 
         Returns
         -------
 
         FI_series : pyleoclim.Series object
-        
+
         '''
+        from ..core.rqa_res import RQARes
+
         W = self.matrix + 1
 
         D = np.zeros(W.shape)
@@ -60,7 +61,7 @@ class RecurrenceMatrix:
             eig_data.append([i,eigvec[idx,1],eigvec[idx,2],eigvec[idx,3],eigvec[idx,4]])
             
         time,value = fisher_information(eig_data,w_size,w_incre)
-        
+
         FI_series = RQARes(time=time,
                             value=value,
                             time_name=self.time_name,
@@ -76,7 +77,7 @@ class RecurrenceMatrix:
                             w_size = w_size,
                             w_incre = w_incre,
                             )
-        
+
         return FI_series
 
     def plot(self,figsize=(8,8),xlabel=None,ylabel=None,title=None,imshow_kwargs=None):
