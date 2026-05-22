@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ammonyte"
+version = "0.0.8"
+description = "A Python package for nonlinear paleoclimate data analysis"
+readme = "README.md"
+license = {text = "GPL-3.0-or-later"}
+authors = [
+    {name = "Alexander James", email = "akjames@usc.edu"},
+    {name = "Maryam Niati"},
+    {name = "Julien Emile-Geay", email = "julieneg@usc.edu"},
+    {name = "Deborah Khider"},
+]
+keywords = ["paleoclimate", "data analysis", "nonlinear", "recurrence analysis", "time series"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Atmospheric Science",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "pyleoclim>=0.7.0",
+    "scipy>=1.7.1",
+    "numpy>=1.21.5",
+    "PyRQA>=8.0.0",
+    "scikit-learn>=1.2.1",
+    "matplotlib",
+    "pandas",
+    "tqdm",
+    "tabulate",
+    "seaborn",
+]
+
+[project.optional-dependencies]
+ruptures = ["ruptures"]
+dev = ["pytest", "pytest-cov"]
+
+[project.urls]
+Homepage = "https://github.com/alexkjames/Ammonyte"
+Repository = "https://github.com/alexkjames/Ammonyte"
+"Bug Tracker" = "https://github.com/alexkjames/Ammonyte/issues"
+
+[tool.setuptools.packages.find]
+include = ["ammonyte*"]
+
+[tool.pytest.ini_options]
+testpaths = ["ammonyte/tests"]
