@@ -19,8 +19,7 @@ from ..core.time_embedded_series import TimeEmbeddedSeries
 from ..core.recurrence_matrix import RecurrenceMatrix
 from ..utils.parameters import tau_search
 from ..utils.ks import KS_test
-from ..utils.climate_phases import find_phases
-from .transitions import DeterministicTransitions, ClimatePhases
+from .transitions import DeterministicTransitions
 
 class Series(pyleo.Series):
     '''Ammonyte series object, launching point for most ammonyte analysis.
@@ -71,7 +70,31 @@ class Series(pyleo.Series):
         )
 
     def embed(self,m,tau=None,):
-        '''Function to create a time delay embedding from a ammonyte.series object'''
+        '''Create a time delay embedding from an ammonyte.Series object
+
+        Parameters
+        ----------
+
+        m : int
+            Embedding dimension (number of delay coordinates).
+
+        tau : int, optional
+            Time delay for the embedding. If None, estimated automatically via the
+            first minimum of mutual information using ammonyte.utils.parameters.tau_search.
+
+        Returns
+        -------
+
+        TimeEmbeddedSeries : ammonyte.TimeEmbeddedSeries
+            Time delay embedded representation of the series.
+
+        See Also
+        --------
+
+        ammonyte.utils.parameters.tau_search
+
+        ammonyte.TimeEmbeddedSeries
+        '''
 
         if tau is None:
             tau = tau_search(self)
@@ -321,7 +344,6 @@ class Series(pyleo.Series):
         
         See Also
         --------
-        find_phases : Detect climate phase boundaries
         DeterministicTransitions.plot : Visualize detected transitions
         
         References
@@ -339,6 +361,10 @@ class Series(pyleo.Series):
         .. [3] Smirnov, N. (1948). Table for estimating the goodness of fit of 
                empirical distributions. The Annals of Mathematical Statistics, 19(2), 279-281.
         '''
+        if not self.is_evenly_spaced():
+            raise ValueError('This method requires evenly spaced data. '
+                             'Use .interp(), .bin(), or .gkernel() prior to calling .kstest().')
+
         # Apply KS test algorithm
         jumps, d_statistics, p_values = KS_test(self, w_min, w_max, n_w, d_c, n_c, s_c, x_c)
         
@@ -354,149 +380,6 @@ class Series(pyleo.Series):
             },
             label=getattr(self, 'label', None),
             statistics={'d_statistics': d_statistics, 'p_values': p_values}
-        )
-        return res
-
-    def find_phases(self, window, interp_method=None):
-        ''' Extract stadial and interstadial climate phase boundaries
-        
-        Identifies climate phases using sliding window approach to compute adaptive thresholds for Dansgaard-Oeschger event classification.
-        
-        Parameters
-        ----------
-        window : float
-            Size of sliding window in time units
-            
-        interp_method : str, optional
-            Interpolation method for final coordinate mapping ('linear', 'cubic', 'nearest', 'quadratic').
-            **ONLY specify this if your original data was NOT evenly spaced and you interpolated it manually.**
-            
-            - If your data was originally evenly spaced: Leave as None (default)
-            - If you used `series.interp()`: Use 'linear' 
-            - If you used `series.interp()` with cubic: Use 'cubic'
-            - If you used `series.gkernel()` or `series.bin()`: Use 'linear' or your preferred method
-            
-            This parameter should match the interpolation method you used during preprocessing.
-            Default is None.
-        
-        Returns
-        -------
-        ClimatePhases
-            Object containing climate phase boundaries and analysis methods
-        
-        Examples
-        --------
-        
-        **Case 1: Originally evenly spaced data**
-        
-        .. jupyter-execute::
-        
-            import ammonyte as amt
-            ngrip = amt.Series.from_csv('ammonyte/data/NGRIP.csv')  # Already evenly spaced
-            phases = ngrip.find_phases(window=1.0)  # No interp_method needed
-            print(phases)
-        
-        **Case 2: Originally irregular data (user interpolated)**
-        
-        .. jupyter-execute::
-        
-            import ammonyte as amt
-            irregular_series = amt.Series.from_csv('irregular_data.csv')
-            
-            # User manually interpolates first
-            even_series = irregular_series.interp(step=0.1)  # Linear interpolation
-            
-            # Must specify the interpolation method used
-            phases = even_series.find_phases(window=1.0, interp_method='linear')
-            print(phases)
-        
-        Plot climate phases:
-        
-        .. jupyter-execute::
-        
-            phases.plot()
-        
-        Extract phase periods:
-        
-        .. jupyter-execute::
-        
-            periods = phases.get_periods()
-            print(f"Interstadial periods: {len(periods['interstadial'])}")
-            print(f"Stadial periods: {len(periods['stadial'])}")
-        
-        Notes
-        -----
-        **Critical:** This method requires evenly spaced data. If your data is irregularly spaced, 
-        you MUST interpolate it first using .interp(), .gkernel(), or .bin() methods.
-        
-        **Two scenarios handled:**
-        
-        1. **Originally evenly spaced data**: 
-           - Call `find_phases(window=1.0)` with no interp_method
-           - Algorithm uses computed values directly (no interpolation back)
-           
-        2. **Originally irregular data (user interpolated)**: 
-           - First: manually interpolate your data 
-           - Then: call `find_phases(window=1.0, interp_method='your_method')`
-           - Algorithm will interpolate back using your specified method
-        
-        See Also
-        --------
-        kstest : Detect abrupt transitions
-        
-        References
-        ----------
-        Dansgaard, W., et al. (1993). Evidence for general instability of past climate from a 250-kyr ice-core record. Nature, 364(6434), 218-220.
-        
-        '''
-        
-        # Defensive approach: copy the original series to prevent accidental modification
-        ts_copy = self.copy()
-        
-        # Check if data is evenly spaced before processing
-        if not ts_copy.is_evenly_spaced():
-            raise ValueError("Data is not evenly spaced. Please follow these steps:\n"
-                           "1. Clean your data first: clean_data = data.clean()\n"
-                           "2. Interpolate the cleaned data: interp_data = clean_data.interp()\n"
-                           "3. Apply climate phases: interp_data.find_phases(window=X)")
-        
-        # Check if data is standardized (mean ≈ 0, std ≈ 1) 
-        data_mean = np.mean(ts_copy.value)
-        data_std = np.std(ts_copy.value, ddof=1)
-        
-        # More flexible tolerance for different data types:
-        # - Ice core data (δ18O) typically has values around -40, std ~3
-        # - Standardized data should have mean ≈ 0, std ≈ 1
-        # Only flag as non-standardized if std is very different from 1 AND mean is not near expected range
-        mean_tolerance = max(0.5, abs(data_mean) * 0.02)  # Allow 2% variation for large absolute means
-        std_tolerance = 0.3
-        
-        is_likely_standardized = (abs(data_mean) < mean_tolerance and abs(data_std - 1.0) < std_tolerance)
-        
-        if is_likely_standardized:
-            print("Data is evenly spaced and standardized - proceeding with climate phase detection.")
-        else:
-            raise ValueError(f"Data is not standardized (mean: {data_mean:.3f}, std: {data_std:.3f}). "
-                           "Please standardize your data first:\n"
-                           "1. Clean your data: clean_data = data.clean()\n"
-                           "2. Interpolate: interp_data = clean_data.interp()\n"
-                           "3. Standardize: std_data = interp_data.standardize()\n"
-                           "4. Apply climate phases: std_data.find_phases(window=X)")
-        
-        # Determine if interpolation back is needed
-        if interp_method is not None:
-            print(f"Using {interp_method} interpolation for final coordinate mapping.")
-            G_I, G_S = find_phases(ts_copy.time, ts_copy.value, window, interp_method, True)
-        else:
-            print("Using computed values directly (no interpolation back).")
-            G_I, G_S = find_phases(ts_copy.time, ts_copy.value, window, None, False)
-        
-        res = ClimatePhases(
-            series=self,
-            interstadial_bounds=G_I,
-            stadial_bounds=G_S,
-            method_args={'window': window, 'interp_method': interp_method},
-            label=getattr(self, 'label', None)
         )
         return res
 
@@ -587,6 +470,10 @@ class Series(pyleo.Series):
                Selective review of offline change point detection methods.
                Signal Processing, 167, 107299.
         '''
+        if not self.is_evenly_spaced():
+            raise ValueError('This method requires evenly spaced data. '
+                             'Use .interp(), .bin(), or .gkernel() prior to calling .ruptures().')
+
         from ..utils.ruptures_transitions import ruptures_transition
 
         return ruptures_transition(

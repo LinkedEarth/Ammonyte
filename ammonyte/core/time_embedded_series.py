@@ -23,35 +23,41 @@ from ..utils.range_finder import range_finder
 class TimeEmbeddedSeries:
     '''Time embedded time series object. Precursor to recurrence matrix and recurrence network.
 
-    series : pyleo.Series object or pandas.Series object
-        Time series to be embedded
-    
+    Parameters
+    ----------
+
+    series : pyleoclim.Series or pandas.Series
+        Time series to be embedded.
+
     m : int
-        Embedding dimension
-    
-    tau : int
-        Embedding delay, will be calculated according to first minimum of mutual information if not passed
+        Embedding dimension.
 
-    embedded_data : array
-        Time delay embedded data. If not passed will be calculated from series, m, and tau
+    tau : int, optional
+        Embedding delay. If None, calculated automatically via the first minimum
+        of mutual information.
 
-    embedded_time : array
-        Time axis corresponding to embedded_data. If embedded_data is passed without embedded_time, an error will be raised
+    embedded_data : numpy.ndarray, optional
+        Pre-computed time delay embedded data. If not passed, will be calculated
+        from series, m, and tau.
 
-    value_name : str
-        Value name
+    embedded_time : array-like, optional
+        Time axis corresponding to embedded_data. Must be passed alongside
+        embedded_data if providing pre-computed data.
 
-    value_unit : str
-        Value units
+    value_name : str, optional
+        Name of the value variable.
 
-    time_name : str
-        Time name
+    value_unit : str, optional
+        Units of the value variable.
 
-    time_unit : str
-        Time units
+    time_name : str, optional
+        Name of the time variable.
 
-    label : str
-        Label for embedding
+    time_unit : str, optional
+        Units of the time variable.
+
+    label : str, optional
+        Label for the object.
     '''
 
     def __init__(self,series,m,tau=None,embedded_data=None,embedded_time=None,value_name=None,value_unit=None,time_name=None,time_unit=None,label=None):
@@ -194,29 +200,51 @@ class TimeEmbeddedSeries:
         
         Parameters
         ----------
+
         eps : float
-            Starting epsilon value (best guess)
+            Starting epsilon value (best guess).
+
         target_density : float
-            Desired recurrence matrix density
+            Desired recurrence matrix density.
+
         tolerance : float
-            Amount of allowable difference between target density and actual density
-        initial_density : float
-            If you've already calculated the initial density for your settings you can pass it here to save computation time
+            Amount of allowable difference between target density and actual density.
+
+        initial_density : float, optional
+            If you have already calculated the initial density for your settings you can
+            pass it here to save computation time.
+
         parallelize : bool; {True,False}
-            Whether or not to parallelize the search process. Currently only tested on macOS, could be issues running this on Windows.
-        num_processes : int
-            Number of processes to run, automatically set to your cpu count
-        amp : int
-            The amplitude of the range of epsilon value search. Higher values cover ground quickly but converge slowly, the opposite is true for lower values
+            Whether or not to parallelize the search process. Currently only tested on
+            macOS, could be issues running this on Windows.
+
+        num_processes : int, optional
+            Number of processes to run. Automatically set to cpu count minus 2 if not passed.
+
+        amp : int, optional
+            Amplitude of the epsilon search range. Higher values cover ground quickly but
+            converge more slowly. Default is 10.
+
         verbose : bool; {True,False}
-            Whether or not to print output after each iteration
+            Whether or not to print output after each iteration. Default is True.
+
         Returns
         -------
-        epsilon : float
-            Epsilon value that produces desired recurrence density within tolerance value provided.
-        See also
+
+        results : dict
+            Dictionary with keys:
+
+            - ``'Epsilon'`` : float — the epsilon value that produces the desired
+              recurrence density within the specified tolerance.
+            - ``'Output'`` : ammonyte.RecurrenceMatrix — the recurrence matrix computed
+              at the converged epsilon value.
+
+        See Also
         --------
-        ammonyte.utils.rm_search
+
+        ammonyte.utils.range_finder.range_finder
+
+        ammonyte.RecurrenceMatrix
         '''
 
         if num_processes is None:

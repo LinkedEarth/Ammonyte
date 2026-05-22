@@ -12,6 +12,44 @@ class RecurrenceMatrix:
     '''Recurrence matrix object. Used for Recurrence Quantification Analysis (RQA).
     '''
     def __init__(self,matrix,time,epsilon,m,tau,series = None,value_name=None,value_unit=None,time_name=None,time_unit=None,label=None):
+        '''
+        Parameters
+        ----------
+
+        matrix : numpy.ndarray
+            2D binary recurrence matrix where entry (i,j) is 1 if points i and j
+            are recurrent within epsilon distance.
+
+        time : array-like
+            Time axis corresponding to the rows and columns of the matrix.
+
+        epsilon : float
+            Radius threshold used to compute the recurrence matrix.
+
+        m : int
+            Embedding dimension used during time delay embedding.
+
+        tau : int
+            Time delay used during time delay embedding.
+
+        series : ammonyte.Series or pyleoclim.Series, optional
+            Original time series from which the matrix was computed.
+
+        value_name : str, optional
+            Name of the value variable.
+
+        value_unit : str, optional
+            Units of the value variable.
+
+        time_name : str, optional
+            Name of the time variable.
+
+        time_unit : str, optional
+            Units of the time variable.
+
+        label : str, optional
+            Label for the object.
+        '''
         self.matrix = matrix
         self.time = time
         self.epsilon = epsilon
@@ -39,7 +77,9 @@ class RecurrenceMatrix:
         Returns
         -------
 
-        FI_series : pyleoclim.Series object
+        FI_series : ammonyte.RQARes
+            RQARes object containing the Fisher Information time series derived
+            from the Laplacian eigenmaps of the recurrence matrix.
 
         '''
         from ..core.rqa_res import RQARes
@@ -101,7 +141,18 @@ class RecurrenceMatrix:
         imshow_kwargs : dict
             Dictionary of key word arguments for the imshow method from matplotlib.axes.Axes.imshow
 
-        See also
+        Returns
+        -------
+
+        fig : matplotlib.figure.Figure
+            The figure object from matplotlib.
+            See `matplotlib.pyplot.figure <https://matplotlib.org/stable/api/figure_api.html>`_ for details.
+
+        ax : matplotlib.axes.Axes
+            The axis object from matplotlib.
+            See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html>`_ for details.
+
+        See Also
         --------
 
         matplotlib.axes.Axes.imshow

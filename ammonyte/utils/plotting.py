@@ -14,14 +14,27 @@ __all__ = [
 ]
 
 def get_labels(obj):
-    '''Function to create plotting labels from object metadata.
-    
-    Assumes specific object properties specific to ammonyte objects
-    
+    '''Create plotting labels from object metadata
+
+    Assumes specific object properties specific to ammonyte objects.
+
     Parameters
     ----------
-    
-    obj : ammonyte.TimeEmbeddedSeries, ammonyte.RecurrenceMatrix, ammonyte.RecurrenceNetwork'''
+
+    obj : ammonyte.TimeEmbeddedSeries, ammonyte.RecurrenceMatrix, or ammonyte.RecurrenceNetwork
+        Object whose metadata will be used to construct axis labels.
+
+    Returns
+    -------
+
+    xlabel : str or None
+        Label string for the x-axis, formatted as 'time_name [time_unit]' if both
+        are available, or just 'time_name', or None if neither is available.
+
+    ylabel : str or None
+        Label string for the y-axis, formatted as 'value_name [value_unit]' if both
+        are available, or just 'value_name', or None if neither is available.
+    '''
 
     if obj.time_name is not None:
         if obj.time_unit is not None:
@@ -43,49 +56,55 @@ def get_labels(obj):
 
 def bootstrap_fill_plot(series,ax=None,line_color=None,fill_color=None,transition_interval=None,
                         plot_kwargs = None, ci_kwargs = None,background_series=None,background_kwargs = None):
-    '''Function for plotting rqa results with confidence bounds
-    
+    '''Plot RQA results with bootstrap confidence bounds as a filled region
+
+    Parameters
+    ----------
+
     series : pyleoclim.Series
-        Pyleoclim series object containin timeseries of the plot in question
+        Series object containing the timeseries to plot.
 
-    ax : matplotlib.axes object
-        Axes to plot on, if None new plot will be generated
+    ax : matplotlib.axes.Axes, optional
+        Axes to plot on. If None, a new figure will be generated.
 
-    line_color : str, tuple
-        String or rgb tuple to use for line color
-    
-    fill_color : str, tuple
-        String or rgb tuple to use for fill color in between lines
+    line_color : str or tuple, optional
+        String or RGB tuple to use for the line colour.
 
-    transition_interval : list,tuple
-        Upper and lower bound for the transition interval
+    fill_color : str or tuple, optional
+        String or RGB tuple to use for the fill colour between confidence bounds.
 
-    plot_kwargs : dict
-        Key word arguments for the main plot, see `pyleoclim.Series.plot <https://pyleoclim-util.readthedocs.io/en/latest/core/api.html#series-pyleoclim-series>_ for details
+    transition_interval : list or tuple, optional
+        (upper, lower) bounds for the transition interval. If None, computed
+        automatically via bootstrapping using ci_kwargs.
 
-    ci_kwargs : dict
-        Key word arguments for calculating the confidence interval. Only to be used if `transition_interval` is not passed. See ammonyte.utils.sampling.confidence_interval for details
+    plot_kwargs : dict, optional
+        Keyword arguments for the main plot.
+        See `pyleoclim.Series.plot <https://pyleoclim-util.readthedocs.io/en/latest/core/api.html#series-pyleoclim-series>`_ for details.
 
-    background_series : pyleoclim.Series
-        Optional to pass a different series that will be plotted behind the main series plot
+    ci_kwargs : dict, optional
+        Keyword arguments for calculating the confidence interval. Only used if
+        transition_interval is not passed.
+        See ammonyte.utils.sampling.confidence_interval for details.
 
-    background_kwargs : dict
-        Key word arguments for the background plot. If none are passed, the color of the main plot will be re-used 
-        and alpha will be set to .2
+    background_series : pyleoclim.Series, optional
+        Optional series to plot behind the main series.
+
+    background_kwargs : dict, optional
+        Keyword arguments for the background plot. If not passed, the colour of the
+        main plot will be reused and alpha will be set to 0.2.
 
     Returns
     -------
 
-    fig : matplotlib.figure
+    fig : matplotlib.figure.Figure
         The figure object from matplotlib.
         See `matplotlib.pyplot.figure <https://matplotlib.org/stable/api/figure_api.html>`_ for details.
 
-    ax : matplotlib.axis 
-        The axis object from matplotlib. 
+    ax : matplotlib.axes.Axes
+        The axis object from matplotlib.
         See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html>`_ for details.
 
-
-    See also
+    See Also
     --------
 
     ammonyte.utils.sampling.confidence_interval
@@ -173,43 +192,51 @@ def bootstrap_fill_plot(series,ax=None,line_color=None,fill_color=None,transitio
 
 def bootstrap_scatter_plot(series,ax=None,marker_color=None,transition_interval=None, scatter_kwargs= None,
                            ci_kwargs = None,background_series=None,background_kwargs = None):
-    '''Function for plotting rqa results with confidence bounds
-    
+    '''Plot RQA results highlighting points outside bootstrap confidence bounds as a scatter
+
+    Parameters
+    ----------
+
     series : pyleoclim.Series
-        Pyleoclim series object containin timeseries of the plot in question
+        Series object containing the timeseries to plot.
 
-    ax : matplotlib.axes object
-        Axes to plot on, if None new plot will be generated
+    ax : matplotlib.axes.Axes, optional
+        Axes to plot on. If None, a new figure will be generated.
 
-    marker_color : str, tuple
-        String or rgb tuple to use for line color
+    marker_color : str or tuple, optional
+        String or RGB tuple to use for the marker colour.
 
-    transition_interval : list,tuple
-        Upper and lower bound for the transition interval
+    transition_interval : list or tuple, optional
+        (upper, lower) bounds for the transition interval. If None, computed
+        automatically via bootstrapping using ci_kwargs.
 
-    scatter_kwargs : dict
-        Key word arguments for the scatter plot
+    scatter_kwargs : dict, optional
+        Keyword arguments for the scatter plot.
 
-    background_series : pyleoclim.Series
-        Optional to pass a different series that will be plotted behind the main series plot
+    ci_kwargs : dict, optional
+        Keyword arguments for calculating the confidence interval. Only used if
+        transition_interval is not passed.
+        See ammonyte.utils.sampling.confidence_interval for details.
 
-    background_kwargs : dict
-        Key word arguments for the background plot. If none are passed, the color of the main plot will be re-used 
-        and alpha will be set to .2
+    background_series : pyleoclim.Series, optional
+        Optional series to plot behind the main series.
+
+    background_kwargs : dict, optional
+        Keyword arguments for the background plot. If not passed, the colour of the
+        main plot will be reused and alpha will be set to 0.2.
 
     Returns
     -------
 
-    fig : matplotlib.figure
+    fig : matplotlib.figure.Figure
         The figure object from matplotlib.
         See `matplotlib.pyplot.figure <https://matplotlib.org/stable/api/figure_api.html>`_ for details.
 
-    ax : matplotlib.axis 
-        The axis object from matplotlib. 
+    ax : matplotlib.axes.Axes
+        The axis object from matplotlib.
         See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html>`_ for details.
 
-
-    See also
+    See Also
     --------
 
     ammonyte.utils.sampling.confidence_interval
