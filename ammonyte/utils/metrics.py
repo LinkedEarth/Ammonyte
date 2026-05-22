@@ -51,28 +51,6 @@ class DetectionMetrics:
     tolerance : float
         Maximum distance for matching detected to ground truth
 
-    Examples
-    --------
-
-    Basic usage:
-
-    .. jupyter-execute::
-
-        from ammonyte.utils.metrics import evaluate_detection
-
-        detected = [10, 25, 50, 75]
-        ground_truth = [10, 26, 60]
-
-        metrics = evaluate_detection(detected, ground_truth, tolerance=2)
-        print(metrics)
-
-    Access individual metrics:
-
-    .. jupyter-execute::
-
-        print(f"Precision: {metrics.precision:.3f}")
-        print(f"Recall: {metrics.recall:.3f}")
-
     '''
 
     def __init__(self, precision, recall, f1_score, true_positives, false_positives,

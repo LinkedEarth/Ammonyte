@@ -2,23 +2,40 @@ import numpy as np
 from scipy.stats import scoreatpercentile
     
 def confidence_interval(series,upper=95,lower=5,w=50,n_samples=10000,random_state = 42):
-    '''Function to calculate upper and lower values for passed confidence interval on series object via bootstrapping
-       Designed to be used to conduct bootstrap testing on fisher information series
+    '''Calculate bootstrap confidence interval bounds for a series
 
-    fisher_information : pyleoclim.Series
-        Series to be evaluated
+    Designed to compute transition thresholds for Fisher Information series
+    via bootstrapping.
 
-    upper : int
-        Upper bound on confidence interval
+    Parameters
+    ----------
 
-    w : int
-        Size of random sample
-    
-    n_samples : int
-        Number of random samples
-    
-    random_state : int
-        Random state for sampling
+    series : ammonyte.RQARes or pyleoclim.Series
+        Series whose values will be bootstrapped.
+
+    upper : int, optional
+        Upper percentile for the confidence interval. Default is 95.
+
+    lower : int, optional
+        Lower percentile for the confidence interval. Default is 5.
+
+    w : int, optional
+        Bootstrap sample size (number of values drawn per sample). Default is 50.
+
+    n_samples : int, optional
+        Number of bootstrap samples to draw. Default is 10000.
+
+    random_state : int, optional
+        Seed for the random number generator for reproducibility. Default is 42.
+
+    Returns
+    -------
+
+    upper_val : float
+        Upper bound of the confidence interval.
+
+    lower_val : float
+        Lower bound of the confidence interval.
     '''
     
     rng = np.random.RandomState(seed=random_state)

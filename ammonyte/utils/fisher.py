@@ -17,6 +17,42 @@ __all__ = [
 ]
 
 def fisher_information(eig_data,w_size,w_incre):
+    '''Compute Fisher Information from Laplacian eigenmap data using sliding windows
+
+    Implements the Fisher Information metric following Ahmad et al. (2016), adapted
+    for use with Laplacian eigenmaps derived from recurrence matrix analysis.
+
+    Parameters
+    ----------
+
+    eig_data : list
+        List of rows where each row is [time, eig1, eig2, eig3, eig4, ...].
+        The first element of each row is a time value and the remaining elements
+        are eigenmap coordinates.
+
+    w_size : int
+        Window size (number of data points per window).
+
+    w_incre : int
+        Window increment (step size between successive windows).
+
+    Returns
+    -------
+
+    time_axis : numpy.ndarray
+        Time values corresponding to each Fisher Information estimate.
+
+    values : numpy.ndarray
+        Fisher Information values for each window.
+
+    References
+    ----------
+
+    .. [1] N. Ahmad, S. Derrible, T. Eason, and H. Cabezas (2016).
+           Using Fisher information to track stability in multivariate systems.
+           Royal Society Open Science, 3:160582.
+           DOI: 10.1098/rsos.160582
+    '''
     Data_num=[]
     Time=[]
     
@@ -117,6 +153,33 @@ def fisher_information(eig_data,w_size,w_incre):
     return np.array(time_axis), np.array(values)
         
 def SOST(eig_data,s_for_sd):
+    '''Compute the Sum of Standard Deviations (SOST) threshold for Fisher Information binning
+
+    Calculates the minimum sliding-window standard deviation for each eigenmap axis,
+    doubled, to serve as the bin-width threshold used in the Fisher Information computation.
+
+    Parameters
+    ----------
+
+    eig_data : list
+        List of rows in the same format as fisher_information: each row is
+        [time, eig1, eig2, ...].
+
+    s_for_sd : int
+        Window size used when computing the sliding standard deviation.
+
+    Returns
+    -------
+
+    df_sos : pandas.DataFrame
+        Single-row DataFrame where each column contains the SOST threshold
+        for the corresponding eigenmap axis.
+
+    See Also
+    --------
+
+    ammonyte.utils.fisher.fisher_information
+    '''
     Data_num=[]
     
     for row in eig_data:
@@ -161,9 +224,15 @@ def smooth_series(series,block_size):
         Series to be smoothed
         
     block_size : int
-        Size of each block, assumes an evenly spaced series'''
-    
-    #There is definitely a better way to do this, will fix in the future
+        Size of each block. Assumes an evenly spaced series.
+
+    Returns
+    -------
+
+    series : ammonyte.RQARes or pyleoclim.Series
+        The input series with values replaced by block-averaged values.
+        Note: modifies and returns the input series in-place.
+    '''
     
     values = series.value
     
