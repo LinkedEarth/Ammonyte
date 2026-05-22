@@ -30,7 +30,8 @@ setup(
         "scipy>=1.7.1",
         "numpy>=1.21.5",
         "PyRQA>=8.0.0",
-        "scikit-learn>=1.2.1"
+        "scikit-learn>=1.2.1",
+        "ruptures>=1.1.9"
     ],
     python_requires=">=3.8.0"
 )
