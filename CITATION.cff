@@ -4,7 +4,7 @@ title: "Ammonyte: A Python package designed for conducting non-linear time serie
 version: v0.0.8
 doi: 10.5281/zenodo.7843881
 date-released: 2023-04-18
-url: "https://github.com/alexkjames/Ammonyte"
+url: "https://github.com/LinkedEarth/Ammonyte"
 license: GPL-3.0-or-later
 authors:
   - family-names: "James"
@@ -12,6 +12,7 @@ authors:
     orcid: "https://orcid.org/0000-0001-8561-3188"
   - family-names: "Niati"
     given-names: "Maryam"
+    orcid: "https://orcid.org/0009-0001-1523-7989"
   - family-names: "Emile-Geay"
     given-names: "Julien"
     email: "julieneg@usc.edu"
