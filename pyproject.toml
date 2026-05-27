@@ -10,7 +10,7 @@ readme = "README.md"
 license = {text = "GPL-3.0-or-later"}
 authors = [
     {name = "Alexander James", email = "akjames@usc.edu"},
-    {name = "Maryam Niati"},
+    {name = "Maryam Niati", email = "niati@usc.edu"},
     {name = "Julien Emile-Geay", email = "julieneg@usc.edu"},
     {name = "Deborah Khider"},
 ]
