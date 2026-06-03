@@ -30,7 +30,7 @@ class TestUtilsRupturesBasic:
         '''Test ruptures_transition returns correct data types and structures'''
         ts = gen_series_with_transitions(add_transitions=True)
 
-        result = ruptures_transition(ts, algo='Pelt', model='rbf', pen=5)
+        result = ruptures_transition(ts, algo='Pelt', cost='rbf', pen=5)
 
         # Check return type
         from ammonyte.core.transitions import DeterministicTransitions
@@ -46,7 +46,7 @@ class TestUtilsRupturesBasic:
     def test_ruptures_value_ranges_t0(self, gen_series_with_transitions):
         '''Test returned values are in expected ranges'''
         ts = gen_series_with_transitions(add_transitions=True)
-        result = ruptures_transition(ts, algo='Pelt', model='rbf', pen=5)
+        result = ruptures_transition(ts, algo='Pelt', cost='rbf', pen=5)
 
         if len(result.jump_times) > 0 and not np.isnan(result.jump_times[0]):
             # Check direction values are -1, 0, or +1
@@ -62,7 +62,7 @@ class TestUtilsRupturesIntegration:
         '''Test integration between ruptures_transition function and Series.ruptures method'''
         ts = gen_series_with_transitions(add_transitions=True)
 
-        transitions = ts.ruptures(algo='Pelt', model='rbf', pen=5)
+        transitions = ts.ruptures(algo='Pelt', cost='rbf', pen=5)
 
         # Check result is DeterministicTransitions object
         from ammonyte.core.transitions import DeterministicTransitions
@@ -71,7 +71,7 @@ class TestUtilsRupturesIntegration:
         # Check method metadata
         assert transitions.method == 'ruptures'
         assert 'algo' in transitions.method_args
-        assert 'model' in transitions.method_args
+        assert 'cost' in transitions.method_args
         assert 'pen' in transitions.method_args
 
         # Check statistics exist
@@ -80,7 +80,7 @@ class TestUtilsRupturesIntegration:
     def test_direct_vs_series_consistency_t0(self, gen_series_with_transitions):
         '''Test consistency between ruptures_transition function and Series.ruptures method'''
         ts = gen_series_with_transitions(add_transitions=True)
-        params = dict(algo='Pelt', model='rbf', pen=5)
+        params = dict(algo='Pelt', cost='rbf', pen=5)
 
         # Direct function call
         result_direct = ruptures_transition(ts, **params)

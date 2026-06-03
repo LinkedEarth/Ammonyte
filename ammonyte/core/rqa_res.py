@@ -152,15 +152,16 @@ class RQARes(Series):
 
         .. jupyter-execute::
 
-            import ammonyte as amt
+            import os, ammonyte as amt
 
             # Load data
-            ngrip = amt.Series.from_csv('../data/NGRIP.csv')
+            ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
 
             # LERM analysis
             NGRIP_td = amt.TimeEmbeddedSeries(ngrip, m=11)
             NGRIP_epsilon = NGRIP_td.find_epsilon(eps=1, target_density=0.05)
-            NGRIP_lp = NGRIP_epsilon.laplacian_eigenmaps(w_size=20, w_incre=4)
+            NGRIP_rm = NGRIP_epsilon['Output']
+            NGRIP_lp = NGRIP_rm.laplacian_eigenmaps(w_size=20, w_incre=4)
             NGRIP_lp_smooth = amt.utils.fisher.smooth_series(NGRIP_lp, block_size=3)
 
             # Detect transitions

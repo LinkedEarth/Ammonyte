@@ -60,8 +60,8 @@ class DeterministicTransitions:
     
     .. jupyter-execute::
     
-        import ammonyte as amt
-        ngrip = amt.Series.from_csv('ammonyte/data/NGRIP.csv')
+        import os, ammonyte as amt
+        ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
         transitions = ngrip.kstest(w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2, x_c=0.8)
         print(transitions)
         
