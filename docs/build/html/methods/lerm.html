@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Laplacian Eigenmaps of Recurrence Matrices (LERM) &#8212; Ammonyte 0.0.8 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <script src="../_static/documentation_options.js?v=53b53b71"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/thebelab-helper.js"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Ruptures" href="ruptures.html" />
+    <link rel="prev" title="Augmented Kolmogorov-Smirnov Test" href="ks_test.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="laplacian-eigenmaps-of-recurrence-matrices-lerm">
+<h1>Laplacian Eigenmaps of Recurrence Matrices (LERM)<a class="headerlink" href="#laplacian-eigenmaps-of-recurrence-matrices-lerm" title="Link to this heading">¶</a></h1>
+<p>LERM detects abrupt transitions by tracking changes in the dynamical
+structure of a time series rather than its raw values. The method works
+through a four-step pipeline that transforms the original series into a
+Fisher Information signal, which serves as an indicator of system
+instability. Transitions are then detected from that signal.</p>
+<p>This method is based on James et al. (2024) <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<section id="pipeline">
+<h2>Pipeline<a class="headerlink" href="#pipeline" title="Link to this heading">¶</a></h2>
+<p><strong>Step 1 — Time delay embedding</strong></p>
+<p>The 1D time series is reconstructed into a multi-dimensional phase space
+using delay embedding. This captures the dynamical state of the system at
+each time point rather than just its scalar value.</p>
+<p>Parameters: <code class="docutils literal notranslate"><span class="pre">m</span></code> (embedding dimension), <code class="docutils literal notranslate"><span class="pre">tau</span></code> (time delay — computed
+automatically from the first minimum of mutual information if not provided)</p>
+<p><strong>Step 2 — Recurrence network</strong></p>
+<p>Points in phase space that fall within a distance <code class="docutils literal notranslate"><span class="pre">eps</span></code> of each other
+are connected, producing a recurrence network. The algorithm searches for
+an <code class="docutils literal notranslate"><span class="pre">eps</span></code> value that achieves a target network density.</p>
+<p>Parameters: <code class="docutils literal notranslate"><span class="pre">eps</span></code> (initial search value), <code class="docutils literal notranslate"><span class="pre">target_density</span></code> (desired
+fraction of connected pairs), <code class="docutils literal notranslate"><span class="pre">tolerance</span></code> (acceptable deviation from
+target density), <code class="docutils literal notranslate"><span class="pre">amp</span></code> (controls step size during the search)</p>
+<p><strong>Step 3 — Fisher Information</strong></p>
+<p>Fisher Information is computed from the recurrence network using a sliding
+window via Laplacian Eigenmaps. High Fisher Information indicates the
+system is near a critical transition; low values indicate stability.</p>
+<p>Parameters: <code class="docutils literal notranslate"><span class="pre">w_size</span></code> (window size in data points), <code class="docutils literal notranslate"><span class="pre">w_incre</span></code> (step
+size between successive windows)</p>
+<p><strong>Step 4 — Smoothing</strong></p>
+<p>Block averaging is applied to the raw Fisher Information to reduce
+high-frequency noise before transition detection.</p>
+<p>Parameter: <code class="docutils literal notranslate"><span class="pre">block_size</span></code> (number of points averaged per block)</p>
+</section>
+<section id="transition-detection">
+<h2>Transition Detection<a class="headerlink" href="#transition-detection" title="Link to this heading">¶</a></h2>
+<p>Once the smoothed Fisher Information series is obtained, transitions can
+be detected using one of two approaches:</p>
+<p><strong>LERM threshold method</strong></p>
+<p>Detects transitions where Fisher Information crosses between a lower and
+upper confidence bound. A complete upward transition occurs when the
+signal moves from below the lower bound to above the upper bound; a
+downward transition is the reverse. Bounds are computed automatically via
+bootstrapping if not provided manually.</p>
+<p>Parameters: <code class="docutils literal notranslate"><span class="pre">upper</span></code> (upper percentile, default 95), <code class="docutils literal notranslate"><span class="pre">lower</span></code> (lower
+percentile, default 5), <code class="docutils literal notranslate"><span class="pre">w</span></code> (bootstrap sample size), <code class="docutils literal notranslate"><span class="pre">n_samples</span></code>
+(number of bootstrap samples). Alternatively, pass <code class="docutils literal notranslate"><span class="pre">transition_interval</span></code>
+as a (upper_bound, lower_bound) tuple to set bounds manually.</p>
+<p><strong>KS test method</strong></p>
+<p>The augmented KS test (see <a class="reference internal" href="ks_test.html"><span class="doc">Augmented Kolmogorov-Smirnov Test</span></a>) can be applied directly to the
+smoothed Fisher Information series as an alternative detection approach.
+This treats the Fisher Information as the input signal rather than the
+original time series.</p>
+</section>
+<section id="results">
+<h2>Results<a class="headerlink" href="#results" title="Link to this heading">¶</a></h2>
+<p><strong>Fisher Information series</strong></p>
+<p>The smoothed Fisher Information is an intermediate output worth inspecting
+before running detection. Peaks in the signal correspond to periods of
+dynamical instability and are the basis for all transition detections.</p>
+<p><strong>Transitions</strong></p>
+<p>Both detection methods return a <code class="docutils literal notranslate"><span class="pre">Transitions</span></code> object with:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">jump_times</span></code></dt><dd><p>Times of detected transitions.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">jump_directions</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">+1</span></code> for upward (Fisher Information rises through upper bound),
+<code class="docutils literal notranslate"><span class="pre">-1</span></code> for downward (Fisher Information falls through lower bound).</p>
+</dd>
+</dl>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">transitions.plot()</span></code> displays both the Fisher Information and
+the original time series with detected transitions marked as vertical
+lines: red for upward, blue for downward.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>James, A., Emile-Geay, J., Malik, N., &amp; Khider, D. (2024).
+Detecting Paleoclimate Transitions With Laplacian Eigenmaps of
+Recurrence Matrices (LERM). Paleoceanography and Paleoclimatology.
+<a class="reference external" href="https://doi.org/10.1029/2023PA004700">https://doi.org/10.1029/2023PA004700</a></p>
+</aside>
+</aside>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Ammonyte</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ks_test.html">Augmented Kolmogorov-Smirnov Test</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Laplacian Eigenmaps of Recurrence Matrices (LERM)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pipeline">Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#transition-detection">Transition Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#results">Results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ruptures.html">Ruptures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/modules.html">ammonyte</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="ks_test.html" title="previous chapter">Augmented Kolmogorov-Smirnov Test</a></li>
+      <li>Next: <a href="ruptures.html" title="next chapter">Ruptures</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Alexander James, Maryam Niati, Julien Emile-Geay, Deborah Khider.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/methods/lerm.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

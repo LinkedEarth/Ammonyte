@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ammonyte.utils package &#8212; Ammonyte 0.0.8 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <script src="../_static/documentation_options.js?v=53b53b71"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/thebelab-helper.js"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="ammonyte.tests package" href="ammonyte.tests.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="ammonyte-utils-package">
+<h1>ammonyte.utils package<a class="headerlink" href="#ammonyte-utils-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-ammonyte.utils.fisher">
+<span id="ammonyte-utils-fisher-module"></span><h2>ammonyte.utils.fisher module<a class="headerlink" href="#module-ammonyte.utils.fisher" title="Link to this heading">¶</a></h2>
+<p>N. Ahmad, S. Derrible, T. Eason, and H. Cabezas, 2016, “Using Fisher information to track stability in multivariate systems”,
+Royal Society Open Science, 3:160582, DOI: 10.1098/rsos.160582</p>
+<p>Edits have been made by Alexander James to streamline the code for usage in this package</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="ammonyte.utils.fisher.fisher_information">
+<span class="sig-prename descclassname"><span class="pre">ammonyte.utils.fisher.</span></span><span class="sig-name descname"><span class="pre">fisher_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eig_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w_incre</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ammonyte/utils/fisher.html#fisher_information"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ammonyte.utils.fisher.fisher_information" title="Link to this definition">¶</a></dt>
+<dd><p>Compute Fisher Information from Laplacian eigenmap data using sliding windows</p>
+<p>Implements the Fisher Information metric following Ahmad et al. (2016), adapted
+for use with Laplacian eigenmaps derived from recurrence matrix analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eig_data</strong> (<em>list</em>) – List of rows where each row is [time, eig1, eig2, eig3, eig4, …].
+The first element of each row is a time value and the remaining elements
+are eigenmap coordinates.</p></li>
+<li><p><strong>w_size</strong> (<em>int</em>) – Window size (number of data points per window).</p></li>
+<li><p><strong>w_incre</strong> (<em>int</em>) – Window increment (step size between successive windows).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>time_axis</strong> (<em>numpy.ndarray</em>) – Time values corresponding to each Fisher Information estimate.</p></li>
+<li><p><strong>values</strong> (<em>numpy.ndarray</em>) – Fisher Information values for each window.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<p>N. Ahmad, S. Derrible, T. Eason, and H. Cabezas (2016).
+Using Fisher information to track stability in multivariate systems.
+Royal Society Open Science, 3:160582.
+DOI: 10.1098/rsos.160582</p>
+</aside>
+</aside>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ammonyte.utils.fisher.smooth_series">
+<span class="sig-prename descclassname"><span class="pre">ammonyte.utils.fisher.</span></span><span class="sig-name descname"><span class="pre">smooth_series</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ammonyte/utils/fisher.html#smooth_series"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ammonyte.utils.fisher.smooth_series" title="Link to this definition">¶</a></dt>
+<dd><p>Function to smooth series by averaging chunks</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>series</strong> (<em>pyleoclim.Series object</em>) – Series to be smoothed</p></li>
+<li><p><strong>block_size</strong> (<em>int</em>) – Size of each block. Assumes an evenly spaced series.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>series</strong> – The input series with values replaced by block-averaged values.
+Note: modifies and returns the input series in-place.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ammonyte.RQARes or pyleoclim.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ammonyte.utils.ks">
+<span id="ammonyte-utils-ks-module"></span><h2>ammonyte.utils.ks module<a class="headerlink" href="#module-ammonyte.utils.ks" title="Link to this heading">¶</a></h2>
+<section id="kolmogorov-smirnov-test-for-tipping-point-detection">
+<h3>Kolmogorov-Smirnov Test for Tipping Point Detection<a class="headerlink" href="#kolmogorov-smirnov-test-for-tipping-point-detection" title="Link to this heading">¶</a></h3>
+<p>This module provides the KS test method for detecting abrupt transitions
+(tipping points) in time series data, specialized for paleoclimate analysis.</p>
+<section id="functions">
+<h4>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h4>
+<p>KS_test : Detect tipping points using Kolmogorov-Smirnov test</p>
+</section>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="ammonyte.utils.ks.KS_test">
+<span class="sig-prename descclassname"><span class="pre">ammonyte.utils.ks.</span></span><span class="sig-name descname"><span class="pre">KS_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ammonyte/utils/ks.html#KS_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ammonyte.utils.ks.KS_test" title="Link to this definition">¶</a></dt>
+<dd><p>Detect tipping points using Kolmogorov-Smirnov test</p>
+<p>Applies sliding window KS test to detect abrupt transitions using the method of Bagniewski et al. (2021).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>series</strong> (<em>ammonyte.Series</em>) – Series object containing time and value data</p></li>
+<li><p><strong>w_min</strong> (<em>float</em>) – Size of smallest sliding window in time units</p></li>
+<li><p><strong>w_max</strong> (<em>float</em>) – Size of largest sliding window in time units</p></li>
+<li><p><strong>n_w</strong> (<em>int</em>) – Number of window sizes to test</p></li>
+<li><p><strong>d_c</strong> (<em>float</em>) – Cut-off threshold for KS statistic</p></li>
+<li><p><strong>n_c</strong> (<em>int</em>) – Minimum sample size per window</p></li>
+<li><p><strong>s_c</strong> (<em>float</em>) – Standard deviation ratio threshold</p></li>
+<li><p><strong>x_c</strong> (<em>float</em>) – Change threshold. If None, auto-calculated</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>jumps</strong> (<em>numpy.ndarray</em>) – Array of detected transitions with shape (n, 2)
+Each row: [time, direction] where direction is +1 (up) or -1 (down)</p></li>
+<li><p><strong>d_statistics</strong> (<em>numpy.ndarray</em>) – Array of KS D-statistics corresponding to each detected transition</p></li>
+<li><p><strong>p_values</strong> (<em>numpy.ndarray</em>) – Array of p-values corresponding to each detected transition</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Basic usage (typically called via Series.kstest):</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">ammonyte</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">amt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ammonyte.utils.ks</span><span class="w"> </span><span class="kn">import</span> <span class="n">KS_test</span>
+<span class="n">ngrip</span> <span class="o">=</span> <span class="n">amt</span><span class="o">.</span><span class="n">Series</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">amt</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;NGRIP.csv&#39;</span><span class="p">))</span>
+<span class="n">transitions</span> <span class="o">=</span> <span class="n">KS_test</span><span class="p">(</span><span class="n">ngrip</span><span class="p">,</span> <span class="n">w_min</span><span class="o">=</span><span class="mf">0.12</span><span class="p">,</span> <span class="n">w_max</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">n_w</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">d_c</span><span class="o">=</span><span class="mf">0.77</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">s_c</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">x_c</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">transitions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2"> transitions&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Time axis values sorted in ascending order
+Time axis values sorted in ascending order
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Detected 104 transitions
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">Series.kstest</span></code></dt><dd><p>High-level interface to this function</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">References</p>
+<p>Bagniewski, W., et al. (2021). Automatic detection of abrupt transitions in paleoclimate records. Chaos, 31(11), 113129.</p>
+</dd></dl>
+
+</section>
+<section id="module-ammonyte.utils.lerm_transitions">
+<span id="ammonyte-utils-lerm-transitions-module"></span><h2>ammonyte.utils.lerm_transitions module<a class="headerlink" href="#module-ammonyte.utils.lerm_transitions" title="Link to this heading">¶</a></h2>
+<section id="lerm-transition-detection">
+<h3>LERM Transition Detection<a class="headerlink" href="#lerm-transition-detection" title="Link to this heading">¶</a></h3>
+<p>This module provides functions for detecting transitions using the LERM
+(Laplacian Eigenmaps Recurrence Matrix) Fisher Information approach.</p>
+<section id="id2">
+<h4>Functions<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
+<p>lerm_transition : Detect upward and downward transitions from Fisher Information series</p>
+</section>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="ammonyte.utils.lerm_transitions.lerm_transition">
+<span class="sig-prename descclassname"><span class="pre">ammonyte.utils.lerm_transitions.</span></span><span class="sig-name descname"><span class="pre">lerm_transition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ammonyte/utils/lerm_transitions.html#lerm_transition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ammonyte.utils.lerm_transitions.lerm_transition" title="Link to this definition">¶</a></dt>
+<dd><p>Detect transitions using LERM Fisher Information threshold crossings</p>
+<p>Identifies complete transitions where the Fisher Information series crosses
+from one confidence bound to the other, indicating abrupt changes in the
+dynamical system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>series</strong> (<em>ammonyte.Series</em><em>, </em><em>ammonyte.RQARes</em>) – Fisher Information series from LERM analysis (typically smoothed)</p></li>
+<li><p><strong>transition_interval</strong> (<em>tuple</em><em>, </em><em>optional</em>) – (upper_bound, lower_bound) for detecting transitions.
+If None, automatically computes via bootstrapping using the parameters below.</p></li>
+<li><p><strong>upper</strong> (<em>int</em><em>, </em><em>optional</em>) – Upper percentile for confidence interval. Default is 95
+Only used if transition_interval is None.</p></li>
+<li><p><strong>lower</strong> (<em>int</em><em>, </em><em>optional</em>) – Lower percentile for confidence interval. Default is 5
+Only used if transition_interval is None.</p></li>
+<li><p><strong>w</strong> (<em>int</em><em>, </em><em>optional</em>) – Bootstrap sample size. Default is 50
+Only used if transition_interval is None.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of bootstrap samples. Default is 10000
+Only used if transition_interval is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>jump_times</strong> (<em>numpy.ndarray</em>) – Array of transition times</p></li>
+<li><p><strong>jump_directions</strong> (<em>numpy.ndarray</em>) – Array of transition directions (+1 for upward, -1 for downward)</p></li>
+<li><p><strong>upper_bound</strong> (<em>float</em>) – Upper confidence bound used for detection</p></li>
+<li><p><strong>lower_bound</strong> (<em>float</em>) – Lower confidence bound used for detection</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Basic usage (typically called via Series.lerm_transitions):</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">ammonyte</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">amt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ammonyte.utils.lerm_transitions</span><span class="w"> </span><span class="kn">import</span> <span class="n">lerm_transition</span>
+
+<span class="c1"># Load data and perform LERM analysis</span>
+<span class="n">ngrip</span> <span class="o">=</span> <span class="n">amt</span><span class="o">.</span><span class="n">Series</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">amt</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;NGRIP.csv&#39;</span><span class="p">))</span>
+<span class="n">NGRIP_td</span> <span class="o">=</span> <span class="n">amt</span><span class="o">.</span><span class="n">TimeEmbeddedSeries</span><span class="p">(</span><span class="n">ngrip</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">NGRIP_epsilon</span> <span class="o">=</span> <span class="n">NGRIP_td</span><span class="o">.</span><span class="n">find_epsilon</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">target_density</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">NGRIP_rm</span> <span class="o">=</span> <span class="n">NGRIP_epsilon</span><span class="p">[</span><span class="s1">&#39;Output&#39;</span><span class="p">]</span>
+<span class="n">NGRIP_lp</span> <span class="o">=</span> <span class="n">NGRIP_rm</span><span class="o">.</span><span class="n">laplacian_eigenmaps</span><span class="p">(</span><span class="n">w_size</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">w_incre</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">NGRIP_lp_smooth</span> <span class="o">=</span> <span class="n">amt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">fisher</span><span class="o">.</span><span class="n">smooth_series</span><span class="p">(</span><span class="n">NGRIP_lp</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Detect transitions</span>
+<span class="n">jump_times</span><span class="p">,</span> <span class="n">jump_directions</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">,</span> <span class="n">lower_bound</span> <span class="o">=</span> <span class="n">lerm_transition</span><span class="p">(</span><span class="n">NGRIP_lp_smooth</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">jump_times</span><span class="p">)</span><span class="si">}</span><span class="s2"> transitions&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bounds used: upper=</span><span class="si">{</span><span class="n">upper_bound</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, lower=</span><span class="si">{</span><span class="n">lower_bound</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Time axis values sorted in ascending order
+Time axis values sorted in ascending order
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Initial density is 0.0004
+Initial density is not within the tolerance window, searching...
+Epsilon: 1.4965, Density: 0.0022
+Epsilon: 1.9749, Density: 0.0072
+Epsilon: 2.4030, Density: 0.0140
+Epsilon: 2.7632, Density: 0.0206
+Epsilon: 3.0570, Density: 0.0267
+Epsilon: 3.2902, Density: 0.0321
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Epsilon: 3.4696, Density: 0.0367
+Epsilon: 3.6030, Density: 0.0403
+Epsilon: 3.6030, Density: 0.0403.
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Detected 33 transitions
+Bounds used: upper=1.2241, lower=0.8737
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">Series.lerm_transitions</span></code></dt><dd><p>High-level interface to this function</p>
+</dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">confidence_interval</span></code></dt><dd><p>Bootstrap confidence interval calculation</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<p>This function detects complete transitions where the series crosses from one
+confidence threshold to the other. The algorithm:</p>
+<ol class="arabic simple">
+<li><p>Interpolates the series to step=1 for fine-grained detection</p></li>
+<li><p>Computes or uses provided confidence bounds (upper, lower)</p></li>
+<li><p>Tracks crossings above the upper threshold</p></li>
+<li><p>Tracks crossings below the lower threshold</p></li>
+<li><p>Identifies complete transitions:
+- Upward (+1): from below lower bound to above upper bound
+- Downward (-1): from above upper bound to below lower bound</p></li>
+<li><p>Assigns transition time at the midpoint between threshold crossings</p></li>
+</ol>
+</dd></dl>
+
+</section>
+<section id="module-ammonyte.utils.metrics">
+<span id="ammonyte-utils-metrics-module"></span><h2>ammonyte.utils.metrics module<a class="headerlink" href="#module-ammonyte.utils.metrics" title="Link to this heading">¶</a></h2>
+<section id="evaluation-metrics-for-transition-detection">
+<h3>Evaluation Metrics for Transition Detection<a class="headerlink" href="#evaluation-metrics-for-transition-detection" title="Link to this heading">¶</a></h3>
+<p>This module provides metrics for evaluating the performance of transition
+detection methods against ground truth data.</p>
+<section id="classes">
+<h4>Classes<a class="headerlink" href="#classes" title="Link to this heading">¶</a></h4>
+<p>DetectionMetrics : Container for evaluation metrics results</p>
+</section>
+<section id="id3">
+<h4>Functions<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h4>
+<p>evaluate_detection : Complete evaluation with precision, recall, F1 score, and counts</p>
+</section>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="ammonyte.utils.metrics.DetectionMetrics">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">ammonyte.utils.metrics.</span></span><span class="sig-name descname"><span class="pre">DetectionMetrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">precision</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recall</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f1_score</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_positives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">false_positives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">false_negatives</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_detected</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_ground_truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ammonyte/utils/metrics.html#DetectionMetrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ammonyte.utils.metrics.DetectionMetrics" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Container for transition detection evaluation metrics</p>
+<p>Stores precision, recall, F1 score, and detailed counts from comparing
+detected transitions against ground truth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>precision</strong> (<em>float</em>) – Precision score (TP / (TP + FP))</p></li>
+<li><p><strong>recall</strong> (<em>float</em>) – Recall score (TP / (TP + FN))</p></li>
+<li><p><strong>f1_score</strong> (<em>float</em>) – F1 score (harmonic mean of precision and recall)</p></li>
+<li><p><strong>true_positives</strong> (<em>int</em>) – Number of correct detections</p></li>
+<li><p><strong>false_positives</strong> (<em>int</em>) – Number of incorrect detections</p></li>
+<li><p><strong>false_negatives</strong> (<em>int</em>) – Number of missed ground truth events</p></li>
+<li><p><strong>n_detected</strong> (<em>int</em>) – Total number of detections</p></li>
+<li><p><strong>n_ground_truth</strong> (<em>int</em>) – Total number of ground truth events</p></li>
+<li><p><strong>tolerance</strong> (<em>float</em>) – Maximum distance for matching detected to ground truth</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="ammonyte.utils.metrics.DetectionMetrics.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ammonyte/utils/metrics.html#DetectionMetrics.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ammonyte.utils.metrics.DetectionMetrics.to_dict" title="Link to this definition">¶</a></dt>
+<dd><p>Convert metrics to dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary containing all metrics.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ammonyte.utils.metrics.evaluate_detection">
+<span class="sig-prename descclassname"><span class="pre">ammonyte.utils.metrics.</span></span><span class="sig-name descname"><span class="pre">evaluate_detection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">detected</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ground_truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ammonyte/utils/metrics.html#evaluate_detection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ammonyte.utils.metrics.evaluate_detection" title="Link to this definition">¶</a></dt>
+<dd><p>Complete evaluation of transition detection performance</p>
+<p>Calculates precision, recall, F1 score, and detailed counts (true positives,
+false positives, false negatives) in a single pass to ensure consistency.
+Uses one-to-one closest matching where each ground truth point matches only
+one detected point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>detected</strong> (<em>array-like</em>) – Detected transition points (indices or time values)</p></li>
+<li><p><strong>ground_truth</strong> (<em>array-like</em>) – Ground truth transition points (indices or time values)</p></li>
+<li><p><strong>tolerance</strong> (<em>float</em><em>, </em><em>optional</em>) – Maximum distance for a detected transition to be considered a true positive.
+Default is 0.5</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>Object containing:</p>
+<ul class="simple">
+<li><p>precision : float - Precision score (0 to 1)</p></li>
+<li><p>recall : float - Recall score (0 to 1)</p></li>
+<li><p>f1_score : float - F1 score (0 to 1)</p></li>
+<li><p>true_positives : int - Number of correct detections</p></li>
+<li><p>false_positives : int - Number of incorrect detections</p></li>
+<li><p>false_negatives : int - Number of missed ground truth events</p></li>
+<li><p>n_detected : int - Total number of detections</p></li>
+<li><p>n_ground_truth : int - Total number of ground truth events</p></li>
+<li><p>tolerance : float - Tolerance used for matching</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#ammonyte.utils.metrics.DetectionMetrics" title="ammonyte.utils.metrics.DetectionMetrics">DetectionMetrics</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Basic usage:</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ammonyte.utils.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">evaluate_detection</span>
+
+<span class="n">detected</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">75</span><span class="p">]</span>
+<span class="n">ground_truth</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">60</span><span class="p">]</span>
+
+<span class="n">metrics</span> <span class="o">=</span> <span class="n">evaluate_detection</span><span class="p">(</span><span class="n">detected</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Detection Evaluation Metrics
+============================
+Metrics calculated within tolerance = 2
+
+Performance Scores:
++-----------+---------+
+| Metric    |   Value |
++===========+=========+
+| Precision |  0.5    |
++-----------+---------+
+| Recall    |  0.6667 |
++-----------+---------+
+| F1 Score  |  0.5714 |
++-----------+---------+
+
+Detection Counts:
++-----------------+---------+
+| Category        |   Count |
++=================+=========+
+| True Positives  |       2 |
++-----------------+---------+
+| False Positives |       2 |
++-----------------+---------+
+| False Negatives |       1 |
++-----------------+---------+
+
+Summary:
+  Detected: 4 | Ground Truth: 3
+
+</pre></div>
+</div>
+</div>
+</div>
+<p>Access individual metrics:</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">ammonyte.utils.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">evaluate_detection</span>
+
+<span class="n">detected</span> <span class="o">=</span> <span class="p">[</span><span class="mf">9.8</span><span class="p">,</span> <span class="mf">23.5</span><span class="p">,</span> <span class="mf">45.2</span><span class="p">]</span>
+<span class="n">ground_truth</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">]</span>
+
+<span class="n">metrics</span> <span class="o">=</span> <span class="n">evaluate_detection</span><span class="p">(</span><span class="n">detected</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Precision: </span><span class="si">{</span><span class="n">metrics</span><span class="o">.</span><span class="n">precision</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recall: </span><span class="si">{</span><span class="n">metrics</span><span class="o">.</span><span class="n">recall</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;F1 Score: </span><span class="si">{</span><span class="n">metrics</span><span class="o">.</span><span class="n">f1_score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Precision: 0.333
+Recall: 0.250
+F1 Score: 0.286
+</pre></div>
+</div>
+</div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-ammonyte.utils.parameters">
+<span id="ammonyte-utils-parameters-module"></span><h2>ammonyte.utils.parameters module<a class="headerlink" href="#module-ammonyte.utils.parameters" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ammonyte.utils.parameters.tau_search">
+<span class="sig-prename descclassname"><span class="pre">ammonyte.utils.parameters.</span></span><span class="sig-name descname"><span class="pre">tau_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_lags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_MI</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ammonyte/utils/parameters.html#tau_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ammonyte.utils.parameters.tau_search" title="Link to this definition">¶</a></dt>
+<dd><p>Find optimal tau value for time delay embedding.</p>
+<p>First minimum of mutual information between series and time lagged copies of itself
+is “optimal” in this case in accordance with Abarnabel’s “Analysis of Observed Chaotic Data”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>series</strong> (<em>pyleo.Series</em>) – Series for which we’d like to find the optimal tau value</p></li>
+<li><p><strong>num_lags</strong> (<em>int</em>) – Number of time delays to consider. Default is 30</p></li>
+<li><p><strong>return_MI</strong> (<em>bool</em><em>, </em><em>{True</em><em>,</em><em>False}</em>) – Whether or not to return the list of mutual information values.
+Useful if the first minimum seems spurious and you’d like to inspect the results.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>tau</strong> (<em>int</em>) – Optimal time delay parameter according to first minimum of mutual information</p></li>
+<li><p><strong>MI</strong> (<em>list</em>) – List of mutual information values.
+Indices + 1 correspond to amount of lag (index 0 is lag 1, index 1 is lag 2, etc.).
+Only returned if return_MI is set to True.</p></li>
+<li><p><em>Citations</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>I., Abarbanel Henry D. Analysis of Observed Chaotic Data. Springer, 1997.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ammonyte.utils.plotting">
+<span id="ammonyte-utils-plotting-module"></span><h2>ammonyte.utils.plotting module<a class="headerlink" href="#module-ammonyte.utils.plotting" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ammonyte.utils.plotting.bootstrap_fill_plot">
+<span class="sig-prename descclassname"><span class="pre">ammonyte.utils.plotting.</span></span><span class="sig-name descname"><span class="pre">bootstrap_fill_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ci_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ammonyte/utils/plotting.html#bootstrap_fill_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ammonyte.utils.plotting.bootstrap_fill_plot" title="Link to this definition">¶</a></dt>
+<dd><p>Plot RQA results with bootstrap confidence bounds as a filled region</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>series</strong> (<em>pyleoclim.Series</em>) – Series object containing the timeseries to plot.</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib.axes.Axes</em><em>, </em><em>optional</em>) – Axes to plot on. If None, a new figure will be generated.</p></li>
+<li><p><strong>line_color</strong> (<em>str</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – String or RGB tuple to use for the line colour.</p></li>
+<li><p><strong>fill_color</strong> (<em>str</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – String or RGB tuple to use for the fill colour between confidence bounds.</p></li>
+<li><p><strong>transition_interval</strong> (<em>list</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – (upper, lower) bounds for the transition interval. If None, computed
+automatically via bootstrapping using ci_kwargs.</p></li>
+<li><p><strong>plot_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Keyword arguments for the main plot.
+See <a class="reference external" href="https://pyleoclim-util.readthedocs.io/en/latest/core/api.html#series-pyleoclim-series">pyleoclim.Series.plot</a> for details.</p></li>
+<li><p><strong>ci_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Keyword arguments for calculating the confidence interval. Only used if
+transition_interval is not passed.
+See ammonyte.utils.sampling.confidence_interval for details.</p></li>
+<li><p><strong>background_series</strong> (<em>pyleoclim.Series</em><em>, </em><em>optional</em>) – Optional series to plot behind the main series.</p></li>
+<li><p><strong>background_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Keyword arguments for the background plot. If not passed, the colour of the
+main plot will be reused and alpha will be set to 0.2.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>fig</strong> (<em>matplotlib.figure.Figure</em>) – The figure object from matplotlib.
+See <a class="reference external" href="https://matplotlib.org/stable/api/figure_api.html">matplotlib.pyplot.figure</a> for details.</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib.axes.Axes</em>) – The axis object from matplotlib.
+See <a class="reference external" href="https://matplotlib.org/stable/api/axes_api.html">matplotlib.axes</a> for details.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#ammonyte.utils.sampling.confidence_interval" title="ammonyte.utils.sampling.confidence_interval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ammonyte.utils.sampling.confidence_interval</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ammonyte.utils.plotting.bootstrap_scatter_plot">
+<span class="sig-prename descclassname"><span class="pre">ammonyte.utils.plotting.</span></span><span class="sig-name descname"><span class="pre">bootstrap_scatter_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transition_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ci_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_series</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ammonyte/utils/plotting.html#bootstrap_scatter_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ammonyte.utils.plotting.bootstrap_scatter_plot" title="Link to this definition">¶</a></dt>
+<dd><p>Plot RQA results highlighting points outside bootstrap confidence bounds as a scatter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>series</strong> (<em>pyleoclim.Series</em>) – Series object containing the timeseries to plot.</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib.axes.Axes</em><em>, </em><em>optional</em>) – Axes to plot on. If None, a new figure will be generated.</p></li>
+<li><p><strong>marker_color</strong> (<em>str</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – String or RGB tuple to use for the marker colour.</p></li>
+<li><p><strong>transition_interval</strong> (<em>list</em><em> or </em><em>tuple</em><em>, </em><em>optional</em>) – (upper, lower) bounds for the transition interval. If None, computed
+automatically via bootstrapping using ci_kwargs.</p></li>
+<li><p><strong>scatter_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Keyword arguments for the scatter plot.</p></li>
+<li><p><strong>ci_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Keyword arguments for calculating the confidence interval. Only used if
+transition_interval is not passed.
+See ammonyte.utils.sampling.confidence_interval for details.</p></li>
+<li><p><strong>background_series</strong> (<em>pyleoclim.Series</em><em>, </em><em>optional</em>) – Optional series to plot behind the main series.</p></li>
+<li><p><strong>background_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Keyword arguments for the background plot. If not passed, the colour of the
+main plot will be reused and alpha will be set to 0.2.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>fig</strong> (<em>matplotlib.figure.Figure</em>) – The figure object from matplotlib.
+See <a class="reference external" href="https://matplotlib.org/stable/api/figure_api.html">matplotlib.pyplot.figure</a> for details.</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib.axes.Axes</em>) – The axis object from matplotlib.
+See <a class="reference external" href="https://matplotlib.org/stable/api/axes_api.html">matplotlib.axes</a> for details.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#ammonyte.utils.sampling.confidence_interval" title="ammonyte.utils.sampling.confidence_interval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ammonyte.utils.sampling.confidence_interval</span></code></a></p>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-ammonyte.utils.range_finder">
+<span id="ammonyte-utils-range-finder-module"></span><h2>ammonyte.utils.range_finder module<a class="headerlink" href="#module-ammonyte.utils.range_finder" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ammonyte.utils.range_finder.range_finder">
+<span class="sig-prename descclassname"><span class="pre">ammonyte.utils.range_finder.</span></span><span class="sig-name descname"><span class="pre">range_finder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_density</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_processes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ammonyte/utils/range_finder.html#range_finder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ammonyte.utils.range_finder.range_finder" title="Link to this definition">¶</a></dt>
+<dd><p>Compute a range of epsilon values to search for a target recurrence density</p>
+<p>Used internally by TimeEmbeddedSeries.find_epsilon during parallel search.
+Returns either a range of epsilon candidates to evaluate, or signals convergence
+when the current density is within tolerance of the target.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eps</strong> (<em>float</em>) – Current epsilon value.</p></li>
+<li><p><strong>density</strong> (<em>float</em>) – Current recurrence matrix density corresponding to eps.</p></li>
+<li><p><strong>target_density</strong> (<em>float</em>) – Desired recurrence matrix density.</p></li>
+<li><p><strong>tolerance</strong> (<em>float</em>) – Acceptable deviation from target_density.</p></li>
+<li><p><strong>num_processes</strong> (<em>int</em>) – Number of epsilon values to generate in the search range.</p></li>
+<li><p><strong>amp</strong> (<em>int</em><em> or </em><em>float</em>) – Amplitude scaling factor controlling the width of the search range.
+Higher values cover more ground per iteration but converge more slowly.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>eps_range</strong> (<em>numpy.ndarray or float</em>) – If not yet converged: array of epsilon values to evaluate next.
+If converged (density within tolerance): the current eps value.</p></li>
+<li><p><strong>flag</strong> (<em>bool</em>) – True if current density is within tolerance of target (convergence reached),
+False otherwise.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ammonyte.TimeEmbeddedSeries.find_epsilon</span></code></p>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-ammonyte.utils.rm">
+<span id="ammonyte-utils-rm-module"></span><h2>ammonyte.utils.rm module<a class="headerlink" href="#module-ammonyte.utils.rm" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ammonyte.utils.rm.rm">
+<span class="sig-prename descclassname"><span class="pre">ammonyte.utils.rm.</span></span><span class="sig-name descname"><span class="pre">rm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ammonyte/utils/rm.html#rm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ammonyte.utils.rm.rm" title="Link to this definition">¶</a></dt>
+<dd><p>Function to calculate recurrence matrix from pyleoclim or pandas series</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>series</strong> (<em>pyleoclim.Series</em><em> or </em><em>pandas.Series</em>) – Timeseries from which the recurrence matrix will be calculated</p></li>
+<li><p><strong>eps</strong> (<em>float</em>) – Epsilon value for calculation of the matrix.</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – Embedding parameter</p></li>
+<li><p><strong>delay</strong> (<em>int</em>) – Delay parameter for time embedding.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>Dictionary with the following keys:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">'rm'</span></code> : numpy.ndarray — the binary recurrence matrix.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'time_axis'</span></code> : array-like — the time axis after accounting for embedding.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'eps'</span></code> : float — the epsilon value used.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ammonyte.utils.ruptures_transitions">
+<span id="ammonyte-utils-ruptures-transitions-module"></span><h2>ammonyte.utils.ruptures_transitions module<a class="headerlink" href="#module-ammonyte.utils.ruptures_transitions" title="Link to this heading">¶</a></h2>
+<section id="ruptures-change-point-detection">
+<h3>Ruptures Change Point Detection<a class="headerlink" href="#ruptures-change-point-detection" title="Link to this heading">¶</a></h3>
+<p>This module provides a wrapper around the ruptures library for detecting
+transitions/change points in paleoclimate time series.</p>
+<section id="id6">
+<h4>Functions<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h4>
+<p>ruptures_transition : Detect transitions using ruptures algorithms</p>
+</section>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="ammonyte.utils.ruptures_transitions.ruptures_transition">
+<span class="sig-prename descclassname"><span class="pre">ammonyte.utils.ruptures_transitions.</span></span><span class="sig-name descname"><span class="pre">ruptures_transition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Pelt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cost</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rbf'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bkps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jump</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ammonyte/utils/ruptures_transitions.html#ruptures_transition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ammonyte.utils.ruptures_transitions.ruptures_transition" title="Link to this definition">¶</a></dt>
+<dd><p>Detect transitions using ruptures change point detection</p>
+<p>Applies ruptures algorithms for offline change point detection in time series data.</p>
+<p>Note that series must be evenly spaced for this method.
+See interp, bin, and gkernel methods in parent class pyleoclim.Series for details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>series</strong> (<em>ammonyte.Series</em>) – Series object containing time and value data</p></li>
+<li><p><strong>algo</strong> (<em>str</em>) – Search algorithm: ‘Pelt’, ‘Dynp’, ‘Binseg’, ‘BottomUp’, ‘Window’, ‘KernelCPD’
+Default is ‘Pelt’</p></li>
+<li><p><strong>cost</strong> (<em>str</em>) – Cost function: ‘l1’, ‘l2’, ‘rbf’, ‘normal’, ‘ar’, ‘linear’, ‘rank’, ‘mahalanobis’, ‘cosine’, ‘clinear’
+Default is ‘rbf’ (Radial Basis Function - good for nonlinear patterns)
+For KernelCPD, use ‘linear’, ‘rbf’, or ‘cosine’ (these are kernel functions)</p></li>
+<li><p><strong>pen</strong> (<em>float</em><em>, </em><em>optional</em>) – <p>Penalty parameter controlling sensitivity to changepoints (higher = fewer changepoints)</p>
+<p><strong>What is penalty?</strong>
+The algorithm minimizes: [fit error] + [number of changepoints × pen]
+- Low penalty → more changepoints (risk: overfitting, detecting noise as transitions)
+- High penalty → fewer changepoints (risk: missing real transitions)</p>
+<p><strong>Choosing penalty is a user decision</strong> based on your data characteristics,
+expected transition frequency, and tolerance for false positives vs. false negatives.
+There is no single “correct” penalty value.</p>
+<p><strong>Example approaches for selecting penalty:</strong>
+1. <strong>Fixed empirical values</strong>: pen = 5, 10, 20, etc. (experiment to find what works)
+2. <strong>Information criteria</strong> (linear penalties that balance fit vs. complexity):</p>
+<blockquote>
+<div><ul>
+<li><p>AIC (Akaike Information Criterion) - more liberal, detects more changepoints</p></li>
+<li><p>BIC (Bayesian Information Criterion) - more conservative, sample-size dependent</p></li>
+<li><p>mBIC (modified BIC) - even more conservative</p></li>
+</ul>
+<p><strong>Note</strong>: The exact formula for each criterion depends on the statistical model
+and cost function used.</p>
+</div></blockquote>
+</p></li>
+<li><p><strong>n_bkps</strong> (<em>int</em><em>, </em><em>optional</em>) – Exact number of breakpoints to detect (alternative to penalty-based approach)
+Use when you know how many transitions to expect
+<strong>Note</strong>: Cannot be used together with ‘pen’ - choose one or the other</p></li>
+<li><p><strong>algorithm</strong> (<em>**Stopping criterion requirements by</em>) – <ul>
+<li><p>Pelt: requires ‘pen’ (penalty)</p></li>
+<li><p>Dynp: requires ‘n_bkps’ (number of breakpoints)</p></li>
+<li><p>Binseg, BottomUp, Window, KernelCPD: requires either ‘pen’ or ‘n_bkps’ (not both)</p></li>
+</ul>
+</p></li>
+<li><p><strong>min_size</strong> (<em>int</em>) – Minimum samples between change points. Default is 2</p></li>
+<li><p><strong>jump</strong> (<em>int</em>) – Subsample (1=all data, 5=every 5th point). Default is 1</p></li>
+<li><p><strong>width</strong> (<em>int</em><em>, </em><em>optional</em>) – Window size (required for Window algorithm)</p></li>
+<li><p><strong>params</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional algorithm-specific parameters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>result</strong> – Object containing detected transitions:
+- jump_times: array of transition times
+- jump_values: array of directions (+1 upward, -1 downward, 0 unclear)
+- series: original Series object
+- method: ‘ruptures’
+- method_args: dict with algorithm settings
+- statistics: dict with breakpoint indices</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="ammonyte.core.html#ammonyte.core.transitions.DeterministicTransitions" title="ammonyte.core.transitions.DeterministicTransitions">DeterministicTransitions</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Basic usage (typically called via Series.ruptures):</p>
+<div class="jupyter_cell jupyter_container docutils container">
+<div class="cell_input code_cell docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">ammonyte</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">amt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ammonyte.utils.ruptures_transitions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ruptures_transition</span>
+<span class="n">ngrip</span> <span class="o">=</span> <span class="n">amt</span><span class="o">.</span><span class="n">Series</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">amt</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;NGRIP.csv&#39;</span><span class="p">))</span>
+<span class="n">transitions</span> <span class="o">=</span> <span class="n">ngrip</span><span class="o">.</span><span class="n">ruptures</span><span class="p">(</span><span class="n">algo</span><span class="o">=</span><span class="s1">&#39;Pelt&#39;</span><span class="p">,</span> <span class="n">cost</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">pen</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Detected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">transitions</span><span class="o">.</span><span class="n">jump_times</span><span class="p">)</span><span class="si">}</span><span class="s2"> transitions&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Time axis values sorted in ascending order
+Time axis values sorted in ascending order
+</pre></div>
+</div>
+<div class="output stream highlight-none notranslate"><div class="highlight"><pre><span></span>Detected 64 transitions
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">Series.ruptures</span></code></dt><dd><p>High-level interface to this function</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">References</p>
+<p>Truong, C., et al. (2020). Selective review of offline change point detection methods. Signal Processing, 167, 107299.</p>
+</dd></dl>
+
+</section>
+<section id="module-ammonyte.utils.sampling">
+<span id="ammonyte-utils-sampling-module"></span><h2>ammonyte.utils.sampling module<a class="headerlink" href="#module-ammonyte.utils.sampling" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="ammonyte.utils.sampling.confidence_interval">
+<span class="sig-prename descclassname"><span class="pre">ammonyte.utils.sampling.</span></span><span class="sig-name descname"><span class="pre">confidence_interval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ammonyte/utils/sampling.html#confidence_interval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ammonyte.utils.sampling.confidence_interval" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate bootstrap confidence interval bounds for a series</p>
+<p>Designed to compute transition thresholds for Fisher Information series
+via bootstrapping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>series</strong> (<em>ammonyte.RQARes</em><em> or </em><em>pyleoclim.Series</em>) – Series whose values will be bootstrapped.</p></li>
+<li><p><strong>upper</strong> (<em>int</em><em>, </em><em>optional</em>) – Upper percentile for the confidence interval. Default is 95.</p></li>
+<li><p><strong>lower</strong> (<em>int</em><em>, </em><em>optional</em>) – Lower percentile for the confidence interval. Default is 5.</p></li>
+<li><p><strong>w</strong> (<em>int</em><em>, </em><em>optional</em>) – Bootstrap sample size (number of values drawn per sample). Default is 50.</p></li>
+<li><p><strong>n_samples</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of bootstrap samples to draw. Default is 10000.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>optional</em>) – Seed for the random number generator for reproducibility. Default is 42.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>upper_val</strong> (<em>float</em>) – Upper bound of the confidence interval.</p></li>
+<li><p><strong>lower_val</strong> (<em>float</em>) – Lower bound of the confidence interval.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-ammonyte.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ammonyte.utils" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Ammonyte</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../methods/ks_test.html">Augmented Kolmogorov-Smirnov Test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../methods/lerm.html">Laplacian Eigenmaps of Recurrence Matrices (LERM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../methods/ruptures.html">Ruptures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">ammonyte</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="ammonyte.html">ammonyte package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">ammonyte</a><ul>
+  <li><a href="ammonyte.html">ammonyte package</a><ul>
+      <li>Previous: <a href="ammonyte.tests.html" title="previous chapter">ammonyte.tests package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Alexander James, Maryam Niati, Julien Emile-Geay, Deborah Khider.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/api/ammonyte.utils.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
