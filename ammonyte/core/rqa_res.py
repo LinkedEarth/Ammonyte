@@ -697,8 +697,8 @@ class RQARes(Series):
             title = f'Eigenmaps for {self.label}'
 
         ax.set_title(title)
-        ax.set_xlabel(f'$\Phi_{axes[0]}$',labelpad=10)
-        ax.set_ylabel(f'$\Phi_{axes[1]}$',labelpad=10)
+        ax.set_xlabel(f'$\\Phi_{{{axes[0]}}}$',labelpad=10)
+        ax.set_ylabel(f'$\\Phi_{{{axes[1]}}}$',labelpad=10)
         ax.ticklabel_format(axis='x', scilimits=[0, 0])
         ax.ticklabel_format(axis='y', scilimits=[0, 0])
 

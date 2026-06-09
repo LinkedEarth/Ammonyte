@@ -110,6 +110,7 @@ def KS_test(series, w_min, w_max, n_w, d_c, n_c, s_c, x_c=None):
     # For dates that are equal find the mean value of x 
     # Using stable unique to preserve order 
     def unique_stable(t):
+        '''Return unique values of t preserving first-occurrence order.'''
         _, idx, inv_idx = np.unique(t, return_index=True, return_inverse=True)
         # Sort by first occurrence order to preserve stability
         sort_order = np.argsort(idx)
@@ -334,6 +335,7 @@ def KS_test(series, w_min, w_max, n_w, d_c, n_c, s_c, x_c=None):
     
     # For each detected jump, find the corresponding statistics
     def find_stats_for_jump(jump_time, jump_direction):
+        '''Return the KS D-statistic and p-value closest to a given jump time.'''
         # Find the closest time point in tt to the jump
         time_idx = np.argmin(np.abs(tt - jump_time))
         

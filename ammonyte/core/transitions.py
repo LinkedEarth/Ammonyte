@@ -84,8 +84,9 @@ class DeterministicTransitions:
 
     '''
     
-    def __init__(self, series, jump_times, jump_values, method, method_args=None, label=None, 
+    def __init__(self, series, jump_times, jump_values, method, method_args=None, label=None,
                  statistics=None):
+        '''Initialize a DeterministicTransitions object with detection results and metadata.'''
         self.series = series
         self.jump_times = np.asarray(jump_times)
         self.jump_values = np.asarray(jump_values)
