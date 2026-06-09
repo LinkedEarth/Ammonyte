@@ -37,41 +37,42 @@ class TestCoreRQAResSmooth:
         lp_series = rm.laplacian_eigenmaps(5,3)
         lp_series.smooth(block_size)
 
-# class TestCoreRQAResConfidenceSmoothPlot:
-#     '''Tests for confidence scatter plot function'''
+class TestCoreRQAResConfidenceSmoothPlot:
+    '''Tests for confidence_smooth_plot function'''
 
-#     @pytest.mark.parametrize('marker,size,color,legend,label,xlabel,ylabel,title,scatter_kwargs,lgd_kwargs',
-#                             [('o',42,'red',True,'label_test','xlabel_test','ylabel_test','title_test',{'alpha':.5},{'fontsize':42}),
-#                             (None,None,None,False,None,None,None,None,None,None)])
-#     def test_confidence_smooth_plot_t0(self,marker,size,color,legend,label,xlabel,ylabel,title,scatter_kwargs,lgd_kwargs):
-#         '''Testing different visual plot arguments'''
-#         #Parameter choices are completely arbitrary, just want to test if the plotting function works
-#         ts_normal = gen_normal(nt=100)
-#         amt_td = amt.TimeEmbeddedSeries(ts_normal,3,1)
-#         rm = amt_td.create_recurrence_matrix(1)
-#         lp_series = rm.laplacian_eigenmaps(5,3)
-#         lp_series.confidence_smooth_plot(marker=marker,size=size,color=color,legend=legend,label=label,xlabel=xlabel,ylabel=ylabel,title=title,
-#                                           scatter_kwargs=scatter_kwargs,lgd_kwargs=lgd_kwargs)
+    def test_confidence_smooth_plot_t0(self):
+        '''Test confidence_smooth_plot runs without error with default arguments'''
+        ts_normal = gen_normal(nt=100)
+        amt_td = amt.TimeEmbeddedSeries(ts_normal, 3, 1)
+        rm = amt_td.create_recurrence_matrix(1)
+        lp_series = rm.laplacian_eigenmaps(5, 3)
+        lp_series.confidence_smooth_plot(block_size=3)
 
-#     @pytest.mark.parametrize('transition_interval,ci_kwargs',([(0,1),None],[(1,-1),None],[None,{'upper':75,'lower':15}]))
-#     def test_confidence_smooth_plot_t1(self,transition_interval,ci_kwargs):
-#         '''Testing different confidence interval calculations'''
-#         #Parameter choices are completely arbitrary, just want to test if the plotting function works
-#         ts_normal = gen_normal(nt=100)
-#         amt_td = amt.TimeEmbeddedSeries(ts_normal,3,1)
-#         rm = amt_td.create_recurrence_matrix(1)
-#         lp_series = rm.laplacian_eigenmaps(5,3)
-#         lp_series.confidence_smooth_plot(transition_interval=transition_interval,ci_kwargs=ci_kwargs)
+    @pytest.mark.parametrize('transition_interval,ci_kwargs', ([(0, 1), None], [(1, -1), None], [None, {'upper': 75, 'lower': 15}]))
+    def test_confidence_smooth_plot_t1(self, transition_interval, ci_kwargs):
+        '''Test confidence_smooth_plot with different confidence interval options'''
+        ts_normal = gen_normal(nt=100)
+        amt_td = amt.TimeEmbeddedSeries(ts_normal, 3, 1)
+        rm = amt_td.create_recurrence_matrix(1)
+        lp_series = rm.laplacian_eigenmaps(5, 3)
+        lp_series.confidence_smooth_plot(block_size=3, transition_interval=transition_interval, ci_kwargs=ci_kwargs)
 
-#     @pytest.mark.parametrize('background_kwargs',(None,{'alpha':1}))
-#     def test_confidence_smooth_plot_t2(self,background_kwargs):
-#         '''Testing with background plot'''
-#         #Parameter choices are completely arbitrary, just want to test if the plotting function works
-#         ts_normal = gen_normal(nt=100)
-#         amt_td = amt.TimeEmbeddedSeries(ts_normal,3,1)
-#         rm = amt_td.create_recurrence_matrix(1)
-#         lp_series = rm.laplacian_eigenmaps(5,3)
-#         lp_series.confidence_smooth_plot(background_series=ts_normal,background_kwargs=background_kwargs)
+
+class TestCoreRQAResLermTransitions:
+    '''Tests for lerm_transitions function'''
+
+    def test_lerm_transitions_t0(self):
+        '''Test lerm_transitions returns a DeterministicTransitions object'''
+        from ammonyte.core.transitions import DeterministicTransitions
+        ts_normal = gen_normal(nt=100)
+        amt_td = amt.TimeEmbeddedSeries(ts_normal, 3, 1)
+        rm = amt_td.create_recurrence_matrix(1)
+        lp_series = rm.laplacian_eigenmaps(5, 3)
+        smoothed = lp_series.smooth(block_size=3)
+
+        result = smoothed.lerm_transitions(upper=95, lower=5, w=30, n_samples=500)
+
+        assert isinstance(result, DeterministicTransitions)
 
 class TestCoreRQAResConfidenceFillPlot:
     '''Tests for confidence fill plot function'''

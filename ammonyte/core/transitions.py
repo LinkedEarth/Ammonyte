@@ -291,13 +291,13 @@ class DeterministicTransitions:
         
         # Set labels
         if ylabel is None:
-            ylabel = getattr(self.series, 'value_name', 'Value')
+            ylabel = getattr(self.series, 'value_name', None) or 'Value'
             value_unit = getattr(self.series, 'value_unit', None)
             if value_unit:
                 ylabel += f' [{value_unit}]'
-                
+
         if xlabel is None:
-            xlabel = getattr(self.series, 'time_name', 'Time')
+            xlabel = getattr(self.series, 'time_name', None) or 'Time'
             time_unit = getattr(self.series, 'time_unit', None)
             if time_unit:
                 xlabel += f' [{time_unit}]'
