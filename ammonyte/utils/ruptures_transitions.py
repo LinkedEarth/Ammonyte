@@ -105,9 +105,9 @@ def ruptures_transition(series, algo='Pelt', cost='rbf', pen=None, n_bkps=None,
 
     .. jupyter-execute::
 
-        import ammonyte as amt
+        import os, ammonyte as amt
         from ammonyte.utils.ruptures_transitions import ruptures_transition
-        ngrip = amt.Series.from_csv('../data/NGRIP.csv')
+        ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
         transitions = ngrip.ruptures(algo='Pelt', cost='rbf', pen=5)
         print(f"Detected {len(transitions.jump_times)} transitions")
 
