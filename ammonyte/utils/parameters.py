@@ -15,7 +15,7 @@ __all__ = ['tau_search']
 
 def tau_search(series,num_lags=30,return_MI = False):
     '''Find optimal tau value for time delay embedding.
-    
+
     First minimum of mutual information between series and time lagged copies of itself
     is "optimal" in this case in accordance with Abarnabel's "Analysis of Observed Chaotic Data"
 
@@ -29,7 +29,7 @@ def tau_search(series,num_lags=30,return_MI = False):
         Number of time delays to consider. Default is 30
 
     return_MI : bool, {True,False}
-        Whether or not to return the list of mutual information values. 
+        Whether or not to return the list of mutual information values.
         Useful if the first minimum seems spurious and you'd like to inspect the results.
 
     Returns
@@ -42,11 +42,11 @@ def tau_search(series,num_lags=30,return_MI = False):
         List of mutual information values.
         Indices + 1 correspond to amount of lag (index 0 is lag 1, index 1 is lag 2, etc.).
         Only returned if return_MI is set to True.
-    
+
     Citations
     ---------
-    
-    I., Abarbanel Henry D. Analysis of Observed Chaotic Data. Springer, 1997. 
+
+    I., Abarbanel Henry D. Analysis of Observed Chaotic Data. Springer, 1997.
     '''
     lags = np.arange(1,num_lags)
     MI = []
@@ -54,7 +54,7 @@ def tau_search(series,num_lags=30,return_MI = False):
     for lag in lags:
         values = series.value[:-lag].reshape(-1, 1)
         lagged_values = series.value[lag:]
-        MI.append(mutual_info_regression(values, lagged_values))
+        MI.append(mutual_info_regression(values, lagged_values, random_state=42))
 
     #Make MI an array
     MI = np.array(MI)
