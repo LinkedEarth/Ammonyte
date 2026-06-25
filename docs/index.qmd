@@ -1,0 +1,21 @@
+---
+title: "Ammonyte"
+subtitle: "A Python package for multi-method detection of transitions in paleoclimate time series"
+sidebar: Ammonyte
+---
+
+A Python package for multi-method detection of transitions in paleoclimate time series
+
+## Quick install
+
+```bash
+pip install git+https://github.com/LinkedEarth/Ammonyte.git
+```
+
+## Where to go next
+
+| | |
+|---|---|
+| [Get Started](get-started/installation.qmd) | Install the package and run your first example |
+| [Tutorials](tutorials/index.qmd) | Worked examples |
+| [Reference](api/index.qmd) | Full API documentation for every class and function |

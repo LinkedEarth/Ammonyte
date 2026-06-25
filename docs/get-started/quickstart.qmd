@@ -1,0 +1,15 @@
+---
+title: Quick Start
+sidebar: get-started
+---
+
+Replace this page with a short end-to-end example showing the most common workflow for `ammonyte`.
+
+```python
+import ammonyte
+```
+
+## Next steps
+
+- [Tutorials](../tutorials/index.qmd) — worked examples
+- [Reference](../api/index.qmd) — full API documentation

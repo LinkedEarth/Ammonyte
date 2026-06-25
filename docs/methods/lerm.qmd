@@ -1,0 +1,30 @@
+---
+title: LERM
+---
+
+LERM (Laplacian Eigenmaps of Recurrence Matrices) [@James2024] is a nonlinear
+method that operates in the system's reconstructed phase space rather than on
+raw values. The pipeline is: time-delay embedding → recurrence matrix →
+Laplacian eigenmaps over sliding windows → Fisher Information signal →
+transition detection as confidence-interval crossings of that signal.
+
+## When to use
+
+**Best for:** Dynamical regime changes where the climate system shifts state
+without a large amplitude jump, transitions that are invisible to
+amplitude-based methods like the [Augmented KS Test](augmented_ks_test.qmd).
+
+**Limitation:** The pipeline is more complex and computationally heavier than
+the other two methods.
+
+## Reference
+
+James, A., Emile-Geay, J., Malik, N., & Khider, D. (2024). Detecting
+Paleoclimate Transitions With Laplacian Eigenmaps of Recurrence Matrices
+(LERM). *Paleoceanography and Paleoclimatology*.
+<https://doi.org/10.1029/2023PA004700>
+
+## Tutorial
+
+See the [LERM Validation](../notebooks/LERM_Validation.ipynb) notebook
+for a worked example.

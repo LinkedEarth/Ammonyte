@@ -1,11 +1,21 @@
-cff-version: 0.0.8
+cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 authors:
+  - family-names: "Niati"
+    given-names: "Maryam"
+    orcid: "https://orcid.org/0009-0001-1523-7989"
   - family-names: "James"
     given-names: "Alexander"
     orcid: "https://orcid.org/0000-0001-8561-3188"
-title: "Ammonyte: A Python package designed for conducting non-linear time series analysis of paleoclimate data."
-version: v0.0.8
-doi: 10.5281/zenodo.7843881
-date-released: 2023-04-18
-url: "https://github.com/alexkjames/Ammonyte"
+  - family-names: "Emile-Geay"
+    given-names: "Julien"
+    orcid: "https://orcid.org/0000-0001-5920-4751"
+  - family-names: "Khider"
+    given-names: "Deborah"
+    orcid: "https://orcid.org/0000-0001-7501-8430"
+title: "Ammonyte: A Python Package for Multi-Method Detection of Transitions in Paleoclimate Time Series"
+version: 1.0.0
+doi: 10.5281/zenodo.XXXXXXX
+date-released: 2026-06-16
+url: "https://github.com/LinkedEarth/Ammonyte"
+license: GPL-3.0-or-later

@@ -1,0 +1,29 @@
+# Function reference {.doc .doc-index}
+
+## Core
+
+Core classes for time series analysis and recurrence quantification.
+
+| | |
+| --- | --- |
+| [core.series.Series](core.series.Series.qmd#ammonyte.core.series.Series) | Ammonyte series object, launching point for most ammonyte analysis. |
+| [core.time_embedded_series.TimeEmbeddedSeries](core.time_embedded_series.TimeEmbeddedSeries.qmd#ammonyte.core.time_embedded_series.TimeEmbeddedSeries) | Time embedded time series object. Precursor to recurrence matrix and recurrence network. |
+| [core.recurrence_matrix.RecurrenceMatrix](core.recurrence_matrix.RecurrenceMatrix.qmd#ammonyte.core.recurrence_matrix.RecurrenceMatrix) | Recurrence matrix object. Used for Recurrence Quantification Analysis (RQA). |
+| [core.recurrence_network.RecurrenceNetwork](core.recurrence_network.RecurrenceNetwork.qmd#ammonyte.core.recurrence_network.RecurrenceNetwork) | Recurrence network object. Used for Recurrence Network Analysis (RNA). |
+| [core.rqa_res.RQARes](core.rqa_res.RQARes.qmd#ammonyte.core.rqa_res.RQARes) | Class for storing the result of various RQA techniques |
+| [core.transitions.DeterministicTransitions](core.transitions.DeterministicTransitions.qmd#ammonyte.core.transitions.DeterministicTransitions) | Container for deterministic transition detection results |
+
+## Utilities
+
+Functions for transition detection, parameter selection, metrics, and plotting.
+
+| | |
+| --- | --- |
+| [utils.ks.KS_test](utils.ks.KS_test.qmd#ammonyte.utils.ks.KS_test) | Detect tipping points using Kolmogorov-Smirnov test |
+| [utils.lerm_transitions.lerm_transition](utils.lerm_transitions.lerm_transition.qmd#ammonyte.utils.lerm_transitions.lerm_transition) | Detect transitions using LERM Fisher Information threshold crossings |
+| [utils.ruptures_transitions.ruptures_transition](utils.ruptures_transitions.ruptures_transition.qmd#ammonyte.utils.ruptures_transitions.ruptures_transition) | Detect transitions using ruptures change point detection |
+| [utils.parameters.tau_search](utils.parameters.tau_search.qmd#ammonyte.utils.parameters.tau_search) | Find optimal tau value for time delay embedding. |
+| [utils.metrics.DetectionMetrics](utils.metrics.DetectionMetrics.qmd#ammonyte.utils.metrics.DetectionMetrics) | Container for transition detection evaluation metrics |
+| [utils.metrics.evaluate_detection](utils.metrics.evaluate_detection.qmd#ammonyte.utils.metrics.evaluate_detection) | Complete evaluation of transition detection performance |
+| [utils.plotting.bootstrap_fill_plot](utils.plotting.bootstrap_fill_plot.qmd#ammonyte.utils.plotting.bootstrap_fill_plot) | Plot RQA results with bootstrap confidence bounds as a filled region |
+| [utils.plotting.bootstrap_scatter_plot](utils.plotting.bootstrap_scatter_plot.qmd#ammonyte.utils.plotting.bootstrap_scatter_plot) | Plot RQA results highlighting points outside bootstrap confidence bounds as a scatter |

@@ -1,0 +1,43 @@
+---
+title: Contributing
+sidebar: get-started
+---
+
+Thank you for your interest in contributing to Ammonyte! Contributions of all kinds are welcome — bug reports, feature requests, documentation improvements, and code contributions.
+
+## Reporting a bug
+
+If you find a bug, please open an issue on [GitHub Issues](https://github.com/LinkedEarth/Ammonyte/issues) and include:
+
+- A short description of the problem
+- A minimal code example that reproduces it
+- The output or error message you see
+
+## Suggesting a feature
+
+Open an issue with the label `enhancement` and describe what you'd like to see and why it would be useful.
+
+## Contributing code
+
+1. Fork the repository and clone it locally
+2. Create a new branch for your change:
+   ```bash
+   git checkout -b my-feature
+   ```
+3. Set up the development environment:
+   ```bash
+   conda env create -f .binder/environment.yml
+   conda activate ammonyte_env
+   pip install -e .
+   ```
+4. Make your changes and add tests if applicable
+5. Run the test suite to make sure everything passes:
+   ```bash
+   pip install pytest
+   pytest ammonyte/tests/
+   ```
+6. Submit a pull request against the `main` branch
+
+## Code style
+
+Please follow existing code conventions in the repository. Docstrings should use NumPy style.

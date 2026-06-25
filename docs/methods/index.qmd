@@ -1,0 +1,9 @@
+---
+title: Methods
+---
+
+Ammonyte provides three methodologically distinct approaches for detecting abrupt transitions in paleoclimate time series:
+
+- **[Augmented KS Test](augmented_ks_test.qmd)** — statistical distribution-based detection using the augmented Kolmogorov–Smirnov test
+- **[Ruptures](ruptures.qmd)** — optimization-based changepoint detection via cost function minimization
+- **[LERM](lerm.qmd)** — nonlinear dynamical analysis using Laplacian Eigenmaps of Recurrence Matrices

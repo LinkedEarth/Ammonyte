@@ -1,0 +1,8 @@
+---
+title: About Ammonyte
+sidebar: get-started
+---
+
+A Python package for multi-method detection of transitions in paleoclimate time series
+
+Replace this page with an overview of your package's motivation and scope.

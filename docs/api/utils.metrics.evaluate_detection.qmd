@@ -1,0 +1,61 @@
+# utils.metrics.evaluate_detection { #ammonyte.utils.metrics.evaluate_detection }
+
+```python
+utils.metrics.evaluate_detection(detected, ground_truth, tolerance=0.5)
+```
+
+Complete evaluation of transition detection performance
+
+Calculates precision, recall, F1 score, and detailed counts (true positives,
+false positives, false negatives) in a single pass to ensure consistency.
+Uses one-to-one closest matching where each ground truth point matches only
+one detected point.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+<code>[**detected**]{.parameter-name} [:]{.parameter-annotation-sep} [[array](`array`) - [like](`like`)]{.parameter-annotation}</code>
+
+:   Detected transition points (indices or time values)
+
+<code>[**ground_truth**]{.parameter-name} [:]{.parameter-annotation-sep} [[array](`array`) - [like](`like`)]{.parameter-annotation}</code>
+
+:   Ground truth transition points (indices or time values)
+
+<code>[**tolerance**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [0.5]{.parameter-default}</code>
+
+:   Maximum distance for a detected transition to be considered a true positive. Default is 0.5
+
+## Returns {.doc-section .doc-section-returns}
+
+<code>[]{.parameter-name} [:]{.parameter-annotation-sep} [[DetectionMetrics](`ammonyte.utils.metrics.DetectionMetrics`)]{.parameter-annotation}</code>
+
+:   Object containing:  - precision : float - Precision score (0 to 1) - recall : float - Recall score (0 to 1) - f1_score : float - F1 score (0 to 1) - true_positives : int - Number of correct detections - false_positives : int - Number of incorrect detections - false_negatives : int - Number of missed ground truth events - n_detected : int - Total number of detections - n_ground_truth : int - Total number of ground truth events - tolerance : float - Tolerance used for matching
+
+## Examples {.doc-section .doc-section-examples}
+
+Basic usage:
+
+.. jupyter-execute::
+
+    from ammonyte.utils.metrics import evaluate_detection
+
+    detected = [10, 25, 50, 75]
+    ground_truth = [10, 26, 60]
+
+    metrics = evaluate_detection(detected, ground_truth, tolerance=2)
+    print(metrics)
+
+Access individual metrics:
+
+.. jupyter-execute::
+
+    from ammonyte.utils.metrics import evaluate_detection
+
+    detected = [9.8, 23.5, 45.2]
+    ground_truth = [10, 25, 40, 60]
+
+    metrics = evaluate_detection(detected, ground_truth, tolerance=1.0)
+
+    print(f"Precision: {metrics.precision:.3f}")
+    print(f"Recall: {metrics.recall:.3f}")
+    print(f"F1 Score: {metrics.f1_score:.3f}")

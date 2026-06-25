@@ -1,0 +1,522 @@
+# core.rqa_res.RQARes { #ammonyte.core.rqa_res.RQARes }
+
+```python
+core.rqa_res.RQARes(
+    time,
+    value,
+    time_name=None,
+    time_unit=None,
+    value_name=None,
+    value_unit=None,
+    series=None,
+    label=None,
+    m=None,
+    tau=None,
+    eps=None,
+    eigenmap=None,
+    w_size=None,
+    w_incre=None,
+)
+```
+
+Class for storing the result of various RQA techniques
+
+## Methods
+
+| Name | Description |
+| --- | --- |
+| [confidence_fill_plot](#ammonyte.core.rqa_res.RQARes.confidence_fill_plot) | Function for plotting rqa results with confidence bounds |
+| [confidence_smooth_plot](#ammonyte.core.rqa_res.RQARes.confidence_smooth_plot) | Function for plotting rqa results with confidence bounds |
+| [lerm_transitions](#ammonyte.core.rqa_res.RQARes.lerm_transitions) | Detect transitions using LERM Fisher Information threshold crossings |
+| [plot_eigenmaps](#ammonyte.core.rqa_res.RQARes.plot_eigenmaps) | Plot Laplacian eigenmaps coloured by time group |
+| [plot_eigenmaps_FI](#ammonyte.core.rqa_res.RQARes.plot_eigenmaps_FI) | Plot Laplacian eigenmaps as a function of Fisher Information in 3D |
+| [smooth](#ammonyte.core.rqa_res.RQARes.smooth) | Function to perform block smoothing on your RQA result |
+
+### confidence_fill_plot { #ammonyte.core.rqa_res.RQARes.confidence_fill_plot }
+
+```python
+core.rqa_res.RQARes.confidence_fill_plot(
+    ax=None,
+    line_color=None,
+    fill_color=None,
+    fill_alpha=None,
+    transition_interval=None,
+    xlabel=None,
+    ylabel=None,
+    marker=None,
+    markersize=None,
+    linestyle=None,
+    linewidth=None,
+    alpha=None,
+    label=None,
+    title=None,
+    zorder=None,
+    plot_kwargs=None,
+    ci_kwargs=None,
+    background_series=None,
+    background_kwargs=None,
+    legend=True,
+    lgd_kwargs=None,
+)
+```
+
+Function for plotting rqa results with confidence bounds
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+<code>[**ax**]{.parameter-name} [:]{.parameter-annotation-sep} [matplotlib.axes object]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Axes to plot on, if None new plot will be generated
+
+<code>[**line_color**]{.parameter-name} [:]{.parameter-annotation-sep} [([str](`str`), [tuple](`tuple`))]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   String or rgb tuple to use for line color
+
+<code>[**fill_color**]{.parameter-name} [:]{.parameter-annotation-sep} [([str](`str`), [tuple](`tuple`))]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   String or rgb tuple to use for fill color in between lines
+
+<code>[**fill_alpha**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Transparency of the fill, default is .1
+
+<code>[**transition_interval**]{.parameter-name} [:]{.parameter-annotation-sep} [([list](`list`), [tuple](`tuple`))]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Upper and lower bound for the transition interval
+
+<code>[**marker**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   e.g., 'o' for dots See `matplotlib.markers <https://matplotlib.org/stable/api/markers_api.html>`_ for details
+
+<code>[**markersize**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   the size of the marker
+
+<code>[**linestyle**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   e.g., '--' for dashed line See `matplotlib.linestyles <https://matplotlib.org/stable/gallery/lines_bars_and_markers/linestyles.html>`_ for details
+
+<code>[**linewidth**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   the width of the line
+
+<code>[**alpha**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Transparency of the line
+
+<code>[**label**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   the label for the line
+
+<code>[**xlabel**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   the label for the x-axis
+
+<code>[**ylabel**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   the label for the y-axis
+
+<code>[**title**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   the title for the figure
+
+<code>[**zorder**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   The default drawing order for all lines on the plot
+
+<code>[**plot_kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Key word arguments for the main plot, see `pyleoclim.Series.plot <https://pyleoclim-util.readthedocs.io/en/latest/core/api.html#series-pyleoclim-series>_ for details
+
+<code>[**ci_kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Key word arguments for calculating the confidence interval. Only to be used if `transition_interval` is not passed. See ammonyte.utils.sampling.confidence_interval for details
+
+<code>[**background_series**]{.parameter-name} [:]{.parameter-annotation-sep} [[pyleoclim](`pyleoclim`).[Series](`pyleoclim.Series`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Optional to pass a different series that will be plotted behind the main series plot
+
+<code>[**background_kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Key word arguments for the background plot. If none are passed, the color of the main plot will be re-used  and alpha will be set to .2
+
+<code>[**legend**]{.parameter-name} [:]{.parameter-annotation-sep} [bool; {True,False}]{.parameter-annotation} [ = ]{.parameter-default-sep} [True]{.parameter-default}</code>
+
+:   Whether or not to plot the legend
+
+<code>[**lgd_kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   
+
+#### Returns {.doc-section .doc-section-returns}
+
+<code>[**fig**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[figure](`matplotlib.figure`)]{.parameter-annotation}</code>
+
+:   The figure object from matplotlib. See `matplotlib.pyplot.figure <https://matplotlib.org/stable/api/figure_api.html>`_ for details.
+
+<code>[**ax**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[axis](`matplotlib.axis`)]{.parameter-annotation}</code>
+
+:   The axis object from matplotlib.  See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html>`_ for details.
+
+#### See Also {.doc-section .doc-section-see-also}
+
+
+ammonyte.utils.sampling.confidence_interval
+
+### confidence_smooth_plot { #ammonyte.core.rqa_res.RQARes.confidence_smooth_plot }
+
+```python
+core.rqa_res.RQARes.confidence_smooth_plot(
+    block_size,
+    figsize=(12, 8),
+    ax=None,
+    transition_interval=None,
+    color=None,
+    label=None,
+    xlabel=None,
+    ylabel=None,
+    title=None,
+    ci_kwargs=None,
+    background_series=None,
+    background_kwargs=None,
+    hline_kwargs=None,
+    ci_plot_kwargs=None,
+    legend=True,
+    lgd_kwargs=None,
+)
+```
+
+Function for plotting rqa results with confidence bounds
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+<code>[**block_size**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation}</code>
+
+:   Size of smoothing block to use.
+
+<code>[**figsize**]{.parameter-name} [:]{.parameter-annotation-sep} [[tuple](`tuple`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [(12, 8)]{.parameter-default}</code>
+
+:   Size of the figure. Default is (12, 8).
+
+<code>[**ax**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[axes](`matplotlib.axes`).[Axes](`matplotlib.axes.Axes`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Axes to plot on. If None, a new figure will be generated.
+
+<code>[**transition_interval**]{.parameter-name} [:]{.parameter-annotation-sep} [([list](`list`), [tuple](`tuple`))]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Upper and lower bound for the transition interval
+
+<code>[**color**]{.parameter-name} [:]{.parameter-annotation-sep} [([str](`str`), [tuple](`tuple`))]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   String or rgb tuple to use for marker color
+
+<code>[**label**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   the label for the Fisher Information
+
+<code>[**xlabel**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   the label for the x-axis
+
+<code>[**ylabel**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   the label for the y-axis
+
+<code>[**title**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   the title for the figure
+
+<code>[**background_series**]{.parameter-name} [:]{.parameter-annotation-sep} [[pyleoclim](`pyleoclim`).[Series](`pyleoclim.Series`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Optional to pass a different series that will be plotted behind the main series plot
+
+<code>[**background_kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Key word arguments for the background plot. If none are passed, the color of the main plot will be re-used  and alpha will be set to .2
+
+<code>[**hline_kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Key word arguments for the Fisher Information statistic plot. Passed to matplotlib.axes.Axes.hlines.
+
+<code>[**ci_plot_kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Key word arguments for the confidence interval plot. Passed to matplotlib.axes.Axes.fill_between.
+
+<code>[**legend**]{.parameter-name} [:]{.parameter-annotation-sep} [bool; {True,False}]{.parameter-annotation} [ = ]{.parameter-default-sep} [True]{.parameter-default}</code>
+
+:   Whether or not to plot the legend
+
+<code>[**lgd_kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Key word arguments for the legend. Passed to matplotlib.axes.Axes.legend.
+
+#### Returns {.doc-section .doc-section-returns}
+
+<code>[**fig**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[figure](`matplotlib.figure`)]{.parameter-annotation}</code>
+
+:   The figure object from matplotlib. See `matplotlib.pyplot.figure <https://matplotlib.org/stable/api/figure_api.html>`_ for details.
+
+<code>[**ax**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[axis](`matplotlib.axis`)]{.parameter-annotation}</code>
+
+:   The axis object from matplotlib.  See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html>`_ for details.
+
+#### See Also {.doc-section .doc-section-see-also}
+
+
+ammonyte.utils.sampling.confidence_interval
+
+matplotlib.axes.Axes.hlines
+
+matplotlib.axes.Axes.fill_between
+
+### lerm_transitions { #ammonyte.core.rqa_res.RQARes.lerm_transitions }
+
+```python
+core.rqa_res.RQARes.lerm_transitions(
+    transition_interval=None,
+    upper=95,
+    lower=5,
+    w=50,
+    n_samples=10000,
+)
+```
+
+Detect transitions using LERM Fisher Information threshold crossings
+
+This method should be applied to a Fisher Information series (RQARes object)
+obtained from LERM analysis, typically after smoothing.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+<code>[**transition_interval**]{.parameter-name} [:]{.parameter-annotation-sep} [[tuple](`tuple`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   (upper_bound, lower_bound) for detecting transitions. If None, automatically computes via bootstrapping.
+
+<code>[**upper**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [95]{.parameter-default}</code>
+
+:   Upper percentile for confidence interval. Default is 95 Only used if transition_interval is None.
+
+<code>[**lower**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [5]{.parameter-default}</code>
+
+:   Lower percentile for confidence interval. Default is 5 Only used if transition_interval is None.
+
+<code>[**w**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [50]{.parameter-default}</code>
+
+:   Bootstrap sample size. Default is 50
+
+<code>[**n_samples**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [10000]{.parameter-default}</code>
+
+:   Number of bootstrap samples. Default is 10000
+
+#### Returns {.doc-section .doc-section-returns}
+
+<code>[]{.parameter-name} [:]{.parameter-annotation-sep} [[DeterministicTransitions](`ammonyte.core.transitions.DeterministicTransitions`)]{.parameter-annotation}</code>
+
+:   Object containing detected transitions with plotting methods
+
+#### Examples {.doc-section .doc-section-examples}
+
+Complete LERM workflow:
+
+.. jupyter-execute::
+
+    import os, ammonyte as amt
+
+    # Load data
+    ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
+
+    # LERM analysis
+    NGRIP_td = amt.TimeEmbeddedSeries(ngrip, m=11)
+    NGRIP_epsilon = NGRIP_td.find_epsilon(eps=1, target_density=0.05)
+    NGRIP_rm = NGRIP_epsilon['Output']
+    NGRIP_lp = NGRIP_rm.laplacian_eigenmaps(w_size=20, w_incre=4)
+    NGRIP_lp_smooth = amt.utils.fisher.smooth_series(NGRIP_lp, block_size=3)
+
+    # Detect transitions
+    transitions = NGRIP_lp_smooth.lerm_transitions()
+    print(transitions)
+    transitions.plot()
+
+Custom confidence bounds:
+
+.. jupyter-execute::
+
+    transitions = NGRIP_lp_smooth.lerm_transitions(
+        transition_interval=(0.025, 0.010)
+    )
+
+### plot_eigenmaps { #ammonyte.core.rqa_res.RQARes.plot_eigenmaps }
+
+```python
+core.rqa_res.RQARes.plot_eigenmaps(
+    groups,
+    axes,
+    figsize=(12, 12),
+    cmap='viridis',
+    cmap_kwargs=None,
+    ax=None,
+    title=None,
+)
+```
+
+Plot Laplacian eigenmaps coloured by time group
+
+Displays a 2D scatter plot of two eigenvector axes from the Laplacian eigenmaps,
+colour-coded by the time groups provided. Useful for visually identifying distinct
+dynamical regimes or state-space structures in the data.
+
+Only works when the RQARes has been created via RecurrenceMatrix.laplacian_eigenmaps.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+<code>[**groups**]{.parameter-name} [:]{.parameter-annotation-sep} [list of list or tuple; (start, stop)]{.parameter-annotation}</code>
+
+:   List of (start, stop) time pairs defining the groups for colour coding. Should be ordered in time.
+
+<code>[**axes**]{.parameter-name} [:]{.parameter-annotation-sep} [[list](`list`) or [tuple](`tuple`)]{.parameter-annotation}</code>
+
+:   Indices of the eigenvector axes to plot. Must be of length 2.
+
+<code>[**figsize**]{.parameter-name} [:]{.parameter-annotation-sep} [[list](`list`) or [tuple](`tuple`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [(12, 12)]{.parameter-default}</code>
+
+:   Size of the figure. Default is (12, 12).
+
+<code>[**cmap**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`) or [list](`list`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [\'viridis\']{.parameter-default}</code>
+
+:   Colour map for coding groups by time. Either the name of a matplotlib colour map or a list of colours. Default is 'viridis'.
+
+<code>[**cmap_kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Keyword arguments passed to ax.figure.colorbar.
+
+<code>[**ax**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[axes](`matplotlib.axes`).[Axes](`matplotlib.axes.Axes`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Axes object to plot on. If None, a new figure is created.
+
+<code>[**title**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Title for the plot. If None, auto-generated from the object label.
+
+#### Returns {.doc-section .doc-section-returns}
+
+<code>[**fig**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[figure](`matplotlib.figure`).[Figure](`matplotlib.figure.Figure`)]{.parameter-annotation}</code>
+
+:   The figure object from matplotlib. See `matplotlib.pyplot.figure <https://matplotlib.org/stable/api/figure_api.html>`_ for details.
+
+<code>[**ax**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[axes](`matplotlib.axes`).[Axes](`matplotlib.axes.Axes`)]{.parameter-annotation}</code>
+
+:   The axis object from matplotlib. See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html>`_ for details.
+
+#### See Also {.doc-section .doc-section-see-also}
+
+
+ammonyte.RecurrenceMatrix.laplacian_eigenmaps
+
+### plot_eigenmaps_FI { #ammonyte.core.rqa_res.RQARes.plot_eigenmaps_FI }
+
+```python
+core.rqa_res.RQARes.plot_eigenmaps_FI(
+    groups,
+    axes,
+    block_smooth=True,
+    cmap='viridis',
+    cmap_kwargs=None,
+    figsize=(18, 12),
+    ax=None,
+    FI_axis_lims=None,
+    scale=(1, 1, 1),
+    title=None,
+)
+```
+
+Plot Laplacian eigenmaps as a function of Fisher Information in 3D
+
+Displays a 3D scatter plot with Fisher Information on one axis and two eigenvector
+axes on the others, colour-coded by the time groups provided. Useful for inspecting
+how dynamical regimes relate to Fisher Information values.
+
+Only works when the RQARes has been created via RecurrenceMatrix.laplacian_eigenmaps.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+<code>[**groups**]{.parameter-name} [:]{.parameter-annotation-sep} [list of list or tuple; (start, stop)]{.parameter-annotation}</code>
+
+:   List of (start, stop) time pairs used for block smoothing and colour coding.
+
+<code>[**axes**]{.parameter-name} [:]{.parameter-annotation-sep} [[list](`list`) or [tuple](`tuple`)]{.parameter-annotation}</code>
+
+:   Indices of the eigenvector axes to plot against Fisher Information. Must be of length 2.
+
+<code>[**block_smooth**]{.parameter-name} [:]{.parameter-annotation-sep} [bool; {True,False}]{.parameter-annotation} [ = ]{.parameter-default-sep} [True]{.parameter-default}</code>
+
+:   Whether to calculate and display the block mean of Fisher Information. Default is True.
+
+<code>[**cmap**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`) or [list](`list`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [\'viridis\']{.parameter-default}</code>
+
+:   Colour map for coding groups by time. Either the name of a matplotlib colour map or a list of colours. Default is 'viridis'.
+
+<code>[**cmap_kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Keyword arguments passed to ax.figure.colorbar.
+
+<code>[**figsize**]{.parameter-name} [:]{.parameter-annotation-sep} [[list](`list`) or [tuple](`tuple`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [(18, 12)]{.parameter-default}</code>
+
+:   Size of the figure. Default is (18, 12).
+
+<code>[**ax**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[axes](`matplotlib.axes`).[Axes](`matplotlib.axes.Axes`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Axes object to plot on. Must use projection='3d' if passed. If None, a new 3D figure is created.
+
+<code>[**FI_axis_lims**]{.parameter-name} [:]{.parameter-annotation-sep} [[list](`list`) or [tuple](`tuple`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   (min, max) boundaries for the Fisher Information axis.
+
+<code>[**scale**]{.parameter-name} [:]{.parameter-annotation-sep} [[tuple](`tuple`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [(1, 1, 1)]{.parameter-default}</code>
+
+:   (x, y, z) scaling factors to stretch or compress the 3D axes independently. Default is (1, 1, 1).
+
+<code>[**title**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Title for the plot.
+
+#### Returns {.doc-section .doc-section-returns}
+
+<code>[**fig**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[figure](`matplotlib.figure`).[Figure](`matplotlib.figure.Figure`)]{.parameter-annotation}</code>
+
+:   The figure object from matplotlib. See `matplotlib.pyplot.figure <https://matplotlib.org/stable/api/figure_api.html>`_ for details.
+
+<code>[**ax**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[axes](`matplotlib.axes`).[Axes](`matplotlib.axes.Axes`)]{.parameter-annotation}</code>
+
+:   The axis object from matplotlib. See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html>`_ for details.
+
+#### See Also {.doc-section .doc-section-see-also}
+
+
+ammonyte.RecurrenceMatrix.laplacian_eigenmaps
+
+ammonyte.RQARes.plot_eigenmaps
+
+### smooth { #ammonyte.core.rqa_res.RQARes.smooth }
+
+```python
+core.rqa_res.RQARes.smooth(block_size)
+```
+
+Function to perform block smoothing on your RQA result
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+<code>[**block_size**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation}</code>
+
+:   Number of points to include in each block
+
+#### Returns {.doc-section .doc-section-returns}
+
+<code>[**smoothed_series**]{.parameter-name} [:]{.parameter-annotation-sep} [[ammonyte](`ammonyte`).[RQARes](`ammonyte.RQARes`)]{.parameter-annotation}</code>
+
+:   Smoothed version of your original RQARes object
+
+#### See Also {.doc-section .doc-section-see-also}
+
+
+ammonyte.utils.fisher.smooth_series

@@ -1,0 +1,39 @@
+# utils.parameters.tau_search { #ammonyte.utils.parameters.tau_search }
+
+```python
+utils.parameters.tau_search(series, num_lags=30, return_MI=False)
+```
+
+Find optimal tau value for time delay embedding.
+
+First minimum of mutual information between series and time lagged copies of itself
+is "optimal" in this case in accordance with Abarnabel's "Analysis of Observed Chaotic Data"
+
+## Parameters {.doc-section .doc-section-parameters}
+
+<code>[**series**]{.parameter-name} [:]{.parameter-annotation-sep} [[pyleo](`pyleoclim`).[Series](`pyleoclim.Series`)]{.parameter-annotation}</code>
+
+:   Series for which we'd like to find the optimal tau value
+
+<code>[**num_lags**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [30]{.parameter-default}</code>
+
+:   Number of time delays to consider. Default is 30
+
+<code>[**return_MI**]{.parameter-name} [:]{.parameter-annotation-sep} [([bool](`bool`), {True, False})]{.parameter-annotation} [ = ]{.parameter-default-sep} [False]{.parameter-default}</code>
+
+:   Whether or not to return the list of mutual information values. Useful if the first minimum seems spurious and you'd like to inspect the results.
+
+## Returns {.doc-section .doc-section-returns}
+
+<code>[**tau**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation}</code>
+
+:   Optimal time delay parameter according to first minimum of mutual information
+
+<code>[**MI**]{.parameter-name} [:]{.parameter-annotation-sep} [[list](`list`)]{.parameter-annotation}</code>
+
+:   List of mutual information values. Indices + 1 correspond to amount of lag (index 0 is lag 1, index 1 is lag 2, etc.). Only returned if return_MI is set to True.
+
+## Citations {.doc-section .doc-section-citations}
+
+
+I., Abarbanel Henry D. Analysis of Observed Chaotic Data. Springer, 1997.

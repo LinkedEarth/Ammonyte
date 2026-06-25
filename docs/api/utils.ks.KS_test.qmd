@@ -1,0 +1,77 @@
+# utils.ks.KS_test { #ammonyte.utils.ks.KS_test }
+
+```python
+utils.ks.KS_test(series, w_min, w_max, n_w, d_c, n_c, s_c, x_c=None)
+```
+
+Detect tipping points using Kolmogorov-Smirnov test
+
+Applies sliding window KS test to detect abrupt transitions using the method of Bagniewski et al. (2021).
+
+## Parameters {.doc-section .doc-section-parameters}
+
+<code>[**series**]{.parameter-name} [:]{.parameter-annotation-sep} [[ammonyte](`ammonyte`).[Series](`ammonyte.Series`)]{.parameter-annotation}</code>
+
+:   Series object containing time and value data
+
+<code>[**w_min**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation}</code>
+
+:   Size of smallest sliding window in time units
+
+<code>[**w_max**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation}</code>
+
+:   Size of largest sliding window in time units
+
+<code>[**n_w**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation}</code>
+
+:   Number of window sizes to test
+
+<code>[**d_c**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation}</code>
+
+:   Cut-off threshold for KS statistic
+
+<code>[**n_c**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation}</code>
+
+:   Minimum sample size per window
+
+<code>[**s_c**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation}</code>
+
+:   Standard deviation ratio threshold
+
+<code>[**x_c**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Change threshold. If None, auto-calculated
+
+## Returns {.doc-section .doc-section-returns}
+
+<code>[**jumps**]{.parameter-name} [:]{.parameter-annotation-sep} [[numpy](`numpy`).[ndarray](`numpy.ndarray`)]{.parameter-annotation}</code>
+
+:   Array of detected transitions with shape (n, 2) Each row: [time, direction] where direction is +1 (up) or -1 (down)
+
+<code>[**d_statistics**]{.parameter-name} [:]{.parameter-annotation-sep} [[numpy](`numpy`).[ndarray](`numpy.ndarray`)]{.parameter-annotation}</code>
+
+:   Array of KS D-statistics corresponding to each detected transition
+
+<code>[**p_values**]{.parameter-name} [:]{.parameter-annotation-sep} [[numpy](`numpy`).[ndarray](`numpy.ndarray`)]{.parameter-annotation}</code>
+
+:   Array of p-values corresponding to each detected transition
+
+## Examples {.doc-section .doc-section-examples}
+
+Basic usage (typically called via Series.kstest):
+
+.. jupyter-execute::
+
+    import os, ammonyte as amt
+    from ammonyte.utils.ks import KS_test
+    ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
+    transitions = KS_test(ngrip, w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2.0, x_c=0.8)
+    print(f"Detected {len(transitions[0])} transitions")
+
+## See Also {.doc-section .doc-section-see-also}
+
+Series.kstest : High-level interface to this function
+
+## References {.doc-section .doc-section-references}
+
+Bagniewski, W., et al. (2021). Automatic detection of abrupt transitions in paleoclimate records. Chaos, 31(11), 113129.

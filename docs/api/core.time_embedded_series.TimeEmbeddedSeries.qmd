@@ -1,0 +1,172 @@
+# core.time_embedded_series.TimeEmbeddedSeries { #ammonyte.core.time_embedded_series.TimeEmbeddedSeries }
+
+```python
+core.time_embedded_series.TimeEmbeddedSeries(
+    series,
+    m,
+    tau=None,
+    embedded_data=None,
+    embedded_time=None,
+    value_name=None,
+    value_unit=None,
+    time_name=None,
+    time_unit=None,
+    label=None,
+)
+```
+
+Time embedded time series object. Precursor to recurrence matrix and recurrence network.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+<code>[**series**]{.parameter-name} [:]{.parameter-annotation-sep} [[pyleoclim](`pyleoclim`).[Series](`pyleoclim.Series`) or [pandas](`pandas`).[Series](`pandas.Series`)]{.parameter-annotation}</code>
+
+:   Time series to be embedded.
+
+<code>[**m**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation}</code>
+
+:   Embedding dimension.
+
+<code>[**tau**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Embedding delay. If None, calculated automatically via the first minimum of mutual information.
+
+<code>[**embedded_data**]{.parameter-name} [:]{.parameter-annotation-sep} [[numpy](`numpy`).[ndarray](`numpy.ndarray`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Pre-computed time delay embedded data. If not passed, will be calculated from series, m, and tau.
+
+<code>[**embedded_time**]{.parameter-name} [:]{.parameter-annotation-sep} [[array](`array`) - [like](`like`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Time axis corresponding to embedded_data. Must be passed alongside embedded_data if providing pre-computed data.
+
+<code>[**value_name**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Name of the value variable.
+
+<code>[**value_unit**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Units of the value variable.
+
+<code>[**time_name**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Name of the time variable.
+
+<code>[**time_unit**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Units of the time variable.
+
+<code>[**label**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Label for the object.
+
+## Methods
+
+| Name | Description |
+| --- | --- |
+| [create_recurrence_matrix](#ammonyte.core.time_embedded_series.TimeEmbeddedSeries.create_recurrence_matrix) | Function to create Recurrence Matrix object |
+| [create_recurrence_network](#ammonyte.core.time_embedded_series.TimeEmbeddedSeries.create_recurrence_network) | Function to create Recurrence Network object |
+| [find_epsilon](#ammonyte.core.time_embedded_series.TimeEmbeddedSeries.find_epsilon) | Function to find epsilon value given target recurrence matrix density |
+
+### create_recurrence_matrix { #ammonyte.core.time_embedded_series.TimeEmbeddedSeries.create_recurrence_matrix }
+
+```python
+core.time_embedded_series.TimeEmbeddedSeries.create_recurrence_matrix(epsilon)
+```
+
+Function to create Recurrence Matrix object
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+<code>[**epsilon**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation}</code>
+
+:   Fixed radius used to calculate whether two points are recurrent
+
+#### Returns {.doc-section .doc-section-returns}
+
+<code>[**RecurrenceMatrix**]{.parameter-name} [:]{.parameter-annotation-sep} [ammonyte.RecurrenceMatrix object]{.parameter-annotation}</code>
+
+:   
+
+### create_recurrence_network { #ammonyte.core.time_embedded_series.TimeEmbeddedSeries.create_recurrence_network }
+
+```python
+core.time_embedded_series.TimeEmbeddedSeries.create_recurrence_network(epsilon)
+```
+
+Function to create Recurrence Network object
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+<code>[**epsilon**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation}</code>
+
+:   Fixed radius used to calculate whether two points are recurrent.
+
+#### Returns {.doc-section .doc-section-returns}
+
+<code>[**RecurrenceNetwork**]{.parameter-name} [:]{.parameter-annotation-sep} [ammonyte.RecurrenceNetwork object]{.parameter-annotation}</code>
+
+:   
+
+### find_epsilon { #ammonyte.core.time_embedded_series.TimeEmbeddedSeries.find_epsilon }
+
+```python
+core.time_embedded_series.TimeEmbeddedSeries.find_epsilon(
+    eps,
+    target_density=0.05,
+    tolerance=0.01,
+    initial_density=None,
+    parallelize=False,
+    num_processes=None,
+    amp=10,
+    verbose=True,
+)
+```
+
+Function to find epsilon value given target recurrence matrix density
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+<code>[**eps**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation}</code>
+
+:   Starting epsilon value (best guess).
+
+<code>[**target_density**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [0.05]{.parameter-default}</code>
+
+:   Desired recurrence matrix density.
+
+<code>[**tolerance**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [0.01]{.parameter-default}</code>
+
+:   Amount of allowable difference between target density and actual density.
+
+<code>[**initial_density**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   If you have already calculated the initial density for your settings you can pass it here to save computation time.
+
+<code>[**parallelize**]{.parameter-name} [:]{.parameter-annotation-sep} [bool; {True,False}]{.parameter-annotation} [ = ]{.parameter-default-sep} [False]{.parameter-default}</code>
+
+:   Whether or not to parallelize the search process. Currently only tested on macOS, could be issues running this on Windows.
+
+<code>[**num_processes**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Number of processes to run. Automatically set to cpu count minus 2 if not passed.
+
+<code>[**amp**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [10]{.parameter-default}</code>
+
+:   Amplitude of the epsilon search range. Higher values cover ground quickly but converge more slowly. Default is 10.
+
+<code>[**verbose**]{.parameter-name} [:]{.parameter-annotation-sep} [bool; {True,False}]{.parameter-annotation} [ = ]{.parameter-default-sep} [True]{.parameter-default}</code>
+
+:   Whether or not to print output after each iteration. Default is True.
+
+#### Returns {.doc-section .doc-section-returns}
+
+<code>[**results**]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation}</code>
+
+:   Dictionary with keys:  - ``'Epsilon'`` : float — the epsilon value that produces the desired   recurrence density within the specified tolerance. - ``'Output'`` : ammonyte.RecurrenceMatrix — the recurrence matrix computed   at the converged epsilon value.
+
+#### See Also {.doc-section .doc-section-see-also}
+
+
+ammonyte.utils.range_finder.range_finder
+
+ammonyte.RecurrenceMatrix

@@ -1,0 +1,70 @@
+# utils.plotting.bootstrap_fill_plot { #ammonyte.utils.plotting.bootstrap_fill_plot }
+
+```python
+utils.plotting.bootstrap_fill_plot(
+    series,
+    ax=None,
+    line_color=None,
+    fill_color=None,
+    transition_interval=None,
+    plot_kwargs=None,
+    ci_kwargs=None,
+    background_series=None,
+    background_kwargs=None,
+)
+```
+
+Plot RQA results with bootstrap confidence bounds as a filled region
+
+## Parameters {.doc-section .doc-section-parameters}
+
+<code>[**series**]{.parameter-name} [:]{.parameter-annotation-sep} [[pyleoclim](`pyleoclim`).[Series](`pyleoclim.Series`)]{.parameter-annotation}</code>
+
+:   Series object containing the timeseries to plot.
+
+<code>[**ax**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[axes](`matplotlib.axes`).[Axes](`matplotlib.axes.Axes`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Axes to plot on. If None, a new figure will be generated.
+
+<code>[**line_color**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`) or [tuple](`tuple`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   String or RGB tuple to use for the line colour.
+
+<code>[**fill_color**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`) or [tuple](`tuple`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   String or RGB tuple to use for the fill colour between confidence bounds.
+
+<code>[**transition_interval**]{.parameter-name} [:]{.parameter-annotation-sep} [[list](`list`) or [tuple](`tuple`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   (upper, lower) bounds for the transition interval. If None, computed automatically via bootstrapping using ci_kwargs.
+
+<code>[**plot_kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Keyword arguments for the main plot. See `pyleoclim.Series.plot <https://pyleoclim-util.readthedocs.io/en/latest/core/api.html#series-pyleoclim-series>`_ for details.
+
+<code>[**ci_kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Keyword arguments for calculating the confidence interval. Only used if transition_interval is not passed. See ammonyte.utils.sampling.confidence_interval for details.
+
+<code>[**background_series**]{.parameter-name} [:]{.parameter-annotation-sep} [[pyleoclim](`pyleoclim`).[Series](`pyleoclim.Series`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Optional series to plot behind the main series.
+
+<code>[**background_kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Keyword arguments for the background plot. If not passed, the colour of the main plot will be reused and alpha will be set to 0.2.
+
+## Returns {.doc-section .doc-section-returns}
+
+<code>[**fig**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[figure](`matplotlib.figure`).[Figure](`matplotlib.figure.Figure`)]{.parameter-annotation}</code>
+
+:   The figure object from matplotlib. See `matplotlib.pyplot.figure <https://matplotlib.org/stable/api/figure_api.html>`_ for details.
+
+<code>[**ax**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[axes](`matplotlib.axes`).[Axes](`matplotlib.axes.Axes`)]{.parameter-annotation}</code>
+
+:   The axis object from matplotlib. See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html>`_ for details.
+
+## See Also {.doc-section .doc-section-see-also}
+
+
+ammonyte.utils.sampling.confidence_interval

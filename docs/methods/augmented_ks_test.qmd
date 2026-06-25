@@ -1,0 +1,30 @@
+---
+title: Augmented KS Test
+---
+
+The augmented Kolmogorov–Smirnov (KS) test [@Bagniewski2021] detects abrupt
+transitions by sliding windows of varying sizes along the time series and
+comparing the statistical distributions on either side of each candidate point.
+A transition is flagged when the two distributions are significantly different,
+subject to additional criteria on minimum sample size, rate-of-change, and
+standard deviation ratio, reducing false positives from noise alone.
+
+## When to use
+
+**Best for:** Sharp, amplitude-based transitions where the distribution of
+values changes abruptly.
+
+**Limitation:** Detects only distributional shifts. If the climate system
+changes dynamical regime without a large amplitude change, this method will
+miss it. For dynamically-sensitive detection, see [LERM](lerm.qmd).
+
+## Reference
+
+Bagniewski, W., Ghil, M., & Rousseau, D.-D. (2021). Automatic detection of
+abrupt transitions in paleoclimate records. *Chaos*, 31, 113129.
+<https://doi.org/10.1063/5.0062543>
+
+## Tutorial
+
+See the [KS Test Validation](../notebooks/KS_test_Validation.ipynb) notebook
+for a worked example.

@@ -1,0 +1,8 @@
+---
+title: Tutorials
+sidebar: tutorials
+---
+
+The tutorials below are executable Jupyter notebooks. Each notebook can be run locally after [installing the package](../get-started/installation.qmd).
+
+{{< include _tutorials_table.qmd >}}

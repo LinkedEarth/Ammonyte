@@ -1,0 +1,20 @@
+# core.recurrence_network.RecurrenceNetwork { #ammonyte.core.recurrence_network.RecurrenceNetwork }
+
+```python
+core.recurrence_network.RecurrenceNetwork(
+    matrix,
+    time,
+    epsilon,
+    series=None,
+    value_name=None,
+    value_unit=None,
+    time_name=None,
+    time_unit=None,
+    label=None,
+)
+```
+
+Recurrence network object. Used for Recurrence Network Analysis (RNA).
+
+Child of ammonyte.RecurrenceMatrix, so it has all of the RecurrenceMatrix methods
+plus additional methods defined here

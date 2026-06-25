@@ -1,0 +1,62 @@
+---
+title: Installation
+sidebar: get-started
+---
+
+## Requirements
+
+Ammonyte requires Python ≥ 3.10.
+
+## Dependencies
+
+Ammonyte depends on the following Python packages, which are installed automatically with `pip install ammonyte`:
+
+- `pyleoclim >= 1.2.1`
+- `scipy >= 1.15.3`
+- `numpy >= 1.26.4`
+- `PyRQA >= 8.1.0`
+- `scikit-learn >= 1.7.0`
+- `ruptures >= 1.1.10`
+
+## Install from PyPI
+
+```bash
+pip install ammonyte
+```
+
+## Install from source
+
+```bash
+git clone https://github.com/LinkedEarth/Ammonyte.git
+cd Ammonyte
+pip install -e .
+```
+
+## Conda environment (recommended)
+
+A pre-configured environment file is provided in `.binder/environment.yml`:
+
+```bash
+conda env create -f .binder/environment.yml
+conda activate ammonyte_env
+```
+
+## Verify the installation
+
+```python
+import ammonyte
+```
+
+## Running the tests
+
+To run the test suite locally, install `pytest` first:
+
+```bash
+pip install pytest
+```
+
+Then from the root of the repository:
+
+```bash
+pytest ammonyte/tests/
+```
