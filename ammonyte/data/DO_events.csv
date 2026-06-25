@@ -1,0 +1,87 @@
+# Dansgaard-Oeschger (DO) Events from NGRIP Ice Core
+#
+# Reference: Rasmussen et al. (2014) - A stratigraphic framework for abrupt climatic
+# changes during the Last Glacial period based on three synchronized Greenland ice-core
+# records: refining and extending the INTIMATE event stratigraphy
+#
+# Main DO events: Major warming transitions only
+# All DO events: All events including minor subdivisions
+#
+# Note: Event timings are subject to chronological uncertainties from annual layer counting
+# and dating techniques, which increase with depth. Different statistical detection methods
+# may identify different change points or transition timings.
+#
+main_kyr_b2k,all_kyr_b2k
+13.099,13.099
+,13.311
+,13.6
+,13.66
+,13.954
+,14.075
+,14.692
+23.02,23.02
+,23.34
+27.78,27.78
+28.9,28.9
+30.84,30.84
+,32.5
+33.74,33.74
+34.88,34.88
+,35.02
+,35.48
+36.86,36.86
+,37.12
+,38.22
+40.16,40.16
+41.46,41.46
+43.34,43.34
+44.56,44.56
+,44.68
+,46.86
+49.06,49.06
+,49.12
+,49.28
+,49.6
+51.5,51.5
+,51.66
+,53.96
+,54.02
+,54.22
+55,55
+,55.8
+57.92,57.92
+,57.96
+,58.04
+,58.28
+58.78,58.78
+,58.84
+,59.08
+,59.44
+64.1,64.1
+69.62,69.62
+,72.34
+74.32,74.32
+,74.44
+,76.44
+78.08,78.08
+,78.74
+,79.24
+,79.7
+,84.76
+,85.06
+87.82,87.82
+,88
+,88.8
+,88.92
+,89.8
+,89.84
+,90.04
+104.04,104.04
+,104.52
+106.22,106.22
+,106.32
+,106.75
+,108.28
+110.94,110.94
+,111.44
+,115.37

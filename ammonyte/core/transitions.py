@@ -60,8 +60,8 @@ class DeterministicTransitions:
     
     .. jupyter-execute::
     
-        import ammonyte as amt
-        ngrip = amt.Series.from_csv('ammonyte/data/NGRIP.csv')
+        import os, ammonyte as amt
+        ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
         transitions = ngrip.kstest(w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2, x_c=0.8)
         print(transitions)
         
@@ -84,8 +84,9 @@ class DeterministicTransitions:
 
     '''
     
-    def __init__(self, series, jump_times, jump_values, method, method_args=None, label=None, 
+    def __init__(self, series, jump_times, jump_values, method, method_args=None, label=None,
                  statistics=None):
+        '''Initialize a DeterministicTransitions object with detection results and metadata.'''
         self.series = series
         self.jump_times = np.asarray(jump_times)
         self.jump_values = np.asarray(jump_values)
@@ -291,13 +292,13 @@ class DeterministicTransitions:
         
         # Set labels
         if ylabel is None:
-            ylabel = getattr(self.series, 'value_name', 'Value')
+            ylabel = getattr(self.series, 'value_name', None) or 'Value'
             value_unit = getattr(self.series, 'value_unit', None)
             if value_unit:
                 ylabel += f' [{value_unit}]'
-                
+
         if xlabel is None:
-            xlabel = getattr(self.series, 'time_name', 'Time')
+            xlabel = getattr(self.series, 'time_name', None) or 'Time'
             time_unit = getattr(self.series, 'time_unit', None)
             if time_unit:
                 xlabel += f' [{time_unit}]'

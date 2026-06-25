@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ammonyte.utils.ks &#8212; Ammonyte 0.0.8 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=27fed22d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <script src="../../../_static/documentation_options.js?v=53b53b71"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/thebelab-helper.js"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for ammonyte.utils.ks</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Kolmogorov-Smirnov Test for Tipping Point Detection</span>
+<span class="sd">===================================================</span>
+
+<span class="sd">This module provides the KS test method for detecting abrupt transitions </span>
+<span class="sd">(tipping points) in time series data, specialized for paleoclimate analysis.</span>
+
+<span class="sd">Functions</span>
+<span class="sd">---------</span>
+<span class="sd">KS_test : Detect tipping points using Kolmogorov-Smirnov test</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">ks_2samp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;KS_test&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="KS_test">
+<a class="viewcode-back" href="../../../api/ammonyte.utils.html#ammonyte.utils.ks.KS_test">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">KS_test</span><span class="p">(</span><span class="n">series</span><span class="p">,</span> <span class="n">w_min</span><span class="p">,</span> <span class="n">w_max</span><span class="p">,</span> <span class="n">n_w</span><span class="p">,</span> <span class="n">d_c</span><span class="p">,</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">s_c</span><span class="p">,</span> <span class="n">x_c</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Detect tipping points using Kolmogorov-Smirnov test</span>
+<span class="sd">    </span>
+<span class="sd">    Applies sliding window KS test to detect abrupt transitions using the method of Bagniewski et al. (2021).</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    series : ammonyte.Series</span>
+<span class="sd">        Series object containing time and value data</span>
+<span class="sd">        </span>
+<span class="sd">    w_min : float</span>
+<span class="sd">        Size of smallest sliding window in time units</span>
+<span class="sd">        </span>
+<span class="sd">    w_max : float</span>
+<span class="sd">        Size of largest sliding window in time units</span>
+<span class="sd">        </span>
+<span class="sd">    n_w : int</span>
+<span class="sd">        Number of window sizes to test</span>
+<span class="sd">        </span>
+<span class="sd">    d_c : float</span>
+<span class="sd">        Cut-off threshold for KS statistic</span>
+<span class="sd">        </span>
+<span class="sd">    n_c : int</span>
+<span class="sd">        Minimum sample size per window</span>
+<span class="sd">        </span>
+<span class="sd">    s_c : float</span>
+<span class="sd">        Standard deviation ratio threshold</span>
+<span class="sd">        </span>
+<span class="sd">    x_c : float</span>
+<span class="sd">        Change threshold. If None, auto-calculated</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    jumps : numpy.ndarray</span>
+<span class="sd">        Array of detected transitions with shape (n, 2)</span>
+<span class="sd">        Each row: [time, direction] where direction is +1 (up) or -1 (down)</span>
+<span class="sd">        </span>
+<span class="sd">    d_statistics : numpy.ndarray</span>
+<span class="sd">        Array of KS D-statistics corresponding to each detected transition</span>
+<span class="sd">        </span>
+<span class="sd">    p_values : numpy.ndarray</span>
+<span class="sd">        Array of p-values corresponding to each detected transition</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    </span>
+<span class="sd">    Basic usage (typically called via Series.kstest):</span>
+<span class="sd">    </span>
+<span class="sd">    .. jupyter-execute::</span>
+<span class="sd">    </span>
+<span class="sd">        import os, ammonyte as amt</span>
+<span class="sd">        from ammonyte.utils.ks import KS_test</span>
+<span class="sd">        ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), &#39;data&#39;, &#39;NGRIP.csv&#39;))</span>
+<span class="sd">        transitions = KS_test(ngrip, w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2.0, x_c=0.8)</span>
+<span class="sd">        print(f&quot;Detected {len(transitions[0])} transitions&quot;)</span>
+<span class="sd">    </span>
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    Series.kstest : High-level interface to this function</span>
+<span class="sd">    </span>
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Bagniewski, W., et al. (2021). Automatic detection of abrupt transitions in paleoclimate records. Chaos, 31(11), 113129.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="c1"># Input validation and preprocessing</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    
+    <span class="c1"># Default x_c calculation</span>
+    <span class="k">if</span> <span class="n">x_c</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">x_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">*</span> <span class="mf">0.05</span>
+    
+    <span class="c1"># Remove NaN values and validate data quality</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.8</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">time</span><span class="p">):</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Large fraction of NaN values removed: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">time</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">series</span><span class="o">.</span><span class="n">time</span><span class="p">)</span><span class="si">}</span><span class="s2"> points&quot;</span><span class="p">,</span> <span class="ne">UserWarning</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">])</span>  <span class="c1"># Insufficient data after NaN removal</span>
+    
+    <span class="c1"># For dates that are equal find the mean value of x </span>
+    <span class="c1"># Using stable unique to preserve order </span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">unique_stable</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">inv_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">return_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Sort by first occurrence order to preserve stability</span>
+        <span class="n">sort_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+        <span class="n">tt_stable</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">t</span><span class="p">)[</span><span class="n">sort_order</span><span class="p">]</span>
+        <span class="c1"># Remap inverse indices to match new ordering</span>
+        <span class="n">inv_idx_remapped</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">inv_idx</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">orig_pos</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sort_order</span><span class="p">):</span>
+            <span class="n">inv_idx_remapped</span><span class="p">[</span><span class="n">inv_idx</span> <span class="o">==</span> <span class="n">orig_pos</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="k">return</span> <span class="n">tt_stable</span><span class="p">,</span> <span class="n">inv_idx_remapped</span>
+    
+    <span class="n">tt</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">unique_stable</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">indices</span> <span class="o">==</span> <span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">))])</span>
+    
+    <span class="c1"># Make sure all values have the same sign</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">xx</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">xx</span><span class="p">)):</span>
+        <span class="n">xx</span> <span class="o">=</span> <span class="n">xx</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.1</span>
+    
+    <span class="c1"># Varying window size </span>
+    <span class="k">if</span> <span class="n">w_min</span> <span class="o">==</span> <span class="n">w_max</span> <span class="ow">or</span> <span class="n">n_w</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">kswindow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">w_min</span><span class="p">])</span>
+        <span class="n">n_w</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">kswindow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">w_min</span> <span class="o">*</span> <span class="p">(</span><span class="n">w_max</span> <span class="o">/</span> <span class="n">w_min</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="p">(</span><span class="n">n_w</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_w</span><span class="p">)])</span>
+    
+    <span class="c1"># Initialize storage arrays</span>
+    <span class="n">ksstat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">),</span> <span class="n">n_w</span><span class="p">))</span>
+    <span class="n">kspval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">),</span> <span class="n">n_w</span><span class="p">))</span>  <span class="c1"># Store p-values</span>
+    <span class="n">change_ks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">),</span> <span class="n">n_w</span><span class="p">))</span>
+    <span class="n">kslen1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">),</span> <span class="n">n_w</span><span class="p">))</span>
+    <span class="n">kslen2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">),</span> <span class="n">n_w</span><span class="p">))</span>
+    <span class="n">ksstd1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">),</span> <span class="n">n_w</span><span class="p">))</span>
+    <span class="n">ksstd2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">),</span> <span class="n">n_w</span><span class="p">))</span>
+    
+    <span class="c1"># Run the KS test </span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_w</span><span class="p">):</span>
+        <span class="n">cc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">))</span>
+        <span class="n">pp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">))</span>  <span class="c1"># Store p-values for this window</span>
+        <span class="n">changes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">))</span>
+        <span class="n">len1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">))</span>
+        <span class="n">len2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">))</span>
+        <span class="n">std1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">))</span>
+        <span class="n">std2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">))</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">)):</span>
+            <span class="c1"># locate dates for two sliding windows</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">tt</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">r1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">tt</span> <span class="o">&gt;</span> <span class="n">y</span> <span class="o">-</span> <span class="n">kswindow</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">tt</span> <span class="o">&lt;=</span> <span class="n">y</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">r2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">tt</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">tt</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">kswindow</span><span class="p">[</span><span class="n">j</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
+            
+            <span class="c1"># run KS test for the two windows</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">r2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> 
+                <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">tt</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">kswindow</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="ow">and</span> 
+                <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">tt</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">kswindow</span><span class="p">[</span><span class="n">j</span><span class="p">]):</span>
+                
+                <span class="c1"># Use raw D-statistic (not directional) and capture p-value</span>
+                <span class="n">d_stat</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">ks_2samp</span><span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="n">r1</span><span class="p">],</span> <span class="n">xx</span><span class="p">[</span><span class="n">r2</span><span class="p">],</span> <span class="n">alternative</span><span class="o">=</span><span class="s1">&#39;two-sided&#39;</span><span class="p">)</span>
+                <span class="n">cc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">d_stat</span>  <span class="c1"># Raw D-statistic</span>
+                <span class="n">pp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_value</span>  <span class="c1"># Store p-value </span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">pp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># No significant difference</span>
+            
+            <span class="c1"># calculate additional variables</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">r2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">changes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="n">r1</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="n">r2</span><span class="p">])</span>
+                <span class="n">len1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span>
+                <span class="n">len2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">r2</span><span class="p">)</span>
+                <span class="n">std1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="n">r1</span><span class="p">],</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span>
+                <span class="n">std2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="n">r2</span><span class="p">],</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">changes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">len1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">len2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">std1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">std2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="c1"># Store results with sign </span>
+        <span class="n">ksstat</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">changes</span><span class="p">)</span>  <span class="c1"># KS statistic (D_KS) + sign</span>
+        <span class="n">kspval</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">pp</span>  <span class="c1"># Store p-values</span>
+        <span class="n">change_ks</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">changes</span>
+        <span class="n">kslen1</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">len1</span>
+        <span class="n">kslen2</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">len2</span>
+        <span class="n">ksstd1</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">std1</span>
+        <span class="n">ksstd2</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">std2</span>
+    
+    <span class="c1"># Find the jumps </span>
+    
+    <span class="c1"># Scale D_KS by mean D_KS of smaller windows</span>
+    <span class="n">ksstat2</span> <span class="o">=</span> <span class="n">ksstat</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ksstat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ksstat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># from last to 3rd column</span>
+            <span class="n">ksstat2</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">([</span><span class="n">ksstat</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">ksstat</span><span class="p">[:,</span> <span class="p">:</span><span class="n">i</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">ksstat2</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">([</span><span class="n">ksstat</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">ksstat</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="c1"># Apply threshold parameters</span>
+    <span class="n">th_si</span> <span class="o">=</span> <span class="p">(</span><span class="n">kslen1</span> <span class="o">&gt;=</span> <span class="n">n_c</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">kslen2</span> <span class="o">&gt;=</span> <span class="n">n_c</span><span class="p">)</span>
+    <span class="n">th_st</span> <span class="o">=</span> <span class="p">(</span><span class="n">s_c</span> <span class="o">*</span> <span class="n">ksstd1</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">change_ks</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">s_c</span> <span class="o">*</span> <span class="n">ksstd2</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">change_ks</span><span class="p">))</span>
+    <span class="n">th_change</span> <span class="o">=</span> <span class="n">x_c</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">change_ks</span><span class="p">)</span>
+    
+    <span class="c1"># Normalization formula </span>
+    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+        <span class="n">denominator</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">kslen1</span> <span class="o">+</span> <span class="n">kslen2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">kslen1</span> <span class="o">*</span> <span class="n">kslen2</span><span class="p">))</span>
+    
+    <span class="c1"># Handle division by zero</span>
+    <span class="n">denominator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">kslen1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">kslen2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">denominator</span> <span class="o">==</span> <span class="mi">0</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
+    
+    <span class="n">ksstat2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ksstat2</span><span class="p">))</span> <span class="o">/</span> <span class="n">denominator</span>
+    <span class="n">ksstat2</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ksstat</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">ksstat2</span><span class="p">[</span><span class="n">ksstat2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">ksstat2</span> <span class="o">=</span> <span class="n">ksstat2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">change_ks</span><span class="p">)</span>
+    <span class="n">ksstat2</span><span class="p">[</span><span class="n">th_si</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">ksstat2</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="p">:]</span> <span class="o">=</span> <span class="mi">0</span> 
+    
+    <span class="c1"># Replace NaN with 0</span>
+    <span class="n">ksstat2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">ksstat2</span><span class="p">,</span> <span class="n">nan</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+    
+    <span class="n">th_ks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ksstat2</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">d_c</span>
+    <span class="n">ks_all</span> <span class="o">=</span> <span class="n">ksstat2</span> <span class="o">*</span> <span class="n">th_st</span> <span class="o">*</span> <span class="n">th_si</span> <span class="o">*</span> <span class="n">th_change</span> <span class="o">*</span> <span class="n">th_ks</span>
+    
+    <span class="c1"># Append mean of all windows</span>
+    <span class="n">ksstat_m</span> <span class="o">=</span> <span class="n">ksstat</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">ks_all</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">ksstat_m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">ksstat_m</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ksstat_m</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)])</span>
+        <span class="n">ksstat2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">ksstat2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ksstat2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)])</span>
+        <span class="n">ks_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">ks_all</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ks_all</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)])</span>
+        <span class="n">ks_all</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ks_all</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">d_c</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="c1"># Find D_KS peaks </span>
+    <span class="n">ks_peak</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ksstat2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">peaks</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ksstat2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">ksstat_m</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">ksstat_m</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]):</span>
+                <span class="n">segment</span> <span class="o">=</span> <span class="n">ks_all</span><span class="p">[</span><span class="n">k</span><span class="p">:</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">segment</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">segment</span><span class="p">)):</span>
+                    <span class="n">mmm</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                    <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">mmm</span><span class="p">))</span>
+                    <span class="n">iii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mmm</span> <span class="o">==</span> <span class="n">mmm</span><span class="p">[</span><span class="n">I</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">k</span>
+                    
+                    <span class="c1"># Choose peak with strongest overall KS signal</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">iii</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">summed_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ksstat2</span><span class="p">[</span><span class="n">iii</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+                        <span class="n">II</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">summed_vals</span><span class="p">)</span>
+                        <span class="n">peak_idx</span> <span class="o">=</span> <span class="n">iii</span><span class="p">[</span><span class="n">II</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">peak_idx</span> <span class="o">=</span> <span class="n">iii</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    
+                    <span class="n">peaks</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">peak_idx</span><span class="p">,</span> <span class="n">ks_all</span><span class="p">[</span><span class="n">peak_idx</span><span class="p">,</span> <span class="n">j</span><span class="p">]])</span>
+                <span class="n">k</span> <span class="o">=</span> <span class="n">i</span>
+        
+        <span class="n">ks_peak</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">peaks</span><span class="p">)</span> <span class="k">if</span> <span class="n">peaks</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+    
+    <span class="c1"># Check if no peaks found</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">ks_peak</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">])</span>
+    
+    <span class="c1"># Separate positive and negative peaks</span>
+    <span class="n">peak_up</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">peak_do</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ks_peak</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ks_peak</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Positive peaks</span>
+            <span class="n">pos_mask</span> <span class="o">=</span> <span class="n">ks_peak</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+            <span class="n">peak_up</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ks_peak</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">pos_mask</span><span class="p">]</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">pos_mask</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+            
+            <span class="c1"># Negative peaks</span>
+            <span class="n">neg_mask</span> <span class="o">=</span> <span class="n">ks_peak</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span>
+            <span class="n">peak_do</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ks_peak</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">neg_mask</span><span class="p">]</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">neg_mask</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">peak_up</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+            <span class="n">peak_do</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+    
+    <span class="c1"># Initialize jump arrays</span>
+    <span class="n">jump_u</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">jump_d</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># Start with largest window (last column)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">peak_up</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">peak_up</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">indices_u</span> <span class="o">=</span> <span class="n">peak_up</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">jump_u</span> <span class="o">=</span> <span class="p">[(</span><span class="n">tt</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+</span> <span class="n">tt</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">indices_u</span> <span class="k">if</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">)]</span>
+    
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">peak_do</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">peak_do</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">indices_d</span> <span class="o">=</span> <span class="n">peak_do</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">jump_d</span> <span class="o">=</span> <span class="p">[(</span><span class="n">tt</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+</span> <span class="n">tt</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">indices_d</span> <span class="k">if</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">)]</span>
+    
+    <span class="c1"># Process smaller windows</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ks_peak</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ks_peak</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># from second-to-last to first</span>
+            <span class="c1"># Process upward peaks</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">peak_up</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">indices_u</span> <span class="o">=</span> <span class="n">peak_up</span><span class="p">[</span><span class="n">j</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+                <span class="n">xxx_u</span> <span class="o">=</span> <span class="p">[(</span><span class="n">tt</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+</span> <span class="n">tt</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">indices_u</span> <span class="k">if</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">)]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">xxx_u</span> <span class="o">=</span> <span class="p">[]</span>
+            
+            <span class="c1"># Process downward peaks</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">peak_do</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">indices_d</span> <span class="o">=</span> <span class="n">peak_do</span><span class="p">[</span><span class="n">j</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+                <span class="n">xxx_d</span> <span class="o">=</span> <span class="p">[(</span><span class="n">tt</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+</span> <span class="n">tt</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">indices_d</span> <span class="k">if</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">tt</span><span class="p">)]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">xxx_d</span> <span class="o">=</span> <span class="p">[]</span>
+            
+            <span class="c1"># Remove peaks close to already detected jumps</span>
+            <span class="k">for</span> <span class="n">jump</span> <span class="ow">in</span> <span class="n">jump_u</span><span class="p">:</span>
+                <span class="n">xxx_u</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xxx_u</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">jump</span> <span class="o">-</span> <span class="n">kswindow</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">jump</span> <span class="o">+</span> <span class="n">kswindow</span><span class="p">[</span><span class="n">j</span><span class="p">])]</span>
+            
+            <span class="k">for</span> <span class="n">jump</span> <span class="ow">in</span> <span class="n">jump_d</span><span class="p">:</span>
+                <span class="n">xxx_d</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xxx_d</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">jump</span> <span class="o">-</span> <span class="n">kswindow</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">jump</span> <span class="o">+</span> <span class="n">kswindow</span><span class="p">[</span><span class="n">j</span><span class="p">])]</span>
+            
+            <span class="c1"># Append new jumps</span>
+            <span class="n">jump_u</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">xxx_u</span><span class="p">)</span>
+            <span class="n">jump_d</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">xxx_d</span><span class="p">)</span>
+    
+    <span class="c1"># Create final output with statistics</span>
+    <span class="n">jumps</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">jump_d_stats</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">jump_p_vals</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># For each detected jump, find the corresponding statistics</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">find_stats_for_jump</span><span class="p">(</span><span class="n">jump_time</span><span class="p">,</span> <span class="n">jump_direction</span><span class="p">):</span>
+        <span class="c1"># Find the closest time point in tt to the jump</span>
+        <span class="n">time_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tt</span> <span class="o">-</span> <span class="n">jump_time</span><span class="p">))</span>
+        
+        <span class="c1"># Get the statistics from the mean column (last column if multiple windows)</span>
+        <span class="k">if</span> <span class="n">ksstat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">d_stat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ksstat</span><span class="p">[</span><span class="n">time_idx</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># Use mean column, take absolute value</span>
+            <span class="n">p_val</span> <span class="o">=</span> <span class="n">kspval</span><span class="p">[</span><span class="n">time_idx</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Use mean column</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">d_stat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ksstat</span><span class="p">[</span><span class="n">time_idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>  <span class="c1"># Single window</span>
+            <span class="n">p_val</span> <span class="o">=</span> <span class="n">kspval</span><span class="p">[</span><span class="n">time_idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+            
+        <span class="k">return</span> <span class="n">d_stat</span><span class="p">,</span> <span class="n">p_val</span>
+    
+    <span class="k">if</span> <span class="n">jump_u</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">ju</span> <span class="ow">in</span> <span class="n">jump_u</span><span class="p">:</span>
+            <span class="n">d_stat</span><span class="p">,</span> <span class="n">p_val</span> <span class="o">=</span> <span class="n">find_stats_for_jump</span><span class="p">(</span><span class="n">ju</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">jumps</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">ju</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">jump_d_stats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d_stat</span><span class="p">)</span>
+            <span class="n">jump_p_vals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p_val</span><span class="p">)</span>
+            
+    <span class="k">if</span> <span class="n">jump_d</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">jd</span> <span class="ow">in</span> <span class="n">jump_d</span><span class="p">:</span>
+            <span class="n">d_stat</span><span class="p">,</span> <span class="n">p_val</span> <span class="o">=</span> <span class="n">find_stats_for_jump</span><span class="p">(</span><span class="n">jd</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">jumps</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">jd</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">jump_d_stats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d_stat</span><span class="p">)</span>
+            <span class="n">jump_p_vals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p_val</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">jumps</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">])</span>
+    
+    <span class="c1"># Sort by jump time and reorder statistics accordingly</span>
+    <span class="n">jumps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">jumps</span><span class="p">)</span>
+    <span class="n">jump_d_stats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">jump_d_stats</span><span class="p">)</span>
+    <span class="n">jump_p_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">jump_p_vals</span><span class="p">)</span>
+    
+    <span class="n">sort_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">jumps</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">jumps</span> <span class="o">=</span> <span class="n">jumps</span><span class="p">[</span><span class="n">sort_indices</span><span class="p">]</span>
+    <span class="n">jump_d_stats</span> <span class="o">=</span> <span class="n">jump_d_stats</span><span class="p">[</span><span class="n">sort_indices</span><span class="p">]</span>
+    <span class="n">jump_p_vals</span> <span class="o">=</span> <span class="n">jump_p_vals</span><span class="p">[</span><span class="n">sort_indices</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="n">jumps</span><span class="p">,</span> <span class="n">jump_d_stats</span><span class="p">,</span> <span class="n">jump_p_vals</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Ammonyte</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../methods/ks_test.html">Augmented Kolmogorov-Smirnov Test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../methods/lerm.html">Laplacian Eigenmaps of Recurrence Matrices (LERM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../methods/ruptures.html">Ruptures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">ammonyte</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Alexander James, Maryam Niati, Julien Emile-Geay, Deborah Khider.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

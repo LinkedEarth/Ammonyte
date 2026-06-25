@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ammonyte.utils.metrics &#8212; Ammonyte 0.0.8 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=27fed22d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <script src="../../../_static/documentation_options.js?v=53b53b71"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/thebelab-helper.js"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for ammonyte.utils.metrics</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Evaluation Metrics for Transition Detection</span>
+<span class="sd">============================================</span>
+
+<span class="sd">This module provides metrics for evaluating the performance of transition</span>
+<span class="sd">detection methods against ground truth data.</span>
+
+<span class="sd">Classes</span>
+<span class="sd">-------</span>
+<span class="sd">DetectionMetrics : Container for evaluation metrics results</span>
+
+<span class="sd">Functions</span>
+<span class="sd">---------</span>
+<span class="sd">evaluate_detection : Complete evaluation with precision, recall, F1 score, and counts</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tabulate</span><span class="w"> </span><span class="kn">import</span> <span class="n">tabulate</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DetectionMetrics&#39;</span><span class="p">,</span> <span class="s1">&#39;evaluate_detection&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="DetectionMetrics">
+<a class="viewcode-back" href="../../../api/ammonyte.utils.html#ammonyte.utils.metrics.DetectionMetrics">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DetectionMetrics</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Container for transition detection evaluation metrics</span>
+
+<span class="sd">    Stores precision, recall, F1 score, and detailed counts from comparing</span>
+<span class="sd">    detected transitions against ground truth.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    precision : float</span>
+<span class="sd">        Precision score (TP / (TP + FP))</span>
+<span class="sd">    recall : float</span>
+<span class="sd">        Recall score (TP / (TP + FN))</span>
+<span class="sd">    f1_score : float</span>
+<span class="sd">        F1 score (harmonic mean of precision and recall)</span>
+<span class="sd">    true_positives : int</span>
+<span class="sd">        Number of correct detections</span>
+<span class="sd">    false_positives : int</span>
+<span class="sd">        Number of incorrect detections</span>
+<span class="sd">    false_negatives : int</span>
+<span class="sd">        Number of missed ground truth events</span>
+<span class="sd">    n_detected : int</span>
+<span class="sd">        Total number of detections</span>
+<span class="sd">    n_ground_truth : int</span>
+<span class="sd">        Total number of ground truth events</span>
+<span class="sd">    tolerance : float</span>
+<span class="sd">        Maximum distance for matching detected to ground truth</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">precision</span><span class="p">,</span> <span class="n">recall</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">true_positives</span><span class="p">,</span> <span class="n">false_positives</span><span class="p">,</span>
+                 <span class="n">false_negatives</span><span class="p">,</span> <span class="n">n_detected</span><span class="p">,</span> <span class="n">n_ground_truth</span><span class="p">,</span> <span class="n">tolerance</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">precision</span> <span class="o">=</span> <span class="n">precision</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recall</span> <span class="o">=</span> <span class="n">recall</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">f1_score</span> <span class="o">=</span> <span class="n">f1_score</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">true_positives</span> <span class="o">=</span> <span class="n">true_positives</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">false_positives</span> <span class="o">=</span> <span class="n">false_positives</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">false_negatives</span> <span class="o">=</span> <span class="n">false_negatives</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_detected</span> <span class="o">=</span> <span class="n">n_detected</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_ground_truth</span> <span class="o">=</span> <span class="n">n_ground_truth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tolerance</span> <span class="o">=</span> <span class="n">tolerance</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Print summary of detection evaluation metrics.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            Formatted string representation of the results.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="s2">&quot;Detection Evaluation Metrics&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Metrics calculated within tolerance = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">tolerance</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Performance metrics table</span>
+        <span class="n">perf_table</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Metric&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Precision&#39;</span><span class="p">,</span> <span class="s1">&#39;Recall&#39;</span><span class="p">,</span> <span class="s1">&#39;F1 Score&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">recall</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">f1_score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Performance Scores:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">perf_table</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="s1">&#39;keys&#39;</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;grid&#39;</span><span class="p">))</span>
+
+        <span class="c1"># Counts table</span>
+        <span class="n">counts_table</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Category&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;True Positives&#39;</span><span class="p">,</span> <span class="s1">&#39;False Positives&#39;</span><span class="p">,</span> <span class="s1">&#39;False Negatives&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;Count&#39;</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">true_positives</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">false_positives</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">false_negatives</span><span class="p">]</span>
+        <span class="p">}</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Detection Counts:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">counts_table</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="s1">&#39;keys&#39;</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;grid&#39;</span><span class="p">))</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Summary:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Detected: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_detected</span><span class="si">}</span><span class="s2"> | Ground Truth: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_ground_truth</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+
+<div class="viewcode-block" id="DetectionMetrics.to_dict">
+<a class="viewcode-back" href="../../../api/ammonyte.utils.html#ammonyte.utils.metrics.DetectionMetrics.to_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Convert metrics to dictionary.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Dictionary containing all metrics.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;precision&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">precision</span><span class="p">,</span>
+            <span class="s1">&#39;recall&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">recall</span><span class="p">,</span>
+            <span class="s1">&#39;f1_score&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">f1_score</span><span class="p">,</span>
+            <span class="s1">&#39;true_positives&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">true_positives</span><span class="p">,</span>
+            <span class="s1">&#39;false_positives&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">false_positives</span><span class="p">,</span>
+            <span class="s1">&#39;false_negatives&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">false_negatives</span><span class="p">,</span>
+            <span class="s1">&#39;n_detected&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_detected</span><span class="p">,</span>
+            <span class="s1">&#39;n_ground_truth&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_ground_truth</span><span class="p">,</span>
+            <span class="s1">&#39;tolerance&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">tolerance</span>
+        <span class="p">}</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="evaluate_detection">
+<a class="viewcode-back" href="../../../api/ammonyte.utils.html#ammonyte.utils.metrics.evaluate_detection">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">evaluate_detection</span><span class="p">(</span><span class="n">detected</span><span class="p">,</span> <span class="n">ground_truth</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Complete evaluation of transition detection performance</span>
+
+<span class="sd">    Calculates precision, recall, F1 score, and detailed counts (true positives,</span>
+<span class="sd">    false positives, false negatives) in a single pass to ensure consistency.</span>
+<span class="sd">    Uses one-to-one closest matching where each ground truth point matches only</span>
+<span class="sd">    one detected point.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    detected : array-like</span>
+<span class="sd">        Detected transition points (indices or time values)</span>
+
+<span class="sd">    ground_truth : array-like</span>
+<span class="sd">        Ground truth transition points (indices or time values)</span>
+
+<span class="sd">    tolerance : float, optional</span>
+<span class="sd">        Maximum distance for a detected transition to be considered a true positive.</span>
+<span class="sd">        Default is 0.5</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    DetectionMetrics</span>
+<span class="sd">        Object containing:</span>
+
+<span class="sd">        - precision : float - Precision score (0 to 1)</span>
+<span class="sd">        - recall : float - Recall score (0 to 1)</span>
+<span class="sd">        - f1_score : float - F1 score (0 to 1)</span>
+<span class="sd">        - true_positives : int - Number of correct detections</span>
+<span class="sd">        - false_positives : int - Number of incorrect detections</span>
+<span class="sd">        - false_negatives : int - Number of missed ground truth events</span>
+<span class="sd">        - n_detected : int - Total number of detections</span>
+<span class="sd">        - n_ground_truth : int - Total number of ground truth events</span>
+<span class="sd">        - tolerance : float - Tolerance used for matching</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    Basic usage:</span>
+
+<span class="sd">    .. jupyter-execute::</span>
+
+<span class="sd">        from ammonyte.utils.metrics import evaluate_detection</span>
+
+<span class="sd">        detected = [10, 25, 50, 75]</span>
+<span class="sd">        ground_truth = [10, 26, 60]</span>
+
+<span class="sd">        metrics = evaluate_detection(detected, ground_truth, tolerance=2)</span>
+<span class="sd">        print(metrics)</span>
+
+<span class="sd">    Access individual metrics:</span>
+
+<span class="sd">    .. jupyter-execute::</span>
+
+<span class="sd">        from ammonyte.utils.metrics import evaluate_detection</span>
+
+<span class="sd">        detected = [9.8, 23.5, 45.2]</span>
+<span class="sd">        ground_truth = [10, 25, 40, 60]</span>
+
+<span class="sd">        metrics = evaluate_detection(detected, ground_truth, tolerance=1.0)</span>
+
+<span class="sd">        print(f&quot;Precision: {metrics.precision:.3f}&quot;)</span>
+<span class="sd">        print(f&quot;Recall: {metrics.recall:.3f}&quot;)</span>
+<span class="sd">        print(f&quot;F1 Score: {metrics.f1_score:.3f}&quot;)</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">detected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">detected</span><span class="p">)</span>
+    <span class="n">ground_truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">)</span>
+
+    <span class="c1"># Handle edge cases</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">detected</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">DetectionMetrics</span><span class="p">(</span>
+            <span class="n">precision</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">recall</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">f1_score</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">true_positives</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">false_positives</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">false_negatives</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">n_detected</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">n_ground_truth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">tolerance</span><span class="o">=</span><span class="n">tolerance</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">detected</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">DetectionMetrics</span><span class="p">(</span>
+            <span class="n">precision</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">recall</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">f1_score</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">true_positives</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">false_positives</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">false_negatives</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">),</span>
+            <span class="n">n_detected</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">n_ground_truth</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">),</span>
+            <span class="n">tolerance</span><span class="o">=</span><span class="n">tolerance</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">DetectionMetrics</span><span class="p">(</span>
+            <span class="n">precision</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">recall</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">f1_score</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">true_positives</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">false_positives</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">detected</span><span class="p">),</span>
+            <span class="n">false_negatives</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">n_detected</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">detected</span><span class="p">),</span>
+            <span class="n">n_ground_truth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">tolerance</span><span class="o">=</span><span class="n">tolerance</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Sort arrays to ensure chronological matching</span>
+    <span class="n">detected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">detected</span><span class="p">)</span>
+    <span class="n">ground_truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">)</span>
+
+    <span class="c1"># Use one-to-one matching: each ground truth can only match once</span>
+    <span class="n">matched_gt</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">matched_det</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="c1"># Match each detected point to closest unmatched ground truth</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">det</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">detected</span><span class="p">):</span>
+        <span class="c1"># Find closest unmatched ground truth</span>
+        <span class="n">best_match</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">best_distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">gt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">matched_gt</span><span class="p">:</span>
+                <span class="n">distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">gt</span> <span class="o">-</span> <span class="n">det</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">distance</span> <span class="o">&lt;=</span> <span class="n">tolerance</span> <span class="ow">and</span> <span class="n">distance</span> <span class="o">&lt;</span> <span class="n">best_distance</span><span class="p">:</span>
+                    <span class="n">best_match</span> <span class="o">=</span> <span class="n">j</span>
+                    <span class="n">best_distance</span> <span class="o">=</span> <span class="n">distance</span>
+
+        <span class="k">if</span> <span class="n">best_match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">matched_gt</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">best_match</span><span class="p">)</span>
+            <span class="n">matched_det</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="c1"># Calculate counts</span>
+    <span class="n">true_positives</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matched_det</span><span class="p">)</span>
+    <span class="n">false_positives</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">detected</span><span class="p">)</span> <span class="o">-</span> <span class="n">true_positives</span>
+    <span class="n">false_negatives</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">matched_gt</span><span class="p">)</span>
+
+    <span class="c1"># Calculate metrics</span>
+    <span class="n">prec</span> <span class="o">=</span> <span class="n">true_positives</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">detected</span><span class="p">)</span>
+    <span class="n">rec</span> <span class="o">=</span> <span class="n">true_positives</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">)</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">prec</span> <span class="o">*</span> <span class="n">rec</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">prec</span> <span class="o">+</span> <span class="n">rec</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">prec</span> <span class="o">+</span> <span class="n">rec</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+
+    <span class="k">return</span> <span class="n">DetectionMetrics</span><span class="p">(</span>
+        <span class="n">precision</span><span class="o">=</span><span class="n">prec</span><span class="p">,</span>
+        <span class="n">recall</span><span class="o">=</span><span class="n">rec</span><span class="p">,</span>
+        <span class="n">f1_score</span><span class="o">=</span><span class="n">f1</span><span class="p">,</span>
+        <span class="n">true_positives</span><span class="o">=</span><span class="n">true_positives</span><span class="p">,</span>
+        <span class="n">false_positives</span><span class="o">=</span><span class="n">false_positives</span><span class="p">,</span>
+        <span class="n">false_negatives</span><span class="o">=</span><span class="n">false_negatives</span><span class="p">,</span>
+        <span class="n">n_detected</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">detected</span><span class="p">),</span>
+        <span class="n">n_ground_truth</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">ground_truth</span><span class="p">),</span>
+        <span class="n">tolerance</span><span class="o">=</span><span class="n">tolerance</span>
+    <span class="p">)</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Ammonyte</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../methods/ks_test.html">Augmented Kolmogorov-Smirnov Test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../methods/lerm.html">Laplacian Eigenmaps of Recurrence Matrices (LERM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../methods/ruptures.html">Ruptures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">ammonyte</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Alexander James, Maryam Niati, Julien Emile-Geay, Deborah Khider.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

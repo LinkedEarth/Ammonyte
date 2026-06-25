@@ -61,6 +61,7 @@ class TimeEmbeddedSeries:
     '''
 
     def __init__(self,series,m,tau=None,embedded_data=None,embedded_time=None,value_name=None,value_unit=None,time_name=None,time_unit=None,label=None):
+        '''Initialize a TimeEmbeddedSeries object. If tau is None, it is estimated via mutual information.'''
         self.series = series
         self.m = m
         self.tau = tau

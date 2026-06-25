@@ -55,6 +55,7 @@ class DetectionMetrics:
 
     def __init__(self, precision, recall, f1_score, true_positives, false_positives,
                  false_negatives, n_detected, n_ground_truth, tolerance):
+        '''Initialize a DetectionMetrics object with evaluation results.'''
         self.precision = precision
         self.recall = recall
         self.f1_score = f1_score

@@ -13,6 +13,7 @@ Notes on how to test:
 5. for more details, see https://docs.pytest.org/en/stable/usage.html
 '''
 
+import os
 import pytest
 import pyleoclim as pyleo
 import ammonyte as amt
@@ -59,3 +60,22 @@ class TestCoreSeriesLaminarity:
         ts = gen_normal()
 
         ts.laminarity(window_size,overlap,m,tau,radius)
+
+
+class TestCoreSeriesFromCsv:
+    '''Tests for Series.from_csv'''
+
+    def test_from_csv_loads_series_t0(self):
+        '''Test that from_csv loads a Series from the bundled NGRIP data file'''
+        data_path = os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv')
+
+        ts = amt.Series.from_csv(data_path)
+
+        assert isinstance(ts, amt.Series)
+        assert len(ts.time) > 0
+        assert len(ts.value) > 0
+
+    def test_from_csv_bad_path_t0(self):
+        '''Test that from_csv raises an error for a non-existent file'''
+        with pytest.raises(Exception):
+            amt.Series.from_csv('nonexistent_file.csv')
