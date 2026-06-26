@@ -162,6 +162,18 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Quick Start</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/citation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Citing Ammonyte</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../get-started/contributing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contributing</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -169,8 +181,20 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation">Motivation</a></li>
+  <li><a href="#what-ammonyte-does" id="toc-what-ammonyte-does" class="nav-link" data-scroll-target="#what-ammonyte-does">What Ammonyte Does</a></li>
+  <li><a href="#comparing-the-methods" id="toc-comparing-the-methods" class="nav-link" data-scroll-target="#comparing-the-methods">Comparing the Methods</a>
+  <ul>
+  <li><a href="#choosing-a-method" id="toc-choosing-a-method" class="nav-link" data-scroll-target="#choosing-a-method">Choosing a method</a></li>
+  </ul></li>
+  <li><a href="#design-philosophy" id="toc-design-philosophy" class="nav-link" data-scroll-target="#design-philosophy">Design Philosophy</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -194,10 +218,96 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>A Python package for multi-method detection of transitions in paleoclimate time series</p>
-<p>Replace this page with an overview of your package’s motivation and scope.</p>
+<section id="motivation" class="level2">
+<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
+<p>Proxy records from ice cores, marine sediments, and speleothems reveal that Earth’s climate has undergone repeated regime shifts — abrupt reorganizations of global circulation patterns such as glacial–interglacial cycles, Dansgaard– Oeschger events, and the mid-Pleistocene transition. Identifying <em>when</em> and <em>how</em> these transitions occurred is fundamental to understanding past climate variability and assessing how sensitive the modern climate system is to future forcing.</p>
+<p>Detecting these transitions is not straightforward. Paleoclimate records are typically noisy, irregularly sampled, and carry age uncertainties. More importantly, <strong>no single detection method works best in all situations</strong>: some transitions manifest as sharp amplitude jumps, others as subtle changes in dynamical behavior with little change in mean value. A method tuned for one type can completely miss the other.</p>
+<p>Ammonyte addresses this by providing a <strong>unified, paleoclimate-oriented interface to three methodologically distinct transition detection approaches</strong>, so that cross-validating results across methods becomes a natural part of the workflow rather than an afterthought.</p>
+</section>
+<section id="what-ammonyte-does" class="level2">
+<h2 class="anchored" data-anchor-id="what-ammonyte-does">What Ammonyte Does</h2>
+<p>Ammonyte extends <a href="https://github.com/LinkedEarth/Pyleoclim_util">Pyleoclim</a>’s <code>Series</code> class, inheriting its full preprocessing toolkit — interpolation, binning, filtering, and age-uncertainty propagation — and adding three detection workflows on top:</p>
+<ol type="1">
+<li><strong>Augmented KS Test</strong> — statistical distribution-based detection</li>
+<li><strong>Ruptures</strong> — optimization-based changepoint detection</li>
+<li><strong>LERM</strong> — nonlinear dynamical analysis via Laplacian Eigenmaps of Recurrence Matrices</li>
+</ol>
+<p>All three methods return a common <code>DeterministicTransitions</code> object, making it easy to overlay and compare results.</p>
+</section>
+<section id="comparing-the-methods" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-the-methods">Comparing the Methods</h2>
+<p>The three methods rest on fundamentally different assumptions about what a “transition” is. Understanding these differences helps you choose the right tool — or, better, use all three together.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Augmented KS Test</th>
+<th>Ruptures</th>
+<th>LERM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>What it detects</strong></td>
+<td>Change in the <em>statistical distribution</em> (mean, variance, shape)</td>
+<td>Structural <em>breakpoints</em> that minimize a cost function</td>
+<td><em>Dynamical regime change</em> in the system’s phase space</td>
+</tr>
+<tr class="even">
+<td><strong>Underlying principle</strong></td>
+<td>Nonparametric hypothesis test on sliding windows</td>
+<td>Optimization / segmentation</td>
+<td>Recurrence analysis + Laplacian eigenmapping + Fisher information</td>
+</tr>
+<tr class="odd">
+<td><strong>Strengths</strong></td>
+<td>Interpretable p-values; no distributional assumption; multi-criterion filtering reduces false positives</td>
+<td>Flexible: 6 search algorithms, multiple cost functions; fast for sharp breaks</td>
+<td>Sensitive to gradual or dynamical shifts invisible to amplitude methods; operates in state space</td>
+</tr>
+<tr class="even">
+<td><strong>Limitations</strong></td>
+<td>Misses transitions where the distribution barely changes (e.g.&nbsp;dynamical shifts with similar mean and variance)</td>
+<td>Like KS, amplitude-based — misses dynamical changes; number of breakpoints often must be specified</td>
+<td>More complex pipeline; computationally heavier; more parameters to tune</td>
+</tr>
+<tr class="odd">
+<td><strong>Best use case</strong></td>
+<td>Sharp, amplitude-driven climate transitions (e.g.&nbsp;glacial terminations)</td>
+<td>When you want flexible algorithm/cost-function control over segmentation</td>
+<td>Subtle regime shifts; validating or contrasting with amplitude-based results</td>
+</tr>
+<tr class="even">
+<td><strong>API entry point</strong></td>
+<td><code>Series.kstest()</code></td>
+<td><code>Series.ruptures()</code></td>
+<td><code>RecurrenceMatrix.laplacian_eigenmaps()</code> → <code>Series.lerm_transitions()</code></td>
+</tr>
+</tbody>
+</table>
+<section id="choosing-a-method" class="level3">
+<h3 class="anchored" data-anchor-id="choosing-a-method">Choosing a method</h3>
+<ul>
+<li><strong>Start with the KS test</strong> if you expect a clear jump in mean or variance and want statistically interpretable output.</li>
+<li><strong>Use Ruptures</strong> when you want maximum flexibility in how breakpoints are found, or when you need to impose a known number of breakpoints.</li>
+<li><strong>Use LERM</strong> when the transition may not be visible in amplitude — for example, a shift in variability or rhythmicity rather than in mean value — or to cross-check the other two methods.</li>
+<li><strong>Use all three together</strong> and look for agreement: detections that appear across multiple methods are more likely to reflect genuine climate transitions than detections that appear in only one.</li>
+</ul>
+</section>
+</section>
+<section id="design-philosophy" class="level2">
+<h2 class="anchored" data-anchor-id="design-philosophy">Design Philosophy</h2>
+<p>Ammonyte is designed around <strong>multi-method cross-validation</strong>. Rather than advocating for one detection framework, it makes applying several approaches to the same record easy and their results directly comparable. This is especially important in paleoclimate, where ground truth is rarely available and methodological assumptions can strongly influence what gets detected.</p>
+<p>The package is built on top of Pyleoclim so that the entire preprocessing workflow — dealing with irregular sampling, age uncertainties, and proxy- specific quirks — integrates seamlessly with detection.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <style>
@@ -278,7 +388,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/niatimary\.github\.io\/Ammonyte\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

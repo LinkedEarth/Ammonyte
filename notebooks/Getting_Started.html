@@ -289,8 +289,6 @@ window.Quarto = {
   <li><a href="#loading-a-time-series" id="toc-loading-a-time-series" class="nav-link" data-scroll-target="#loading-a-time-series">Loading a Time Series</a></li>
   <li><a href="#exploring-the-series" id="toc-exploring-the-series" class="nav-link" data-scroll-target="#exploring-the-series">Exploring the Series</a></li>
   <li><a href="#visualizing-the-series" id="toc-visualizing-the-series" class="nav-link" data-scroll-target="#visualizing-the-series">Visualizing the Series</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
   </ul>
 <div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://mybinder.org/v2/gh/LinkedEarth/Ammonyte/HEAD?labpath=notebooks/Getting_Started.ipynb"><i class="bi bi-rocket-takeoff"></i>Launch on Binder</a></li><li><a href="https://raw.githubusercontent.com/LinkedEarth/Ammonyte/main/notebooks/Getting_Started.ipynb"><i class="bi bi-download"></i>Download notebook</a></li></ul></div></nav>
     </div>
@@ -396,19 +394,6 @@ Data points: 6112</code></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>This notebook shows the common entry point for every Ammonyte workflow: loading a record with <code>Series.from_csv()</code>, inspecting its metadata, and visualizing it, all in just a few lines of code. The resulting <code>Series</code> object is exactly what gets passed into <code>kstest()</code>, <code>ruptures()</code>, or the LERM workflow in the following tutorials — so the same loaded series can be reused across all three detection methods without any extra setup or conversion.</p>
-</section>
-<section id="next-steps" class="level2">
-<h2 class="anchored" data-anchor-id="next-steps">Next Steps</h2>
-<p>Now that you have a <code>Series</code> loaded and visualized, you can apply any of the three transition detection methods:</p>
-<ul>
-<li><a href="https://linked.earth/AmmonyteTutorials/KS_test.html"><strong>KS Test tutorial</strong></a>: detect transitions using the augmented Kolmogorov-Smirnov test</li>
-<li><a href="https://linked.earth/AmmonyteTutorials/LERM_validation.html"><strong>LERM tutorial</strong></a>: detect transitions using Laplacian Eigenmaps of Recurrence Matrices</li>
-<li><a href="https://linked.earth/AmmonyteTutorials/Rupture_Validation.html"><strong>Ruptures tutorial</strong></a>: detect transitions using change-point detection algorithms</li>
-</ul>
 
 
 </section>
@@ -492,7 +477,7 @@ Data points: 6112</code></pre>
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/niatimary\.github\.io\/Ammonyte\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
