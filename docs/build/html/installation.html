@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Installation &#8212; Ammonyte 0.0.8 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <link rel="stylesheet" type="text/css" href="_static/jupyter-sphinx.css" />
+    <link rel="stylesheet" type="text/css" href="_static/thebelab.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <script src="_static/documentation_options.js?v=53b53b71"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/thebelab-helper.js"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@^1.0.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorials" href="tutorials.html" />
+    <link rel="prev" title="Welcome to Ammonyte’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h1>
+<section id="system-requirements">
+<h2>System Requirements<a class="headerlink" href="#system-requirements" title="Link to this heading">¶</a></h2>
+<p>Ammonyte requires Python 3.8 or above. We recommend using Python 3.12.</p>
+</section>
+<section id="setting-up-an-environment">
+<h2>Setting up an Environment<a class="headerlink" href="#setting-up-an-environment" title="Link to this heading">¶</a></h2>
+<p>We recommend using <a class="reference external" href="https://www.anaconda.com/">Anaconda</a> or <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a> to manage your Python environment. To create a dedicated environment for Ammonyte:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>ammonyte_env<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.12
+conda<span class="w"> </span>activate<span class="w"> </span>ammonyte_env
+</pre></div>
+</div>
+<p>Some dependencies require the conda-forge channel. Install cartopy before proceeding:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>cartopy
+</pre></div>
+</div>
+</section>
+<section id="installing-ammonyte">
+<h2>Installing Ammonyte<a class="headerlink" href="#installing-ammonyte" title="Link to this heading">¶</a></h2>
+<p><strong>Stable release (recommended)</strong></p>
+<p>Install the latest stable release from PyPI:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>ammonyte
+</pre></div>
+</div>
+<p><strong>Development version</strong></p>
+<p>To install the latest development version directly from GitHub:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/LinkedEarth/Ammonyte.git
+</pre></div>
+</div>
+<p>Note that the development version may contain bugs or incomplete features.</p>
+</section>
+<section id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading">¶</a></h2>
+<p>Ammonyte requires the following packages, which are installed automatically via pip:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/LinkedEarth/Pyleoclim_util">pyleoclim</a></p></li>
+<li><p>numpy</p></li>
+<li><p>scipy</p></li>
+<li><p>scikit-learn</p></li>
+<li><p>PyRQA</p></li>
+<li><p>ruptures</p></li>
+</ul>
+</section>
+<section id="testing-the-installation">
+<h2>Testing the Installation<a class="headerlink" href="#testing-the-installation" title="Link to this heading">¶</a></h2>
+<p>To verify that Ammonyte has been installed correctly, run the following in Python:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">ammonyte</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">amt</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">amt</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To run the full test suite:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>ammonyte/tests/
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Ammonyte</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#system-requirements">System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-an-environment">Setting up an Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-ammonyte">Installing Ammonyte</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing-the-installation">Testing the Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/ks_test.html">Augmented Kolmogorov-Smirnov Test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/lerm.html">Laplacian Eigenmaps of Recurrence Matrices (LERM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="methods/ruptures.html">Ruptures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">ammonyte</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to Ammonyte’s documentation!</a></li>
+      <li>Next: <a href="tutorials.html" title="next chapter">Tutorials</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Alexander James, Maryam Niati, Julien Emile-Geay, Deborah Khider.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/installation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
