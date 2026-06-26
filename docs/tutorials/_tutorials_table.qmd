@@ -4,7 +4,7 @@
 
 | Notebook | What it shows |
 |---|---|
-| [Getting Started](../notebooks/Getting_Started.ipynb) | Load a paleoclimate dataset and visualize the time series. |
+| [Getting Started](../notebooks/Getting_Started.ipynb) |  |
 
 ## Augmented KS Test
 
@@ -16,11 +16,11 @@
 
 | Notebook | What it shows |
 |---|---|
-| [LERM_Validation](../notebooks/LERM_Validation.ipynb) | Compute and smooth Fisher Information via LERM, detect tipping points using bootstrap confidence bound crossings and the augmented KS test, and evaluate against known events using precision, recall, and F1 score. |
+| [LERM_Validation](../notebooks/LERM_Validation.ipynb) |  |
 
 ## Ruptures
 
 | Notebook | What it shows |
 |---|---|
-| [Ruptures_Validation](../notebooks/Ruptures_Validation.ipynb) | Detect transitions using the Pelt change-point detection algorithm with an l2 cost function, and evaluate against known events using precision, recall, and F1 score. |
+| [Ruptures_Validation](../notebooks/Ruptures_Validation.ipynb) |  |
 

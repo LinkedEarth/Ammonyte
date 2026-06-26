@@ -3,6 +3,57 @@ title: About Ammonyte
 sidebar: get-started
 ---
 
-A Python package for multi-method detection of transitions in paleoclimate time series
+Ammonyte is a Python package for detecting abrupt transitions and tipping points
+in paleoclimate time series. It provides a unified interface to three
+methodologically distinct detection approaches, so that cross-validating results
+across methods is a natural part of the workflow.
 
-Replace this page with an overview of your package's motivation and scope.
+## Package Structure
+
+Ammonyte is built as an extension of
+[Pyleoclim](https://github.com/LinkedEarth/Pyleoclim_util). Rather than
+starting from scratch, it adds transition detection directly onto Pyleoclim's
+`Series` class. This means that **preprocessing and detection live in the same
+object**: interpolation, binning, filtering, and age-uncertainty propagation are
+all available on the same series you then pass to a detection method, with no
+reformatting or hand-off between tools.
+
+The three detection methods are called directly on a `Series`:
+
+1. **Augmented KS Test** — statistical distribution-based detection
+2. **Ruptures** — optimization-based changepoint detection
+3. **LERM** — nonlinear dynamical analysis via Laplacian Eigenmaps of Recurrence Matrices
+
+All three return a common `DeterministicTransitions` object. This shared output
+structure is intentional: it makes it straightforward to overlay results from
+different methods on the same record and compare where they agree or disagree.
+Because no single method works best for all types of transitions, agreement
+across methods is a stronger signal than any one method alone.
+
+## Comparing the Methods
+
+The three methods rest on fundamentally different assumptions about what a
+"transition" is. Understanding these differences helps you choose the right
+tool — or, better, use all three together.
+
+| | Augmented KS Test | Ruptures | LERM |
+|---|---|---|---|
+| **What it detects** | Change in the *statistical distribution* (mean, variance, shape) | Structural *breakpoints* that minimize a cost function | *Dynamical regime change* in the system's phase space |
+| **Underlying principle** | Nonparametric hypothesis test on sliding windows | Optimization / segmentation | Recurrence analysis + Laplacian eigenmapping + Fisher information |
+| **Strengths** | Interpretable p-values; no distributional assumption; multi-criterion filtering reduces false positives | Flexible: 6 search algorithms, multiple cost functions; fast for sharp breaks | Sensitive to gradual or dynamical shifts invisible to amplitude methods; operates in state space |
+| **Limitations** | Misses transitions where the distribution barely changes (e.g. dynamical shifts with similar mean and variance) | Like KS, amplitude-based — misses dynamical changes; some algorithms (e.g. dynamic programming) are computationally expensive; number of breakpoints often must be specified | More complex pipeline; computationally heavier |
+| **Best use case** | Sharp, amplitude-driven climate transitions (e.g. glacial terminations) | When you want flexible algorithm/cost-function control over segmentation | Subtle regime shifts; validating or contrasting with amplitude-based results |
+
+### Choosing a method
+
+- **Start with the KS test** if you expect a clear jump in mean or variance and
+  want statistically interpretable output.
+- **Use Ruptures** when you want maximum flexibility in how breakpoints are
+  found, or when you need to impose a known number of breakpoints.
+- **Use LERM** when the transition may not be visible in amplitude — for
+  example, a shift in variability or rhythmicity rather than in mean value —
+  or to cross-check the other two methods.
+- **Use all three together** and look for agreement: detections that appear
+  across multiple methods are more likely to reflect genuine climate transitions
+  than detections that appear in only one.
+
