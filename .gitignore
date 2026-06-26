@@ -1,4 +1,5 @@
 build/
+!docs/build/
 __pycache__/
 dist/
 ammonyte.egg-info/
