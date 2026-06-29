@@ -28,7 +28,7 @@
     "href": "get-started/contributing.html",
     "title": "Contributing",
     "section": "",
-    "text": "Thank you for your interest in contributing to Ammonyte! Contributions of all kinds are welcome — bug reports, feature requests, documentation improvements, and code contributions.",
+    "text": "Contributions of all kinds are welcome: bug reports, feature requests, documentation improvements, and code contributions. All work is coordinated through GitHub Issues.",
     "crumbs": [
       "Get Started",
       "Basic Use",
@@ -40,7 +40,7 @@
     "href": "get-started/contributing.html#reporting-a-bug",
     "title": "Contributing",
     "section": "Reporting a bug",
-    "text": "Reporting a bug\nIf you find a bug, please open an issue on GitHub Issues and include:\n\nA short description of the problem\nA minimal code example that reproduces it\nThe output or error message you see",
+    "text": "Reporting a bug\nOpen an issue on GitHub and include:\n\nA minimal, self-contained code example that reproduces the problem\nThe full version string: print(ammonyte.__version__)\nThe error message or incorrect output you observe\nYour Python version and operating system\n\nThe more specific the report, the faster it can be resolved.",
     "crumbs": [
       "Get Started",
       "Basic Use",
@@ -52,7 +52,7 @@
     "href": "get-started/contributing.html#suggesting-a-feature",
     "title": "Contributing",
     "section": "Suggesting a feature",
-    "text": "Suggesting a feature\nOpen an issue with the label enhancement and describe what you’d like to see and why it would be useful.",
+    "text": "Suggesting a feature\nOpen an issue with the label enhancement and describe:\n\nWhat you would like to see\nWhy it would be useful\nIf possible, a sketch of how it might work\n\nFor non-trivial features, consider prototyping the idea in a notebook first, showing the proposed API and a working example.",
     "crumbs": [
       "Get Started",
       "Basic Use",
@@ -64,7 +64,7 @@
     "href": "get-started/contributing.html#contributing-code",
     "title": "Contributing",
     "section": "Contributing code",
-    "text": "Contributing code\n\nFork the repository and clone it locally\nCreate a new branch for your change:\ngit checkout -b my-feature\nSet up the development environment:\nconda env create -f .binder/environment.yml\nconda activate ammonyte_env\npip install -e .\nMake your changes and add tests if applicable\nRun the test suite to make sure everything passes:\npip install pytest\npytest ammonyte/tests/\nSubmit a pull request against the main branch",
+    "text": "Contributing code\n\n1. Fork and clone\nFork the repository on GitHub, then clone your fork locally and add the upstream remote:\ngit clone https://github.com/your-username/Ammonyte.git\ncd Ammonyte\ngit remote add upstream https://github.com/LinkedEarth/Ammonyte.git\n\n\n2. Set up the development environment\nconda env create -f .binder/environment.yml\nconda activate ammonyte_env\npip install -e .\n\n\n3. Create a branch\nAlways branch from an up-to-date main:\ngit pull upstream main --ff-only\ngit checkout -b my-feature\nUse a descriptive branch name that reflects the change (e.g. fix/kstest-edge-case, feature/geoseries).\n\n\n4. Make your changes\n\nAdd or update tests for any new or changed behaviour\nUpdate docstrings to reflect any API changes\nKeep changes focused (one feature or fix per branch)\n\n\n\n5. Run the tests\npytest ammonyte/tests/\nAll tests must pass before submitting a pull request.\n\n\n6. Commit your changes\nWrite a short, descriptive commit message (under 80 characters). If the commit closes a GitHub issue, reference it in the body:\nAdd GeoSeries class with lat/lon/elevation metadata\n\nCloses #23\ngit add path/to/changed_file.py\ngit commit -m \"your message\"\ngit push origin my-feature\n\n\n7. Open a pull request\nOpen a pull request against the main branch of LinkedEarth/Ammonyte. In the PR description:\n\nSummarise what changed and why\nReference the related issue (e.g. Closes #23)\nList any decisions or trade-offs worth noting\n\nBefore submitting, verify that:\n\nAll tests pass locally\nNew functionality has corresponding tests\nDocstrings are up to date\nThe branch is up to date with upstream/main\n\nIf the upstream main has moved since you branched, update your branch before merging:\ngit merge upstream/main\n\n\n8. After the PR is merged\nDelete the feature branch locally and on your fork:\ngit branch -d my-feature\ngit push origin --delete my-feature",
     "crumbs": [
       "Get Started",
       "Basic Use",
@@ -76,7 +76,7 @@
     "href": "get-started/contributing.html#code-style",
     "title": "Contributing",
     "section": "Code style",
-    "text": "Code style\nPlease follow existing code conventions in the repository. Docstrings should use NumPy style.",
+    "text": "Code style\n\nFollow the existing conventions in the codebase\nUse descriptive variable names\nDocstrings must follow NumPy style and include a Parameters, Returns, and Examples section\n\nA minimal docstring example:\ndef my_function(x, threshold=0.05):\n    \"\"\"\n    One-line summary of what the function does.\n\n    Parameters\n    ----------\n    x : array-like\n        Input data.\n    threshold : float, optional\n        Significance threshold. Default is 0.05.\n\n    Returns\n    -------\n    result : float\n        Description of the return value.\n\n    Examples\n    --------\n    &gt;&gt;&gt; import ammonyte as amt\n    &gt;&gt;&gt; result = my_function([1, 2, 3])\n    \"\"\"",
     "crumbs": [
       "Get Started",
       "Basic Use",
@@ -738,14 +738,14 @@
     "href": "index.html",
     "title": "Ammonyte",
     "section": "",
-    "text": "A Python package for multi-method detection of transitions in paleoclimate time series"
+    "text": "pip install git+https://github.com/LinkedEarth/Ammonyte.git"
   },
   {
     "objectID": "index.html#quick-install",
     "href": "index.html#quick-install",
     "title": "Ammonyte",
-    "section": "Quick install",
-    "text": "Quick install\npip install git+https://github.com/LinkedEarth/Ammonyte.git"
+    "section": "",
+    "text": "pip install git+https://github.com/LinkedEarth/Ammonyte.git"
   },
   {
     "objectID": "index.html#where-to-go-next",
@@ -1376,6 +1376,18 @@
     ]
   },
   {
+    "objectID": "notebooks/Getting_Started.html#geoseries-adding-geographic-context",
+    "href": "notebooks/Getting_Started.html#geoseries-adding-geographic-context",
+    "title": "Getting Started with Ammonyte",
+    "section": "GeoSeries — Adding Geographic Context",
+    "text": "GeoSeries — Adding Geographic Context\nammonyte.GeoSeries extends Series by attaching location metadata to a geographically referenced archive. It inherits all of Ammonyte’s transition detection methods plus the geospatial methods from pyleoclim.GeoSeries, such as .map().\nSince the NGRIP ice core was drilled at a known location in Greenland, we can wrap the series we already loaded into a GeoSeries by adding:\n\nlat / lon — drill site coordinates\nelevation — metres above sea level\narchiveType — type of climate archive (styles the map marker)\n\n\nngrip_geo = amt.GeoSeries(\n    time=ngrip.time,\n    value=ngrip.value,\n    lat=75.1,\n    lon=-42.32,\n    elevation=3090,\n    time_name=ngrip.time_name,\n    time_unit=ngrip.time_unit,\n    value_name=ngrip.value_name,\n    value_unit=ngrip.value_unit,\n    label=ngrip.label,\n    archiveType='GlacierIce'\n)\nngrip_geo\n\nTime axis values sorted in ascending order\n{'archiveType': 'GlacierIce', 'label': 'NGRIP Ice Core Data'}\n\n\nNone\nAge [kyr b2k]\n0.05     -35.11\n0.07     -34.65\n0.09     -34.53\n0.11     -35.29\n0.13     -35.02\n          ...  \n122.19   -32.85\n122.21   -32.66\n122.23   -32.66\n122.25   -32.51\n122.27   -32.56\nName: δ¹⁸O [‰], Length: 6112, dtype: float64\n\n\nThe .map() method places the archive on a world map, using the archiveType to style the marker:\n\nngrip_geo.map()\n\n(&lt;Figure size 1800x700 with 1 Axes&gt;,\n {'map': &lt;GeoAxes: xlabel='lon', ylabel='lat'&gt;})",
+    "crumbs": [
+      "Tutorials",
+      "Getting Started",
+      "Getting Started"
+    ]
+  },
+  {
     "objectID": "notebooks/LERM_validation.html",
     "href": "notebooks/LERM_validation.html",
     "title": "Detecting Tipping Points with Ammonyte LERM Method",
@@ -1506,29 +1518,18 @@
     "href": "get-started/overview.html",
     "title": "About Ammonyte",
     "section": "",
-    "text": "Proxy records from ice cores, marine sediments, and speleothems reveal that Earth’s climate has undergone repeated regime shifts — abrupt reorganizations of global circulation patterns such as glacial–interglacial cycles, Dansgaard– Oeschger events, and the mid-Pleistocene transition. Identifying when and how these transitions occurred is fundamental to understanding past climate variability and assessing how sensitive the modern climate system is to future forcing.\nDetecting these transitions is not straightforward. Paleoclimate records are typically noisy, irregularly sampled, and carry age uncertainties. More importantly, no single detection method works best in all situations: some transitions manifest as sharp amplitude jumps, others as subtle changes in dynamical behavior with little change in mean value. A method tuned for one type can completely miss the other.\nAmmonyte addresses this by providing a unified, paleoclimate-oriented interface to three methodologically distinct transition detection approaches, so that cross-validating results across methods becomes a natural part of the workflow rather than an afterthought.",
+    "text": "Ammonyte is a Python package for detecting abrupt transitions and tipping points in paleoclimate time series. It provides a unified interface to three methodologically distinct detection approaches, so that cross-validating results across methods is a natural part of the workflow.",
     "crumbs": [
       "Get Started",
       "About Ammonyte"
     ]
   },
   {
-    "objectID": "get-started/overview.html#motivation",
-    "href": "get-started/overview.html#motivation",
+    "objectID": "get-started/overview.html#package-structure",
+    "href": "get-started/overview.html#package-structure",
     "title": "About Ammonyte",
-    "section": "",
-    "text": "Proxy records from ice cores, marine sediments, and speleothems reveal that Earth’s climate has undergone repeated regime shifts — abrupt reorganizations of global circulation patterns such as glacial–interglacial cycles, Dansgaard– Oeschger events, and the mid-Pleistocene transition. Identifying when and how these transitions occurred is fundamental to understanding past climate variability and assessing how sensitive the modern climate system is to future forcing.\nDetecting these transitions is not straightforward. Paleoclimate records are typically noisy, irregularly sampled, and carry age uncertainties. More importantly, no single detection method works best in all situations: some transitions manifest as sharp amplitude jumps, others as subtle changes in dynamical behavior with little change in mean value. A method tuned for one type can completely miss the other.\nAmmonyte addresses this by providing a unified, paleoclimate-oriented interface to three methodologically distinct transition detection approaches, so that cross-validating results across methods becomes a natural part of the workflow rather than an afterthought.",
-    "crumbs": [
-      "Get Started",
-      "About Ammonyte"
-    ]
-  },
-  {
-    "objectID": "get-started/overview.html#what-ammonyte-does",
-    "href": "get-started/overview.html#what-ammonyte-does",
-    "title": "About Ammonyte",
-    "section": "What Ammonyte Does",
-    "text": "What Ammonyte Does\nAmmonyte extends Pyleoclim’s Series class, inheriting its full preprocessing toolkit — interpolation, binning, filtering, and age-uncertainty propagation — and adding three detection workflows on top:\n\nAugmented KS Test — statistical distribution-based detection\nRuptures — optimization-based changepoint detection\nLERM — nonlinear dynamical analysis via Laplacian Eigenmaps of Recurrence Matrices\n\nAll three methods return a common DeterministicTransitions object, making it easy to overlay and compare results.",
+    "section": "Package Structure",
+    "text": "Package Structure\nAmmonyte is built as an extension of Pyleoclim. Rather than starting from scratch, it adds transition detection directly onto Pyleoclim’s Series class. This means that preprocessing and detection live in the same object: interpolation, binning, filtering, and age-uncertainty propagation are all available on the same series you then pass to a detection method, with no reformatting or hand-off between tools.\nThe three detection methods are called directly on a Series:\n\nAugmented KS Test — statistical distribution-based detection\nRuptures — optimization-based changepoint detection\nLERM — nonlinear dynamical analysis via Laplacian Eigenmaps of Recurrence Matrices\n\nAll three return a common DeterministicTransitions object. This shared output structure is intentional: it makes it straightforward to overlay results from different methods on the same record and compare where they agree or disagree. Because no single method works best for all types of transitions, agreement across methods is a stronger signal than any one method alone.",
     "crumbs": [
       "Get Started",
       "About Ammonyte"
@@ -1539,18 +1540,7 @@
     "href": "get-started/overview.html#comparing-the-methods",
     "title": "About Ammonyte",
     "section": "Comparing the Methods",
-    "text": "Comparing the Methods\nThe three methods rest on fundamentally different assumptions about what a “transition” is. Understanding these differences helps you choose the right tool — or, better, use all three together.\n\n\n\n\n\n\n\n\n\n\nAugmented KS Test\nRuptures\nLERM\n\n\n\n\nWhat it detects\nChange in the statistical distribution (mean, variance, shape)\nStructural breakpoints that minimize a cost function\nDynamical regime change in the system’s phase space\n\n\nUnderlying principle\nNonparametric hypothesis test on sliding windows\nOptimization / segmentation\nRecurrence analysis + Laplacian eigenmapping + Fisher information\n\n\nStrengths\nInterpretable p-values; no distributional assumption; multi-criterion filtering reduces false positives\nFlexible: 6 search algorithms, multiple cost functions; fast for sharp breaks\nSensitive to gradual or dynamical shifts invisible to amplitude methods; operates in state space\n\n\nLimitations\nMisses transitions where the distribution barely changes (e.g. dynamical shifts with similar mean and variance)\nLike KS, amplitude-based — misses dynamical changes; number of breakpoints often must be specified\nMore complex pipeline; computationally heavier; more parameters to tune\n\n\nBest use case\nSharp, amplitude-driven climate transitions (e.g. glacial terminations)\nWhen you want flexible algorithm/cost-function control over segmentation\nSubtle regime shifts; validating or contrasting with amplitude-based results\n\n\nAPI entry point\nSeries.kstest()\nSeries.ruptures()\nRecurrenceMatrix.laplacian_eigenmaps() → Series.lerm_transitions()\n\n\n\n\nChoosing a method\n\nStart with the KS test if you expect a clear jump in mean or variance and want statistically interpretable output.\nUse Ruptures when you want maximum flexibility in how breakpoints are found, or when you need to impose a known number of breakpoints.\nUse LERM when the transition may not be visible in amplitude — for example, a shift in variability or rhythmicity rather than in mean value — or to cross-check the other two methods.\nUse all three together and look for agreement: detections that appear across multiple methods are more likely to reflect genuine climate transitions than detections that appear in only one.",
-    "crumbs": [
-      "Get Started",
-      "About Ammonyte"
-    ]
-  },
-  {
-    "objectID": "get-started/overview.html#design-philosophy",
-    "href": "get-started/overview.html#design-philosophy",
-    "title": "About Ammonyte",
-    "section": "Design Philosophy",
-    "text": "Design Philosophy\nAmmonyte is designed around multi-method cross-validation. Rather than advocating for one detection framework, it makes applying several approaches to the same record easy and their results directly comparable. This is especially important in paleoclimate, where ground truth is rarely available and methodological assumptions can strongly influence what gets detected.\nThe package is built on top of Pyleoclim so that the entire preprocessing workflow — dealing with irregular sampling, age uncertainties, and proxy- specific quirks — integrates seamlessly with detection.",
+    "text": "Comparing the Methods\nThe three methods rest on fundamentally different assumptions about what a “transition” is. Understanding these differences helps you choose the right tool, or better use all three together.\n\n\n\n\n\n\n\n\n\n\nAugmented KS Test\nRuptures\nLERM\n\n\n\n\nWhat it detects\nChange in the statistical distribution (mean, variance, shape)\nStructural breakpoints that minimize a cost function\nDynamical regime change in the system’s phase space\n\n\nUnderlying principle\nNonparametric hypothesis test on sliding windows\nOptimization / segmentation\nRecurrence analysis + Laplacian eigenmapping + Fisher information\n\n\nStrengths\nInterpretable p-values; no distributional assumption; multi-criterion filtering reduces false positives\nFlexible: 6 search algorithms, multiple cost functions; fast for sharp breaks\nSensitive to gradual or dynamical shifts invisible to amplitude methods; operates in state space\n\n\nLimitations\nMisses transitions where the distribution barely changes (e.g. dynamical shifts with similar mean and variance)\nLike KS, amplitude-based, misses dynamical changes; some algorithms (e.g. dynamic programming) are computationally expensive; number of breakpoints often must be specified\nMore complex pipeline; computationally heavier\n\n\nBest use case\nSharp, amplitude-driven climate transitions (e.g. glacial terminations)\nWhen you want flexible algorithm/cost-function control over segmentation\nSubtle regime shifts; validating or contrasting with amplitude-based results\n\n\n\n\nChoosing a method\n\nStart with the KS test if you expect a clear jump in mean or variance and want statistically interpretable output.\nUse Ruptures when you want maximum flexibility in how breakpoints are found, or when you need to impose a known number of breakpoints.\nUse LERM when the transition may not be visible in amplitude, for example, a shift in variability or rhythmicity rather than in mean value, or to cross-check the other two methods.\nUse all three together and look for agreement: detections that appear across multiple methods are more likely to reflect genuine climate transitions than detections that appear in only one.",
     "crumbs": [
       "Get Started",
       "About Ammonyte"
@@ -1585,7 +1575,7 @@
     "href": "get-started/installation.html#dependencies",
     "title": "Installation",
     "section": "Dependencies",
-    "text": "Dependencies\nAmmonyte depends on the following Python packages, which are installed automatically with pip install ammonyte:\n\npyleoclim &gt;= 1.2.1\nscipy &gt;= 1.15.3\nnumpy &gt;= 1.26.4\nPyRQA &gt;= 8.1.0\nscikit-learn &gt;= 1.7.0\nruptures &gt;= 1.1.10",
+    "text": "Dependencies\nThe following packages are installed automatically with Ammonyte:\n\npyleoclim &gt;= 1.2.1\nscipy &gt;= 1.15.3\nnumpy &gt;= 1.26.4\nPyRQA &gt;= 8.1.0\nscikit-learn &gt;= 1.7.0\nruptures &gt;= 1.1.10",
     "crumbs": [
       "Get Started",
       "Basic Use",
@@ -1633,7 +1623,7 @@
     "href": "get-started/installation.html#verify-the-installation",
     "title": "Installation",
     "section": "Verify the installation",
-    "text": "Verify the installation\nimport ammonyte",
+    "text": "Verify the installation\nAfter installing, confirm the package is available and check the version:\nimport ammonyte\nprint(ammonyte.__version__)",
     "crumbs": [
       "Get Started",
       "Basic Use",
@@ -1645,11 +1635,23 @@
     "href": "get-started/installation.html#running-the-tests",
     "title": "Installation",
     "section": "Running the tests",
-    "text": "Running the tests\nTo run the test suite locally, install pytest first:\npip install pytest\nThen from the root of the repository:\npytest ammonyte/tests/",
+    "text": "Running the tests\nInstall pytest and run the test suite from the root of the repository:\npip install pytest\npytest ammonyte/tests/",
     "crumbs": [
       "Get Started",
       "Basic Use",
       "Installation"
+    ]
+  },
+  {
+    "objectID": "get-started/contributing.html#testing-conventions",
+    "href": "get-started/contributing.html#testing-conventions",
+    "title": "Contributing",
+    "section": "Testing conventions",
+    "text": "Testing conventions\n\nPlace tests in ammonyte/tests/\nName test files test_&lt;module&gt;.py (e.g. test_core_series.py)\nName test functions test_&lt;method&gt; (e.g. test_kstest_returns_transitions)\nUse the datasets bundled with the package where possible\nKeep tests minimal and focused — each test should verify one behaviour",
+    "crumbs": [
+      "Get Started",
+      "Basic Use",
+      "Contributing"
     ]
   }
 ]

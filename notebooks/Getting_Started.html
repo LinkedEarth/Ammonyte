@@ -289,6 +289,7 @@ window.Quarto = {
   <li><a href="#loading-a-time-series" id="toc-loading-a-time-series" class="nav-link" data-scroll-target="#loading-a-time-series">Loading a Time Series</a></li>
   <li><a href="#exploring-the-series" id="toc-exploring-the-series" class="nav-link" data-scroll-target="#exploring-the-series">Exploring the Series</a></li>
   <li><a href="#visualizing-the-series" id="toc-visualizing-the-series" class="nav-link" data-scroll-target="#visualizing-the-series">Visualizing the Series</a></li>
+  <li><a href="#geoseries-adding-geographic-context" id="toc-geoseries-adding-geographic-context" class="nav-link" data-scroll-target="#geoseries-adding-geographic-context">GeoSeries — Adding Geographic Context</a></li>
   </ul>
 <div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://mybinder.org/v2/gh/LinkedEarth/Ammonyte/HEAD?labpath=notebooks/Getting_Started.ipynb"><i class="bi bi-rocket-takeoff"></i>Launch on Binder</a></li><li><a href="https://raw.githubusercontent.com/LinkedEarth/Ammonyte/main/notebooks/Getting_Started.ipynb"><i class="bi bi-download"></i>Download notebook</a></li></ul></div></nav>
     </div>
@@ -390,6 +391,67 @@ Data points: 6112</code></pre>
 <div>
 <figure class="figure">
 <p><img src="Getting_Started_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="geoseries-adding-geographic-context" class="level2">
+<h2 class="anchored" data-anchor-id="geoseries-adding-geographic-context">GeoSeries — Adding Geographic Context</h2>
+<p><code>ammonyte.GeoSeries</code> extends <code>Series</code> by attaching location metadata to a geographically referenced archive. It inherits all of Ammonyte’s transition detection methods plus the geospatial methods from <code>pyleoclim.GeoSeries</code>, such as <code>.map()</code>.</p>
+<p>Since the NGRIP ice core was drilled at a known location in Greenland, we can wrap the series we already loaded into a <code>GeoSeries</code> by adding:</p>
+<ul>
+<li><strong><code>lat</code></strong> / <strong><code>lon</code></strong> — drill site coordinates</li>
+<li><strong><code>elevation</code></strong> — metres above sea level</li>
+<li><strong><code>archiveType</code></strong> — type of climate archive (styles the map marker)</li>
+</ul>
+<div id="cell-geoseries-create" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ngrip_geo <span class="op">=</span> amt.GeoSeries(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    time<span class="op">=</span>ngrip.time,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    value<span class="op">=</span>ngrip.value,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    lat<span class="op">=</span><span class="fl">75.1</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    lon<span class="op">=-</span><span class="fl">42.32</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    elevation<span class="op">=</span><span class="dv">3090</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    time_name<span class="op">=</span>ngrip.time_name,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    time_unit<span class="op">=</span>ngrip.time_unit,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    value_name<span class="op">=</span>ngrip.value_name,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    value_unit<span class="op">=</span>ngrip.value_unit,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span>ngrip.label,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    archiveType<span class="op">=</span><span class="st">'GlacierIce'</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>ngrip_geo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time axis values sorted in ascending order
+{'archiveType': 'GlacierIce', 'label': 'NGRIP Ice Core Data'}</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>None
+Age [kyr b2k]
+0.05     -35.11
+0.07     -34.65
+0.09     -34.53
+0.11     -35.29
+0.13     -35.02
+          ...  
+122.19   -32.85
+122.21   -32.66
+122.23   -32.66
+122.25   -32.51
+122.27   -32.56
+Name: δ¹⁸O [‰], Length: 6112, dtype: float64</code></pre>
+</div>
+</div>
+<p>The <code>.map()</code> method places the archive on a world map, using the <code>archiveType</code> to style the marker:</p>
+<div id="cell-geoseries-map" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ngrip_geo.<span class="bu">map</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>(&lt;Figure size 1800x700 with 1 Axes&gt;,
+ {'map': &lt;GeoAxes: xlabel='lon', ylabel='lat'&gt;})</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Getting_Started_files/figure-html/cell-7-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
