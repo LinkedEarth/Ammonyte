@@ -9,7 +9,7 @@ Ammonyte requires Python ≥ 3.10.
 
 ## Dependencies
 
-Ammonyte depends on the following Python packages, which are installed automatically with `pip install ammonyte`:
+The following packages are installed automatically with Ammonyte:
 
 - `pyleoclim >= 1.2.1`
 - `scipy >= 1.15.3`
@@ -43,20 +43,18 @@ conda activate ammonyte_env
 
 ## Verify the installation
 
+After installing, confirm the package is available and check the version:
+
 ```python
 import ammonyte
+print(ammonyte.__version__)
 ```
 
 ## Running the tests
 
-To run the test suite locally, install `pytest` first:
+Install `pytest` and run the test suite from the root of the repository:
 
 ```bash
 pip install pytest
-```
-
-Then from the root of the repository:
-
-```bash
 pytest ammonyte/tests/
 ```

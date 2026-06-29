@@ -223,8 +223,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#reporting-a-bug" id="toc-reporting-a-bug" class="nav-link active" data-scroll-target="#reporting-a-bug">Reporting a bug</a></li>
   <li><a href="#suggesting-a-feature" id="toc-suggesting-a-feature" class="nav-link" data-scroll-target="#suggesting-a-feature">Suggesting a feature</a></li>
-  <li><a href="#contributing-code" id="toc-contributing-code" class="nav-link" data-scroll-target="#contributing-code">Contributing code</a></li>
+  <li><a href="#contributing-code" id="toc-contributing-code" class="nav-link" data-scroll-target="#contributing-code">Contributing code</a>
+  <ul>
+  <li><a href="#fork-and-clone" id="toc-fork-and-clone" class="nav-link" data-scroll-target="#fork-and-clone">1. Fork and clone</a></li>
+  <li><a href="#set-up-the-development-environment" id="toc-set-up-the-development-environment" class="nav-link" data-scroll-target="#set-up-the-development-environment">2. Set up the development environment</a></li>
+  <li><a href="#create-a-branch" id="toc-create-a-branch" class="nav-link" data-scroll-target="#create-a-branch">3. Create a branch</a></li>
+  <li><a href="#make-your-changes" id="toc-make-your-changes" class="nav-link" data-scroll-target="#make-your-changes">4. Make your changes</a></li>
+  <li><a href="#run-the-tests" id="toc-run-the-tests" class="nav-link" data-scroll-target="#run-the-tests">5. Run the tests</a></li>
+  <li><a href="#commit-your-changes" id="toc-commit-your-changes" class="nav-link" data-scroll-target="#commit-your-changes">6. Commit your changes</a></li>
+  <li><a href="#open-a-pull-request" id="toc-open-a-pull-request" class="nav-link" data-scroll-target="#open-a-pull-request">7. Open a pull request</a></li>
+  <li><a href="#after-the-pr-is-merged" id="toc-after-the-pr-is-merged" class="nav-link" data-scroll-target="#after-the-pr-is-merged">8. After the PR is merged</a></li>
+  </ul></li>
   <li><a href="#code-style" id="toc-code-style" class="nav-link" data-scroll-target="#code-style">Code style</a></li>
+  <li><a href="#testing-conventions" id="toc-testing-conventions" class="nav-link" data-scroll-target="#testing-conventions">Testing conventions</a></li>
   </ul>
 </nav>
     </div>
@@ -250,40 +261,137 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Thank you for your interest in contributing to Ammonyte! Contributions of all kinds are welcome — bug reports, feature requests, documentation improvements, and code contributions.</p>
+<p>Contributions of all kinds are welcome: bug reports, feature requests, documentation improvements, and code contributions. All work is coordinated through <a href="https://github.com/LinkedEarth/Ammonyte/issues">GitHub Issues</a>.</p>
 <section id="reporting-a-bug" class="level2">
 <h2 class="anchored" data-anchor-id="reporting-a-bug">Reporting a bug</h2>
-<p>If you find a bug, please open an issue on <a href="https://github.com/LinkedEarth/Ammonyte/issues">GitHub Issues</a> and include:</p>
+<p>Open an issue on GitHub and include:</p>
 <ul>
-<li>A short description of the problem</li>
-<li>A minimal code example that reproduces it</li>
-<li>The output or error message you see</li>
+<li>A minimal, self-contained code example that reproduces the problem</li>
+<li>The full version string: <code>print(ammonyte.__version__)</code></li>
+<li>The error message or incorrect output you observe</li>
+<li>Your Python version and operating system</li>
 </ul>
+<p>The more specific the report, the faster it can be resolved.</p>
 </section>
 <section id="suggesting-a-feature" class="level2">
 <h2 class="anchored" data-anchor-id="suggesting-a-feature">Suggesting a feature</h2>
-<p>Open an issue with the label <code>enhancement</code> and describe what you’d like to see and why it would be useful.</p>
+<p>Open an issue with the label <code>enhancement</code> and describe:</p>
+<ul>
+<li>What you would like to see</li>
+<li>Why it would be useful</li>
+<li>If possible, a sketch of how it might work</li>
+</ul>
+<p>For non-trivial features, consider prototyping the idea in a notebook first, showing the proposed API and a working example.</p>
 </section>
 <section id="contributing-code" class="level2">
 <h2 class="anchored" data-anchor-id="contributing-code">Contributing code</h2>
-<ol type="1">
-<li><p>Fork the repository and clone it locally</p></li>
-<li><p>Create a new branch for your change:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> my-feature</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Set up the development environment:</p>
+<section id="fork-and-clone" class="level3">
+<h3 class="anchored" data-anchor-id="fork-and-clone">1. Fork and clone</h3>
+<p>Fork the repository on GitHub, then clone your fork locally and add the upstream remote:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/your-username/Ammonyte.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> Ammonyte</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add upstream https://github.com/LinkedEarth/Ammonyte.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="set-up-the-development-environment" class="level3">
+<h3 class="anchored" data-anchor-id="set-up-the-development-environment">2. Set up the development environment</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">-f</span> .binder/environment.yml</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate ammonyte_env</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-e</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Make your changes and add tests if applicable</p></li>
-<li><p>Run the test suite to make sure everything passes:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pytest</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span> ammonyte/tests/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Submit a pull request against the <code>main</code> branch</p></li>
-</ol>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-e</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="create-a-branch" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-branch">3. Create a branch</h3>
+<p>Always branch from an up-to-date <code>main</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull upstream main <span class="at">--ff-only</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> my-feature</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Use a descriptive branch name that reflects the change (e.g.&nbsp;<code>fix/kstest-edge-case</code>, <code>feature/geoseries</code>).</p>
+</section>
+<section id="make-your-changes" class="level3">
+<h3 class="anchored" data-anchor-id="make-your-changes">4. Make your changes</h3>
+<ul>
+<li>Add or update tests for any new or changed behaviour</li>
+<li>Update docstrings to reflect any API changes</li>
+<li>Keep changes focused (one feature or fix per branch)</li>
+</ul>
+</section>
+<section id="run-the-tests" class="level3">
+<h3 class="anchored" data-anchor-id="run-the-tests">5. Run the tests</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span> ammonyte/tests/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>All tests must pass before submitting a pull request.</p>
+</section>
+<section id="commit-your-changes" class="level3">
+<h3 class="anchored" data-anchor-id="commit-your-changes">6. Commit your changes</h3>
+<p>Write a short, descriptive commit message (under 80 characters). If the commit closes a GitHub issue, reference it in the body:</p>
+<pre><code>Add GeoSeries class with lat/lon/elevation metadata
+
+Closes #23</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add path/to/changed_file.py</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"your message"</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin my-feature</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="open-a-pull-request" class="level3">
+<h3 class="anchored" data-anchor-id="open-a-pull-request">7. Open a pull request</h3>
+<p>Open a pull request against the <code>main</code> branch of <code>LinkedEarth/Ammonyte</code>. In the PR description:</p>
+<ul>
+<li>Summarise what changed and why</li>
+<li>Reference the related issue (e.g.&nbsp;<code>Closes #23</code>)</li>
+<li>List any decisions or trade-offs worth noting</li>
+</ul>
+<p>Before submitting, verify that:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">All tests pass locally</label></li>
+<li><label><input type="checkbox">New functionality has corresponding tests</label></li>
+<li><label><input type="checkbox">Docstrings are up to date</label></li>
+<li><label><input type="checkbox">The branch is up to date with <code>upstream/main</code></label></li>
+</ul>
+<p>If the upstream <code>main</code> has moved since you branched, update your branch before merging:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> merge upstream/main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="after-the-pr-is-merged" class="level3">
+<h3 class="anchored" data-anchor-id="after-the-pr-is-merged">8. After the PR is merged</h3>
+<p>Delete the feature branch locally and on your fork:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-d</span> my-feature</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin <span class="at">--delete</span> my-feature</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
 </section>
 <section id="code-style" class="level2">
 <h2 class="anchored" data-anchor-id="code-style">Code style</h2>
-<p>Please follow existing code conventions in the repository. Docstrings should use NumPy style.</p>
+<ul>
+<li>Follow the existing conventions in the codebase</li>
+<li>Use descriptive variable names</li>
+<li>Docstrings must follow <a href="https://numpydoc.readthedocs.io/en/latest/format.html">NumPy style</a> and include a <code>Parameters</code>, <code>Returns</code>, and <code>Examples</code> section</li>
+</ul>
+<p>A minimal docstring example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> my_function(x, threshold<span class="op">=</span><span class="fl">0.05</span>):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">    One-line summary of what the function does.</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">    x : array-like</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">        Input data.</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">    threshold : float, optional</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">        Significance threshold. Default is 0.05.</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">    result : float</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">        Description of the return value.</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co">    Examples</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co">    --------</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co">    &gt;&gt;&gt; import ammonyte as amt</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co">    &gt;&gt;&gt; result = my_function([1, 2, 3])</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="testing-conventions" class="level2">
+<h2 class="anchored" data-anchor-id="testing-conventions">Testing conventions</h2>
+<ul>
+<li>Place tests in <code>ammonyte/tests/</code></li>
+<li>Name test files <code>test_&lt;module&gt;.py</code> (e.g.&nbsp;<code>test_core_series.py</code>)</li>
+<li>Name test functions <code>test_&lt;method&gt;</code> (e.g.&nbsp;<code>test_kstest_returns_transitions</code>)</li>
+<li>Use the datasets bundled with the package where possible</li>
+<li>Keep tests minimal and focused — each test should verify one behaviour</li>
+</ul>
 
 
 </section>
@@ -367,7 +475,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/niatimary\.github\.io\/Ammonyte\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

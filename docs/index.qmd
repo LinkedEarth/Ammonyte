@@ -4,8 +4,6 @@ subtitle: "A Python package for multi-method detection of transitions in paleocl
 sidebar: Ammonyte
 ---
 
-A Python package for multi-method detection of transitions in paleoclimate time series
-
 ## Quick install
 
 ```bash

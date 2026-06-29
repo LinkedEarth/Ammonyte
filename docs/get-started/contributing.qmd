@@ -3,41 +3,156 @@ title: Contributing
 sidebar: get-started
 ---
 
-Thank you for your interest in contributing to Ammonyte! Contributions of all kinds are welcome — bug reports, feature requests, documentation improvements, and code contributions.
+Contributions of all kinds are welcome: bug reports, feature requests, documentation improvements, and code contributions. All work is coordinated through [GitHub Issues](https://github.com/LinkedEarth/Ammonyte/issues).
 
 ## Reporting a bug
 
-If you find a bug, please open an issue on [GitHub Issues](https://github.com/LinkedEarth/Ammonyte/issues) and include:
+Open an issue on GitHub and include:
 
-- A short description of the problem
-- A minimal code example that reproduces it
-- The output or error message you see
+- A minimal, self-contained code example that reproduces the problem
+- The full version string: `print(ammonyte.__version__)`
+- The error message or incorrect output you observe
+- Your Python version and operating system
+
+The more specific the report, the faster it can be resolved.
 
 ## Suggesting a feature
 
-Open an issue with the label `enhancement` and describe what you'd like to see and why it would be useful.
+Open an issue with the label `enhancement` and describe:
+
+- What you would like to see
+- Why it would be useful
+- If possible, a sketch of how it might work
+
+For non-trivial features, consider prototyping the idea in a notebook first, showing the proposed API and a working example.
 
 ## Contributing code
 
-1. Fork the repository and clone it locally
-2. Create a new branch for your change:
-   ```bash
-   git checkout -b my-feature
-   ```
-3. Set up the development environment:
-   ```bash
-   conda env create -f .binder/environment.yml
-   conda activate ammonyte_env
-   pip install -e .
-   ```
-4. Make your changes and add tests if applicable
-5. Run the test suite to make sure everything passes:
-   ```bash
-   pip install pytest
-   pytest ammonyte/tests/
-   ```
-6. Submit a pull request against the `main` branch
+### 1. Fork and clone
+
+Fork the repository on GitHub, then clone your fork locally and add the upstream remote:
+
+```bash
+git clone https://github.com/your-username/Ammonyte.git
+cd Ammonyte
+git remote add upstream https://github.com/LinkedEarth/Ammonyte.git
+```
+
+### 2. Set up the development environment
+
+```bash
+conda env create -f .binder/environment.yml
+conda activate ammonyte_env
+pip install -e .
+```
+
+### 3. Create a branch
+
+Always branch from an up-to-date `main`:
+
+```bash
+git pull upstream main --ff-only
+git checkout -b my-feature
+```
+
+Use a descriptive branch name that reflects the change (e.g. `fix/kstest-edge-case`, `feature/geoseries`).
+
+### 4. Make your changes
+
+- Add or update tests for any new or changed behaviour
+- Update docstrings to reflect any API changes
+- Keep changes focused (one feature or fix per branch)
+
+### 5. Run the tests
+
+```bash
+pytest ammonyte/tests/
+```
+
+All tests must pass before submitting a pull request.
+
+### 6. Commit your changes
+
+Write a short, descriptive commit message (under 80 characters). If the commit closes a GitHub issue, reference it in the body:
+
+```
+Add GeoSeries class with lat/lon/elevation metadata
+
+Closes #23
+```
+
+```bash
+git add path/to/changed_file.py
+git commit -m "your message"
+git push origin my-feature
+```
+
+### 7. Open a pull request
+
+Open a pull request against the `main` branch of `LinkedEarth/Ammonyte`. In the PR description:
+
+- Summarise what changed and why
+- Reference the related issue (e.g. `Closes #23`)
+- List any decisions or trade-offs worth noting
+
+Before submitting, verify that:
+
+- [ ] All tests pass locally
+- [ ] New functionality has corresponding tests
+- [ ] Docstrings are up to date
+- [ ] The branch is up to date with `upstream/main`
+
+If the upstream `main` has moved since you branched, update your branch before merging:
+
+```bash
+git merge upstream/main
+```
+
+### 8. After the PR is merged
+
+Delete the feature branch locally and on your fork:
+
+```bash
+git branch -d my-feature
+git push origin --delete my-feature
+```
 
 ## Code style
 
-Please follow existing code conventions in the repository. Docstrings should use NumPy style.
+- Follow the existing conventions in the codebase
+- Use descriptive variable names
+- Docstrings must follow [NumPy style](https://numpydoc.readthedocs.io/en/latest/format.html) and include a `Parameters`, `Returns`, and `Examples` section
+
+A minimal docstring example:
+
+```python
+def my_function(x, threshold=0.05):
+    """
+    One-line summary of what the function does.
+
+    Parameters
+    ----------
+    x : array-like
+        Input data.
+    threshold : float, optional
+        Significance threshold. Default is 0.05.
+
+    Returns
+    -------
+    result : float
+        Description of the return value.
+
+    Examples
+    --------
+    >>> import ammonyte as amt
+    >>> result = my_function([1, 2, 3])
+    """
+```
+
+## Testing conventions
+
+- Place tests in `ammonyte/tests/`
+- Name test files `test_<module>.py` (e.g. `test_core_series.py`)
+- Name test functions `test_<method>` (e.g. `test_kstest_returns_transitions`)
+- Use the datasets bundled with the package where possible
+- Keep tests minimal and focused — each test should verify one behaviour

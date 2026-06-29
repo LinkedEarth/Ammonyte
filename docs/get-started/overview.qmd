@@ -34,14 +34,14 @@ across methods is a stronger signal than any one method alone.
 
 The three methods rest on fundamentally different assumptions about what a
 "transition" is. Understanding these differences helps you choose the right
-tool — or, better, use all three together.
+tool, or better use all three together.
 
 | | Augmented KS Test | Ruptures | LERM |
 |---|---|---|---|
 | **What it detects** | Change in the *statistical distribution* (mean, variance, shape) | Structural *breakpoints* that minimize a cost function | *Dynamical regime change* in the system's phase space |
 | **Underlying principle** | Nonparametric hypothesis test on sliding windows | Optimization / segmentation | Recurrence analysis + Laplacian eigenmapping + Fisher information |
 | **Strengths** | Interpretable p-values; no distributional assumption; multi-criterion filtering reduces false positives | Flexible: 6 search algorithms, multiple cost functions; fast for sharp breaks | Sensitive to gradual or dynamical shifts invisible to amplitude methods; operates in state space |
-| **Limitations** | Misses transitions where the distribution barely changes (e.g. dynamical shifts with similar mean and variance) | Like KS, amplitude-based — misses dynamical changes; some algorithms (e.g. dynamic programming) are computationally expensive; number of breakpoints often must be specified | More complex pipeline; computationally heavier |
+| **Limitations** | Misses transitions where the distribution barely changes (e.g. dynamical shifts with similar mean and variance) | Like KS, amplitude-based, misses dynamical changes; some algorithms (e.g. dynamic programming) are computationally expensive; number of breakpoints often must be specified | More complex pipeline; computationally heavier |
 | **Best use case** | Sharp, amplitude-driven climate transitions (e.g. glacial terminations) | When you want flexible algorithm/cost-function control over segmentation | Subtle regime shifts; validating or contrasting with amplitude-based results |
 
 ### Choosing a method
@@ -50,8 +50,8 @@ tool — or, better, use all three together.
   want statistically interpretable output.
 - **Use Ruptures** when you want maximum flexibility in how breakpoints are
   found, or when you need to impose a known number of breakpoints.
-- **Use LERM** when the transition may not be visible in amplitude — for
-  example, a shift in variability or rhythmicity rather than in mean value —
+- **Use LERM** when the transition may not be visible in amplitude, for
+  example, a shift in variability or rhythmicity rather than in mean value,
   or to cross-check the other two methods.
 - **Use all three together** and look for agreement: detections that appear
   across multiple methods are more likely to reflect genuine climate transitions
