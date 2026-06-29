@@ -1,0 +1,101 @@
+# core.recurrence_matrix.RecurrenceMatrix { #ammonyte.core.recurrence_matrix.RecurrenceMatrix }
+
+```python
+core.recurrence_matrix.RecurrenceMatrix(
+    matrix,
+    time,
+    epsilon,
+    m,
+    tau,
+    series=None,
+    value_name=None,
+    value_unit=None,
+    time_name=None,
+    time_unit=None,
+    label=None,
+)
+```
+
+Recurrence matrix object. Used for Recurrence Quantification Analysis (RQA).
+
+## Methods
+
+| Name | Description |
+| --- | --- |
+| [laplacian_eigenmaps](#ammonyte.core.recurrence_matrix.RecurrenceMatrix.laplacian_eigenmaps) | Function to run regime change detection workflow |
+| [plot](#ammonyte.core.recurrence_matrix.RecurrenceMatrix.plot) | Plotting function for recurrence matrices |
+
+### laplacian_eigenmaps { #ammonyte.core.recurrence_matrix.RecurrenceMatrix.laplacian_eigenmaps }
+
+```python
+core.recurrence_matrix.RecurrenceMatrix.laplacian_eigenmaps(w_size, w_incre)
+```
+
+Function to run regime change detection workflow
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+<code>[**w_size**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation}</code>
+
+:   Window size for the fisher information
+
+<code>[**w_incre**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation}</code>
+
+:   Window increment for the fisher information
+
+#### Returns {.doc-section .doc-section-returns}
+
+<code>[**FI_series**]{.parameter-name} [:]{.parameter-annotation-sep} [[ammonyte](`ammonyte`).[RQARes](`ammonyte.RQARes`)]{.parameter-annotation}</code>
+
+:   RQARes object containing the Fisher Information time series derived from the Laplacian eigenmaps of the recurrence matrix.
+
+### plot { #ammonyte.core.recurrence_matrix.RecurrenceMatrix.plot }
+
+```python
+core.recurrence_matrix.RecurrenceMatrix.plot(
+    figsize=(8, 8),
+    xlabel=None,
+    ylabel=None,
+    title=None,
+    imshow_kwargs=None,
+)
+```
+
+Plotting function for recurrence matrices
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+<code>[**figsize**]{.parameter-name} [:]{.parameter-annotation-sep} [[tuple](`tuple`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [(8, 8)]{.parameter-default}</code>
+
+:   Size of figure
+
+<code>[**xlabel**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Label on x axis (if time name and units are present they will be used)
+
+<code>[**ylabel**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Label on y axis (if time name and units are present they will be used)
+
+<code>[**title**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Title of the plot
+
+<code>[**imshow_kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Dictionary of key word arguments for the imshow method from matplotlib.axes.Axes.imshow
+
+#### Returns {.doc-section .doc-section-returns}
+
+<code>[**fig**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[figure](`matplotlib.figure`).[Figure](`matplotlib.figure.Figure`)]{.parameter-annotation}</code>
+
+:   The figure object from matplotlib. See `matplotlib.pyplot.figure <https://matplotlib.org/stable/api/figure_api.html>`_ for details.
+
+<code>[**ax**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[axes](`matplotlib.axes`).[Axes](`matplotlib.axes.Axes`)]{.parameter-annotation}</code>
+
+:   The axis object from matplotlib. See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html>`_ for details.
+
+#### See Also {.doc-section .doc-section-see-also}
+
+
+matplotlib.axes.Axes.imshow

@@ -1,0 +1,150 @@
+project:
+  type: website
+  output-dir: _site
+  resources:
+    - notebooks
+    - scripts
+    - figures
+    - objects.txt
+    - thumbnails
+  pre-render:
+    - python scripts/sync_notebooks.py
+    - python scripts/generate_tutorials_index.py
+    - python scripts/inject_doc_figures.py
+
+metadata-files:
+  - api/_sidebar.yml
+
+filters:
+  - "interlinks"
+
+interlinks:
+  fast: true
+  autolink: true
+  sources:
+    numpy:
+      url: https://numpy.org/doc/stable/
+    python:
+      url: https://docs.python.org/3/
+    ammonyte:
+      url: /
+      inv: objects.txt
+  aliases:
+    pandas: pd
+
+execute:
+  freeze: true
+
+website:
+  title: "Ammonyte"
+  description: "A Python package for multi-method detection of transitions in paleoclimate time series"
+  page-navigation: true
+  navbar:
+    title: false
+    # logo: thumbnails/logo.png
+    logo-alt: "Ammonyte"
+    left:
+      - file: get-started/installation.qmd
+        text: Get Started
+      - file: methods/index.qmd
+        text: Methods
+      - href: api/index.qmd
+        text: API
+      - file: tutorials/index.qmd
+        text: Tutorials
+
+    right:
+      - icon: github
+        href: https://github.com/LinkedEarth/Ammonyte
+
+  sidebar:
+    - id: get-started
+      title: Get Started
+      style: floating
+      align: left
+      contents:
+        - get-started/overview.qmd
+        - section: "Basic Use"
+          contents:
+          - get-started/installation.qmd
+          - get-started/quickstart.qmd
+          - get-started/citation.qmd
+          - get-started/contributing.qmd
+
+    - id: methods
+      title: Methods
+      style: floating
+      align: left
+      contents:
+        - methods/index.qmd
+        - methods/augmented_ks_test.qmd
+        - methods/lerm.qmd
+        - methods/ruptures.qmd
+
+    - id: tutorials
+      title: Tutorials
+      style: floating
+      align: left
+      contents:
+        - tutorials/index.qmd
+        - section: "Getting Started"
+          contents:
+            - text: "Getting Started"
+              href: notebooks/Getting_Started.ipynb
+        - section: "Augmented KS Test"
+          contents:
+            - text: "KS_Test_Validation"
+              href: notebooks/KS_test_Validation.ipynb
+        - section: "LERM"
+          contents:
+            - text: "LERM_Validation"
+              href: notebooks/LERM_Validation.ipynb
+        - section: "Ruptures"
+          contents:
+            - text: "Ruptures_Validation"
+              href: notebooks/Ruptures_Validation.ipynb
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 5
+    toc-location: right
+    include-after-body: _version-picker.html
+    css:
+      - api/_styles-quartodoc.css
+      - styles.css
+
+quartodoc:
+  style: pkgdown
+  dir: api
+  package: ammonyte
+  out_index: index.qmd
+  render_interlinks: true
+  renderer:
+    style: markdown
+    table_style: description-list
+  sidebar: "api/_sidebar.yml"
+  css: "api/_styles-quartodoc.css"
+
+  sections:
+    - title: Core
+      desc: "Core classes for time series analysis and recurrence quantification."
+      contents:
+        - core.series.Series
+        - core.time_embedded_series.TimeEmbeddedSeries
+        - core.recurrence_matrix.RecurrenceMatrix
+        - core.recurrence_network.RecurrenceNetwork
+        - core.rqa_res.RQARes
+        - core.transitions.DeterministicTransitions
+    - title: Utilities
+      desc: "Functions for transition detection, parameter selection, metrics, and plotting."
+      contents:
+        - utils.ks.KS_test
+        - utils.lerm_transitions.lerm_transition
+        - utils.ruptures_transitions.ruptures_transition
+        - utils.parameters.tau_search
+        - utils.metrics.DetectionMetrics
+        - utils.metrics.evaluate_detection
+        - utils.plotting.bootstrap_fill_plot
+        - utils.plotting.bootstrap_scatter_plot

@@ -1,0 +1,104 @@
+# utils.lerm_transitions.lerm_transition { #ammonyte.utils.lerm_transitions.lerm_transition }
+
+```python
+utils.lerm_transitions.lerm_transition(
+    series,
+    transition_interval=None,
+    upper=95,
+    lower=5,
+    w=50,
+    n_samples=10000,
+)
+```
+
+Detect transitions using LERM Fisher Information threshold crossings
+
+Identifies complete transitions where the Fisher Information series crosses
+from one confidence bound to the other, indicating abrupt changes in the
+dynamical system.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+<code>[**series**]{.parameter-name} [:]{.parameter-annotation-sep} [([ammonyte](`ammonyte`).[Series](`ammonyte.Series`), [ammonyte](`ammonyte`).[RQARes](`ammonyte.RQARes`))]{.parameter-annotation}</code>
+
+:   Fisher Information series from LERM analysis (typically smoothed)
+
+<code>[**transition_interval**]{.parameter-name} [:]{.parameter-annotation-sep} [[tuple](`tuple`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   (upper_bound, lower_bound) for detecting transitions. If None, automatically computes via bootstrapping using the parameters below.
+
+<code>[**upper**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [95]{.parameter-default}</code>
+
+:   Upper percentile for confidence interval. Default is 95 Only used if transition_interval is None.
+
+<code>[**lower**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [5]{.parameter-default}</code>
+
+:   Lower percentile for confidence interval. Default is 5 Only used if transition_interval is None.
+
+<code>[**w**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [50]{.parameter-default}</code>
+
+:   Bootstrap sample size. Default is 50 Only used if transition_interval is None.
+
+<code>[**n_samples**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [10000]{.parameter-default}</code>
+
+:   Number of bootstrap samples. Default is 10000 Only used if transition_interval is None.
+
+## Returns {.doc-section .doc-section-returns}
+
+<code>[**jump_times**]{.parameter-name} [:]{.parameter-annotation-sep} [[numpy](`numpy`).[ndarray](`numpy.ndarray`)]{.parameter-annotation}</code>
+
+:   Array of transition times
+
+<code>[**jump_directions**]{.parameter-name} [:]{.parameter-annotation-sep} [[numpy](`numpy`).[ndarray](`numpy.ndarray`)]{.parameter-annotation}</code>
+
+:   Array of transition directions (+1 for upward, -1 for downward)
+
+<code>[**upper_bound**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation}</code>
+
+:   Upper confidence bound used for detection
+
+<code>[**lower_bound**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation}</code>
+
+:   Lower confidence bound used for detection
+
+## Examples {.doc-section .doc-section-examples}
+
+Basic usage (typically called via Series.lerm_transitions):
+
+.. jupyter-execute::
+
+    import os, ammonyte as amt
+    from ammonyte.utils.lerm_transitions import lerm_transition
+
+    # Load data and perform LERM analysis
+    ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
+    NGRIP_td = amt.TimeEmbeddedSeries(ngrip, m=11)
+    NGRIP_epsilon = NGRIP_td.find_epsilon(eps=1, target_density=0.05)
+    NGRIP_rm = NGRIP_epsilon['Output']
+    NGRIP_lp = NGRIP_rm.laplacian_eigenmaps(w_size=20, w_incre=4)
+    NGRIP_lp_smooth = amt.utils.fisher.smooth_series(NGRIP_lp, block_size=3)
+
+    # Detect transitions
+    jump_times, jump_directions, upper_bound, lower_bound = lerm_transition(NGRIP_lp_smooth)
+    print(f"Detected {len(jump_times)} transitions")
+    print(f"Bounds used: upper={upper_bound:.4f}, lower={lower_bound:.4f}")
+
+## See Also {.doc-section .doc-section-see-also}
+
+Series.lerm_transitions : High-level interface to this function
+confidence_interval : Bootstrap confidence interval calculation
+
+## Notes {.doc-section .doc-section-notes}
+
+
+This function detects complete transitions where the series crosses from one
+confidence threshold to the other. The algorithm:
+
+1. Interpolates the series to step=1 for fine-grained detection
+2. Computes or uses provided confidence bounds (upper, lower)
+3. Tracks crossings above the upper threshold
+4. Tracks crossings below the lower threshold
+5. Identifies complete transitions:
+   - Upward (+1): from below lower bound to above upper bound
+   - Downward (-1): from above upper bound to below lower bound
+6. Assigns transition time at the midpoint between threshold crossings

@@ -1,0 +1,32 @@
+# _docsmith_example.docsmith_example_plot { #ammonyte._docsmith_example.docsmith_example_plot }
+
+```python
+_docsmith_example.docsmith_example_plot(n=50)
+```
+
+Plot a damped sine wave, as a worked example of the docstring convention.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+<code>[**n**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [50]{.parameter-default}</code>
+
+:   Number of points to sample.
+
+## Returns {.doc-section .doc-section-returns}
+
+<code>[]{.parameter-name} [:]{.parameter-annotation-sep} [[tuple](`tuple`)\[[np](`numpy`).[ndarray](`numpy.ndarray`), [np](`numpy`).[ndarray](`numpy.ndarray`)\]]{.parameter-annotation}</code>
+
+:   The ``(x, y)`` arrays that were plotted.
+
+## Examples {.doc-section .doc-section-examples}
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+from ammonyte._docsmith_example import docsmith_example_plot
+
+x, y = docsmith_example_plot()
+plt.savefig('docs/reference/figures/docsmith_example_plot_example.png', dpi=150, bbox_inches='tight')
+```
+
+![docsmith_example_plot example output](../figures/docsmith_example_plot_example.png)

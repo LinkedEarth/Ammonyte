@@ -1,0 +1,262 @@
+# core.transitions.DeterministicTransitions { #ammonyte.core.transitions.DeterministicTransitions }
+
+```python
+core.transitions.DeterministicTransitions(
+    series,
+    jump_times,
+    jump_values,
+    method,
+    method_args=None,
+    label=None,
+    statistics=None,
+)
+```
+
+Container for deterministic transition detection results
+
+Stores results from tipping point detection algorithms with methods for analysis and visualization.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+<code>[**series**]{.parameter-name} [:]{.parameter-annotation-sep} [[ammonyte](`ammonyte`).[Series](`ammonyte.Series`)]{.parameter-annotation}</code>
+
+:   Original time series object
+
+<code>[**jump_times**]{.parameter-name} [:]{.parameter-annotation-sep} [[array](`array`) - [like](`like`)]{.parameter-annotation}</code>
+
+:   Array of detected transition times
+
+<code>[**jump_values**]{.parameter-name} [:]{.parameter-annotation-sep} [[array](`array`) - [like](`like`)]{.parameter-annotation}</code>
+
+:   Array of transition directions (+1 upward, -1 downward)
+
+<code>[**method**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation}</code>
+
+:   Name of detection method used
+
+<code>[**method_args**]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Dictionary of method parameters
+
+<code>[**label**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Label for the results
+
+<code>[**d_statistics**]{.parameter-name} [:]{.parameter-annotation-sep} [[array](`array`) - [like](`like`)]{.parameter-annotation}</code>
+
+:   Array of KS D-statistics corresponding to each transition
+
+<code>[**p_values**]{.parameter-name} [:]{.parameter-annotation-sep} [([array](`array`) - [like](`like`), [optional](`optional`))]{.parameter-annotation}</code>
+
+:   Array of p-values corresponding to each transition
+
+## Examples {.doc-section .doc-section-examples}
+
+Basic transition detection:
+
+.. jupyter-execute::
+
+    import os, ammonyte as amt
+    ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
+    transitions = ngrip.kstest(w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2, x_c=0.8)
+    print(transitions)
+    
+Plot the results:
+
+.. jupyter-execute::
+
+    transitions.plot()
+    
+Access transition data:
+
+.. jupyter-execute::
+
+    print(f"Number of transitions: {len(transitions.jump_times)}")
+    print(f"First transition: {transitions.jump_times[0]:.2f}")
+
+## See Also {.doc-section .doc-section-see-also}
+
+Series.kstest : Detect transitions
+
+## Methods
+
+| Name | Description |
+| --- | --- |
+| [copy](#ammonyte.core.transitions.DeterministicTransitions.copy) | Create a copy of the DeterministicTransitions object. |
+| [plot](#ammonyte.core.transitions.DeterministicTransitions.plot) | Plot the time series with detected transitions. |
+| [to_csv](#ammonyte.core.transitions.DeterministicTransitions.to_csv) | Export detected transitions to CSV file |
+
+### copy { #ammonyte.core.transitions.DeterministicTransitions.copy }
+
+```python
+core.transitions.DeterministicTransitions.copy()
+```
+
+Create a copy of the DeterministicTransitions object.
+
+#### Returns {.doc-section .doc-section-returns}
+
+<code>[]{.parameter-name} [:]{.parameter-annotation-sep} [[DeterministicTransitions](`ammonyte.core.transitions.DeterministicTransitions`)]{.parameter-annotation}</code>
+
+:   A deep copy of the current object.
+
+### plot { #ammonyte.core.transitions.DeterministicTransitions.plot }
+
+```python
+core.transitions.DeterministicTransitions.plot(
+    figsize=(12, 8),
+    ylabel=None,
+    xlabel=None,
+    title=None,
+    upward_color='red',
+    downward_color='blue',
+    transition_color=None,
+    show_transitions='both',
+    ax=None,
+    title_fontsize=14,
+    label_fontsize=12,
+    tick_fontsize=10,
+    legend_fontsize=10,
+    show_legend=True,
+    legend_labels=None,
+    legend_loc='best',
+    **kwargs,
+)
+```
+
+Plot the time series with detected transitions.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+<code>[**figsize**]{.parameter-name} [:]{.parameter-annotation-sep} [[tuple](`tuple`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [(12, 8)]{.parameter-default}</code>
+
+:   Figure size (width, height) in inches. Default is (12, 8).
+
+<code>[**ylabel**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Y-axis label. If None, uses series metadata.
+
+<code>[**xlabel**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   X-axis label. If None, uses series metadata.
+
+<code>[**title**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Plot title. If None, auto-generated.
+
+<code>[**upward_color**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [\'red\']{.parameter-default}</code>
+
+:   Color for upward transition markers. Default is 'red'. Used when show_transitions is 'both' or 'upward'.
+
+<code>[**downward_color**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [\'blue\']{.parameter-default}</code>
+
+:   Color for downward transition markers. Default is 'blue'. Used when show_transitions is 'both' or 'downward'.
+
+<code>[**transition_color**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Color for all transitions when show_transitions='all'. Default is None. If None, falls back to upward_color. Recommended to use this parameter when show_transitions='all' for clarity.
+
+<code>[**show_transitions**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [\'both\']{.parameter-default}</code>
+
+:   Which transitions to show: 'all', 'both', 'upward', or 'downward'. Default is 'both'. - 'all': Show all transitions in one color without direction distinction (use transition_color) - 'both': Show upward and downward transitions in different colors (use upward_color/downward_color) - 'upward': Show only upward transitions (use upward_color) - 'downward': Show only downward transitions (use downward_color)
+
+<code>[**ax**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[axes](`matplotlib.axes`).[Axes](`matplotlib.axes.Axes`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Axes object to plot on. If None, creates new figure.
+
+<code>[**title_fontsize**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [14]{.parameter-default}</code>
+
+:   Font size for plot title. Default is 14.
+
+<code>[**label_fontsize**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [12]{.parameter-default}</code>
+
+:   Font size for axis labels. Default is 12.
+
+<code>[**tick_fontsize**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [10]{.parameter-default}</code>
+
+:   Font size for tick labels (numbers on axes). Default is 10.
+
+<code>[**legend_fontsize**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [10]{.parameter-default}</code>
+
+:   Font size for legend. Default is 10.
+
+<code>[**show_legend**]{.parameter-name} [:]{.parameter-annotation-sep} [[bool](`bool`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [True]{.parameter-default}</code>
+
+:   Whether to display legend. Default is True.
+
+<code>[**legend_labels**]{.parameter-name} [:]{.parameter-annotation-sep} [list of str]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Custom legend labels. If None, uses auto-generated labels. Provide as list: ['label1'] for single transition type, or ['label1', 'label2'] for both.
+
+<code>[**legend_loc**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [\'best\']{.parameter-default}</code>
+
+:   Legend location. Default is 'best'. Options: 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center', 'best'.
+
+<code>[****kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation} [ = ]{.parameter-default-sep} [{}]{.parameter-default}</code>
+
+:   Additional arguments passed to matplotlib plot functions.
+
+#### Returns {.doc-section .doc-section-returns}
+
+<code>[**fig**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[figure](`matplotlib.figure`).[Figure](`matplotlib.figure.Figure`)]{.parameter-annotation}</code>
+
+:   The figure object.
+
+<code>[**ax**]{.parameter-name} [:]{.parameter-annotation-sep} [[matplotlib](`matplotlib`).[axes](`matplotlib.axes`).[Axes](`matplotlib.axes.Axes`)]{.parameter-annotation}</code>
+
+:   The axes object.
+
+#### Examples {.doc-section .doc-section-examples}
+
+```python
+>>> # Basic plot
+>>> result.plot()
+>>>
+>>> # Custom colors and size
+>>> result.plot(figsize=(15, 10), upward_color='green', downward_color='purple')
+>>>
+>>> # Show only upward transitions
+>>> result.plot(show_transitions='upward', upward_color='red')
+>>>
+>>> # Show all transitions without direction distinction (single color, single legend)
+>>> result.plot(show_transitions='all', transition_color='blue')
+>>>
+>>> # Custom font sizes
+>>> result.plot(title_fontsize=18, label_fontsize=16, tick_fontsize=14, legend_fontsize=14)
+>>>
+>>> # Hide legend
+>>> result.plot(show_legend=False)
+>>>
+>>> # Custom legend label with 'all' mode
+>>> result.plot(show_transitions='all', transition_color='purple',
+...             legend_labels=['Detected Transitions'])
+>>>
+>>> # Custom legend location and color
+>>> result.plot(show_transitions='all', transition_color='#1f77b4',
+...             legend_loc='upper right')
+```
+
+### to_csv { #ammonyte.core.transitions.DeterministicTransitions.to_csv }
+
+```python
+core.transitions.DeterministicTransitions.to_csv(path=None, **kwargs)
+```
+
+Export detected transitions to CSV file
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+<code>[**path**]{.parameter-name} [:]{.parameter-annotation-sep} [[str](`str`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   Output file path. If None, uses default naming based on method.
+
+<code>[****kwargs**]{.parameter-name} [:]{.parameter-annotation-sep} []{.parameter-annotation} [ = ]{.parameter-default-sep} [{}]{.parameter-default}</code>
+
+:   Additional arguments passed to pandas.to_csv()
+
+#### Examples {.doc-section .doc-section-examples}
+
+```python
+>>> transitions = ngrip.kstest(w_min=0.12, w_max=2.5)
+>>> transitions.to_csv('my_transitions.csv')
+```

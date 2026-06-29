@@ -1,0 +1,29 @@
+---
+title: Ruptures
+---
+
+Ruptures [@Truong2020] detects transitions by partitioning the time series into
+homogeneous segments and finding breakpoints that minimize a cost function.
+Ammonyte exposes six search algorithms (Pelt, Binseg, BottomUp, Dynp, Window,
+and KernelCPD) and multiple cost functions, making it the most flexible of the
+three methods.
+
+## When to use
+
+**Best for:** Sharp structural breaks in mean or variance, when flexibility in
+algorithm and cost function choice is needed.
+
+**Limitation:** Like the [Augmented KS Test](augmented_ks_test.qmd), ruptures
+detects statistical breaks in amplitude. It says nothing about the dynamics,
+for dynamically-sensitive detection, see [LERM](lerm.qmd).
+
+## Reference
+
+Truong, C., Oudre, L., & Vayatis, N. (2020). Selective review of offline
+change point detection methods. *Signal Processing*, 167, 107299.
+<https://doi.org/10.1016/j.sigpro.2019.107299>
+
+## Tutorial
+
+See the [Ruptures Validation](../notebooks/Ruptures_Validation.ipynb) notebook
+for a worked example.

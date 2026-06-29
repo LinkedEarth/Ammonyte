@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Detecting Tipping Points with Ammonyte LERM Method – Ammonyte</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../api/_styles-quartodoc.css">
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../get-started/installation.html"> 
+<span class="menu-text">Get Started</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../methods/index.html"> 
+<span class="menu-text">Methods</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../api/index.html"> 
+<span class="menu-text">API</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../tutorials/index.html"> 
+<span class="menu-text">Tutorials</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/LinkedEarth/Ammonyte"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#load-the-ngrip-dataset-for-tipping-point-analysis" id="toc-load-the-ngrip-dataset-for-tipping-point-analysis" class="nav-link active" data-scroll-target="#load-the-ngrip-dataset-for-tipping-point-analysis">Load the NGRIP Dataset for Tipping Point Analysis</a></li>
+  <li><a href="#dataset-overview" id="toc-dataset-overview" class="nav-link" data-scroll-target="#dataset-overview">Dataset Overview</a></li>
+  <li><a href="#dataset-metadata-summary" id="toc-dataset-metadata-summary" class="nav-link" data-scroll-target="#dataset-metadata-summary">Dataset Metadata Summary</a></li>
+  <li><a href="#ngrip-mathrmdelta18o-record-visualization" id="toc-ngrip-mathrmdelta18o-record-visualization" class="nav-link" data-scroll-target="#ngrip-mathrmdelta18o-record-visualization">NGRIP <span class="math inline">\(\mathrm{\delta^{18}O}\)</span> Record Visualization</a></li>
+  <li><a href="#main-lerm-analysis" id="toc-main-lerm-analysis" class="nav-link" data-scroll-target="#main-lerm-analysis">Main LERM Analysis</a>
+  <ul>
+  <li><a href="#step-1-time-delay-embedding" id="toc-step-1-time-delay-embedding" class="nav-link" data-scroll-target="#step-1-time-delay-embedding">Step 1: Time Delay Embedding</a>
+  <ul>
+  <li><a href="#phase-space-reconstruction" id="toc-phase-space-reconstruction" class="nav-link" data-scroll-target="#phase-space-reconstruction">Phase Space Reconstruction</a></li>
+  </ul></li>
+  <li><a href="#step-2-recurrence-network-construction" id="toc-step-2-recurrence-network-construction" class="nav-link" data-scroll-target="#step-2-recurrence-network-construction">Step 2: Recurrence Network Construction</a>
+  <ul>
+  <li><a href="#finding-the-optimal-epsilon-parameter" id="toc-finding-the-optimal-epsilon-parameter" class="nav-link" data-scroll-target="#finding-the-optimal-epsilon-parameter">Finding the Optimal Epsilon Parameter</a></li>
+  <li><a href="#recurrence-matrices-visualization" id="toc-recurrence-matrices-visualization" class="nav-link" data-scroll-target="#recurrence-matrices-visualization">Recurrence Matrices Visualization</a>
+  <ul class="collapse">
+  <li><a href="#extracting-and-visualizing-the-recurrence-network" id="toc-extracting-and-visualizing-the-recurrence-network" class="nav-link" data-scroll-target="#extracting-and-visualizing-the-recurrence-network">Extracting and Visualizing the Recurrence Network</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#step-3-fisher-information-computation" id="toc-step-3-fisher-information-computation" class="nav-link" data-scroll-target="#step-3-fisher-information-computation">Step 3: Fisher Information Computation</a>
+  <ul>
+  <li><a href="#extracting-dynamical-information-from-the-recurrence-network" id="toc-extracting-dynamical-information-from-the-recurrence-network" class="nav-link" data-scroll-target="#extracting-dynamical-information-from-the-recurrence-network">Extracting Dynamical Information from the Recurrence Network</a></li>
+  </ul></li>
+  <li><a href="#step-4-smoothing-the-fisher-information-series" id="toc-step-4-smoothing-the-fisher-information-series" class="nav-link" data-scroll-target="#step-4-smoothing-the-fisher-information-series">Step 4: Smoothing the Fisher Information Series</a></li>
+  <li><a href="#step-5-visualizing-smoothed-fisher-information" id="toc-step-5-visualizing-smoothed-fisher-information" class="nav-link" data-scroll-target="#step-5-visualizing-smoothed-fisher-information">Step 5: Visualizing Smoothed Fisher Information</a></li>
+  <li><a href="#step-6-detecting-climate-transitions-with-lerm" id="toc-step-6-detecting-climate-transitions-with-lerm" class="nav-link" data-scroll-target="#step-6-detecting-climate-transitions-with-lerm">Step 6: Detecting Climate Transitions with LERM</a></li>
+  <li><a href="#step-7-visualizing-detected-transitions" id="toc-step-7-visualizing-detected-transitions" class="nav-link" data-scroll-target="#step-7-visualizing-detected-transitions">Step 7: Visualizing Detected Transitions</a></li>
+  <li><a href="#step-8-alternative-detection-method-kolmogorov-smirnov-test" id="toc-step-8-alternative-detection-method-kolmogorov-smirnov-test" class="nav-link" data-scroll-target="#step-8-alternative-detection-method-kolmogorov-smirnov-test">Step 8: Alternative Detection Method (Kolmogorov-Smirnov Test)</a>
+  <ul>
+  <li><a href="#ks-test-results" id="toc-ks-test-results" class="nav-link" data-scroll-target="#ks-test-results">KS Test Results</a></li>
+  <li><a href="#visualizing-ks-test-transitions" id="toc-visualizing-ks-test-transitions" class="nav-link" data-scroll-target="#visualizing-ks-test-transitions">Visualizing KS Test Transitions</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-other-links"><h2>Other Links</h2><ul><li><a href="https://mybinder.org/v2/gh/LinkedEarth/Ammonyte/HEAD?labpath=notebooks/LERM_validation.ipynb"><i class="bi bi-rocket-takeoff"></i>Launch on Binder</a></li><li><a href="https://raw.githubusercontent.com/LinkedEarth/Ammonyte/main/notebooks/LERM_validation.ipynb"><i class="bi bi-download"></i>Download notebook</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Detecting Tipping Points with Ammonyte LERM Method</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="d917985c-7a9a-4c4e-aff1-71a77afabf0a" class="cell" data-execution_count="37">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import libraries and packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ammonyte <span class="im">as</span> amt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> copy </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="load-the-ngrip-dataset-for-tipping-point-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="load-the-ngrip-dataset-for-tipping-point-analysis">Load the NGRIP Dataset for Tipping Point Analysis</h3>
+</section>
+<section id="dataset-overview" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-overview">Dataset Overview</h3>
+<p>The <strong>North Greenland Ice Core Project (NGRIP)</strong> dataset contains high-resolution paleoclimate proxy data from Greenland ice cores. This dataset is particularly valuable for studying abrupt climate transitions and tipping points in the Earth’s climate system.</p>
+<p><strong>Key Dataset Features:</strong> - <strong>Proxy Variable</strong>: <span class="math inline">\(\mathrm{\delta^{18}O}\)</span> isotope measurements - <strong>Units</strong>: per mil - <strong>Time Scale</strong>: Thousands of years before present (kyr b2k)</p>
+<div id="33ad5808-28ce-4fb2-8e2c-d1a3b7066c60" class="cell" data-execution_count="38">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ngrip <span class="op">=</span> amt.Series.from_csv(<span class="st">'../ammonyte/data/NGRIP.csv'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time axis values sorted in ascending order
+Time axis values sorted in ascending order</code></pre>
+</div>
+</div>
+<div id="80e66717" class="cell" data-execution_count="39">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store original arrays for reuse</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ngrip_time_original <span class="op">=</span> ngrip.time.copy()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ngrip_value_original <span class="op">=</span> ngrip.value.copy()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="dataset-metadata-summary" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-metadata-summary">Dataset Metadata Summary</h3>
+<p>Display key metadata information from the loaded NGRIP time series to understand the dataset characteristics.</p>
+<div id="ba6c9ffe" class="cell" data-execution_count="40">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The metadata</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Loaded NGRIP dataset: </span><span class="sc">{</span>ngrip<span class="sc">.</span>label<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Time range: </span><span class="sc">{</span>ngrip<span class="sc">.</span>time<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.2f}</span><span class="ss"> - </span><span class="sc">{</span>ngrip<span class="sc">.</span>time<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.2f}</span><span class="ss"> </span><span class="sc">{</span>ngrip<span class="sc">.</span>time_unit<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of data points: </span><span class="sc">{</span><span class="bu">len</span>(ngrip.time)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Value range: </span><span class="sc">{</span>ngrip<span class="sc">.</span>value<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.2f}</span><span class="ss"> - </span><span class="sc">{</span>ngrip<span class="sc">.</span>value<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.2f}</span><span class="ss"> </span><span class="sc">{</span>ngrip<span class="sc">.</span>value_unit<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loaded NGRIP dataset: NGRIP Ice Core Data
+Time range: 0.05 - 122.27 kyr b2k
+Number of data points: 6112
+Value range: -46.50 - -32.11 ‰</code></pre>
+</div>
+</div>
+</section>
+<section id="ngrip-mathrmdelta18o-record-visualization" class="level3">
+<h3 class="anchored" data-anchor-id="ngrip-mathrmdelta18o-record-visualization">NGRIP <span class="math inline">\(\mathrm{\delta^{18}O}\)</span> Record Visualization</h3>
+<p>The plot below shows the complete NGRIP ice core record, where: - <strong>X-axis</strong>: Time in thousands of years before present (kyr b2k) - <strong>Y-axis</strong>: <span class="math inline">\(\mathrm{\delta^{18}O}\)</span> isotope values in per mil - <strong>Interpretation</strong>: More negative values indicate colder conditions</p>
+<div id="8376a48f-d8f4-4da9-8da0-f4690530b195" class="cell" data-execution_count="41">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot NGRIP series</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ngrip.plot() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+<pre><code>(&lt;Figure size 1000x400 with 1 Axes&gt;,
+ &lt;Axes: xlabel='Age [kyr b2k]', ylabel='δ¹⁸O [‰]'&gt;)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LERM_validation_files/figure-html/cell-6-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="main-lerm-analysis" class="level1">
+<h1>Main LERM Analysis</h1>
+<p>This section demonstrates the complete LERM workflow for detecting climate transitions in the NGRIP dataset. We use <strong>block_size=2</strong> for smoothing Fisher Information throughout this analysis.</p>
+<p><strong>Workflow Steps:</strong> 1. Time Delay Embedding - Transform 1D time series into multi-dimensional phase space 2. Recurrence Network Construction - Build network representation of climate dynamics 3. Fisher Information Computation - Extract dynamical information via Laplacian Eigenmaps 4. Smoothing - Apply block averaging to reduce noise (block_size=2) 5. Visualization - Display smoothed Fisher Information 6. Transition Detection - Apply LERM method to identify climate transitions 7. Results Visualization - Show detected transitions on both Fisher Information and NGRIP data 8. Alternative Method - Apply KS test for comparison</p>
+<section id="step-1-time-delay-embedding" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-time-delay-embedding">Step 1: Time Delay Embedding</h2>
+<section id="phase-space-reconstruction" class="level4">
+<h4 class="anchored" data-anchor-id="phase-space-reconstruction">Phase Space Reconstruction</h4>
+<p>To apply the LERM method, we first transform the 1-dimensional time series into a <strong>multi-dimensional phase space</strong>.</p>
+<p><strong>Key Parameters:</strong> - <strong><code>m</code> (embedding dimension)</strong>: The number of dimensions in the reconstructed phase space - <strong><code>tau</code> (time delay)</strong>: The lag between successive coordinates in the embedded space - Automatically computed to optimize reconstruction - Represents the decorrelation timescale of the system</p>
+<div id="ba1fef2d-ffc1-4402-ade5-771cc34b125b" class="cell" data-execution_count="42">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#series to time embedded series</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="dv">12</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>NGRIP_td <span class="op">=</span> amt.TimeEmbeddedSeries(ngrip , m)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>NGRIP_td.tau</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="42">
+<pre><code>9</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="step-2-recurrence-network-construction" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-recurrence-network-construction">Step 2: Recurrence Network Construction</h2>
+<section id="finding-the-optimal-epsilon-parameter" class="level4">
+<h4 class="anchored" data-anchor-id="finding-the-optimal-epsilon-parameter">Finding the Optimal Epsilon Parameter</h4>
+<p>Before constructing the recurrence network, we need to determine the optimal <strong>epsilon (ε)</strong> value, which defines the neighborhood radius for connecting points in the phase space. The algorithm iteratively adjusts epsilon until the recurrence network achieves the target density.</p>
+<p><strong>Method:</strong> Adaptive epsilon search to achieve target network density</p>
+<p><strong>Parameters:</strong> - <strong><code>eps</code></strong>: Initial epsilon value to start the search (1.0) - <strong><code>target_density</code></strong>: Desired density of the recurrence network (0.05 = 5%) - <strong><code>tolerance</code></strong>: Acceptable deviation from target density (0.01 = 1%, meaning it Stops search when density is within [4%, 6%]) - <strong><code>amp</code></strong>: Amplitude scaling factor for the search (30, Controls the step size during epsilon optimization)</p>
+<div id="bb17caef-6724-4109-9a08-b05d54a690b9" class="cell" data-execution_count="43">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>NGRIP_epsilon <span class="op">=</span> NGRIP_td.find_epsilon(eps<span class="op">=</span><span class="dv">1</span>,target_density<span class="op">=</span><span class="fl">.05</span>,tolerance<span class="op">=</span><span class="fl">.01</span>,amp<span class="op">=</span><span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Initial density is 0.0003
+Initial density is not within the tolerance window, searching...
+Epsilon: 2.4915, Density: 0.0126
+Epsilon: 3.6123, Density: 0.0335
+Epsilon: 4.1062, Density: 0.0464
+Epsilon: 4.1062, Density: 0.0464.</code></pre>
+</div>
+</div>
+</section>
+<section id="recurrence-matrices-visualization" class="level3">
+<h3 class="anchored" data-anchor-id="recurrence-matrices-visualization">Recurrence Matrices Visualization</h3>
+<section id="extracting-and-visualizing-the-recurrence-network" class="level4">
+<h4 class="anchored" data-anchor-id="extracting-and-visualizing-the-recurrence-network">Extracting and Visualizing the Recurrence Network</h4>
+<p><strong>What is a Recurrence Matrices?</strong> - A binary Matrices where entry (i,j) = 1 if points i and j are “close” in phase space (within epsilon distance)</p>
+<p><strong>Interpretation</strong> - <strong>Dense black regions</strong>: Stable climate states with high recurrence (stadials or interstadials) - <strong>White/sparse regions</strong>: Transitional periods, rapid changes, or unique states <strong>Tipping points occur here</strong> - <strong>Black diagonal lines</strong>: Similar evolution patterns at different times - <strong>Black vertical/horizontal lines</strong>: Frequently recurring climate states</p>
+<div id="186df876-e473-4f35-bc1e-ad3e4b43294a" class="cell" data-execution_count="44">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>NGRIP_rm <span class="op">=</span> NGRIP_epsilon[<span class="st">'Output'</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the recurrence Matrices</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>NGRIP_rm.plot(title <span class="op">=</span> <span class="st">'Recurrence Matrices'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="44">
+<pre><code>(&lt;Figure size 800x800 with 1 Axes&gt;,
+ &lt;Axes: title={'center': 'Recurrence Matrices'}, xlabel='Age kyr b2k', ylabel='Age kyr b2k'&gt;)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LERM_validation_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="step-3-fisher-information-computation" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-fisher-information-computation">Step 3: Fisher Information Computation</h2>
+<section id="extracting-dynamical-information-from-the-recurrence-network" class="level4">
+<h4 class="anchored" data-anchor-id="extracting-dynamical-information-from-the-recurrence-network">Extracting Dynamical Information from the Recurrence Network</h4>
+<p>The <strong>Laplacian Eigenmaps</strong> method computes <strong>Fisher Information</strong> from the recurrence network using a sliding window approach. Fisher Information quantifies how much information the system’s trajectory carries about its underlying dynamics and serves as an early warning signal for tipping points.</p>
+<p><strong>Parameters:</strong> - <strong><code>w_size</code></strong>: Window size (20 time steps) - Size of the sliding window for local Fisher Information computation - <strong><code>w_incre</code></strong>: Window increment (4 time steps) - Step size for moving the window along the time series</p>
+<p><strong>Fisher Information Interpretation:</strong> - <strong>High Fisher Information</strong>: System is near a critical transition - <strong>Low Fisher Information</strong>: System is stable</p>
+<div id="21f31b6c-4f89-440a-8d83-eb50f7d7000d" class="cell" data-execution_count="45">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>NGRIP_lp <span class="op">=</span> NGRIP_rm.laplacian_eigenmaps(w_size<span class="op">=</span><span class="dv">20</span>,w_incre<span class="op">=</span><span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="step-4-smoothing-the-fisher-information-series" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-smoothing-the-fisher-information-series">Step 4: Smoothing the Fisher Information Series</h2>
+<p>The raw Fisher Information signal can contain high-frequency noise that may lead to false positive transition detections. We apply <strong>block averaging</strong> to smooth the series while preserving the timing and magnitude of genuine transitions.</p>
+<p><strong>Method:</strong> Block averaging with sliding window</p>
+<p><strong>Parameters:</strong> - <strong><code>block_size</code></strong>: Size of the averaging window (2 time steps)</p>
+<div id="9bc5c0ed" class="cell" data-execution_count="46">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>NGRIP_lp_smooth <span class="op">=</span> amt.utils.fisher.smooth_series(series<span class="op">=</span>NGRIP_lp, block_size<span class="op">=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="step-5-visualizing-smoothed-fisher-information" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-visualizing-smoothed-fisher-information">Step 5: Visualizing Smoothed Fisher Information</h2>
+<p>This visualization displays the <strong>smoothed Fisher Information</strong>.</p>
+<p><strong>Plot elements:</strong> - <strong>Blue line</strong>: Smoothed Fisher Information signal - <strong>X-axis</strong>: Time in kyr b2k - <strong>Y-axis</strong>: Fisher Information values</p>
+<div id="c44174b6-9e90-4f4c-a69a-a51aec4907c6" class="cell" data-execution_count="47">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">6</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>NGRIP_lp_smooth.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'blue'</span>,linewidth<span class="op">=</span><span class="fl">1.5</span>, label <span class="op">=</span> <span class="st">'Smoothed Fisher Information'</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Time'</span>,fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Fisher Information'</span>,fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LERM_validation_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="step-6-detecting-climate-transitions-with-lerm" class="level2">
+<h2 class="anchored" data-anchor-id="step-6-detecting-climate-transitions-with-lerm">Step 6: Detecting Climate Transitions with LERM</h2>
+<p>The <code>lerm_transitions()</code> method performs <strong>deterministic transition detection</strong> on the Fisher Information series. This is a key distinction:</p>
+<ul>
+<li><strong>What’s being analyzed</strong>: The smoothed Fisher Information (<code>NGRIP_lp_smooth</code>)</li>
+<li><strong>Why</strong>: Fisher Information is sensitive to dynamical changes and serves as an indicator of system transitions</li>
+<li><strong>Output</strong>: Specific times where the system crosses critical thresholds</li>
+</ul>
+<p>The LERM method identifies transitions by: 1. Computing <strong>adaptive thresholds</strong> from the Fisher Information distribution - Upper threshold (95th percentile): Marks significant upward changes - Lower threshold (5th percentile): Marks significant downward changes 2. Detecting <strong>crossings</strong> where Fisher Information exceeds these bounds 3. Classifying each transition as: - <strong>Upward (+1)</strong>: System moving toward instability or rapid change - <strong>Downward (-1)</strong>: System returning to stability</p>
+<div id="9a4c83bd" class="cell" data-execution_count="48">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>transitions <span class="op">=</span> NGRIP_lp_smooth.lerm_transitions()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(transitions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Deterministic Transition Detection Results - NGRIP Ice Core Data
+================================================================
++----------+---------------------+----------------+------------------+---------------------+
+| Method   |   Total Transitions |   Upward Jumps |   Downward Jumps | Series Label        |
++==========+=====================+================+==================+=====================+
+| LERM     |                  24 |             12 |               12 | NGRIP Ice Core Data |
++----------+---------------------+----------------+------------------+---------------------+
+
+Transition Details:
+  1. Time: 9.43 kyr b2k, Direction: Upward
+  2. Time: 10.43 kyr b2k, Direction: Downward
+  3. Time: 12.43 kyr b2k, Direction: Upward
+  4. Time: 13.43 kyr b2k, Direction: Downward
+  5. Time: 15.43 kyr b2k, Direction: Upward
+  6. Time: 26.43 kyr b2k, Direction: Downward
+  7. Time: 29.43 kyr b2k, Direction: Upward
+  8. Time: 31.43 kyr b2k, Direction: Downward
+  9. Time: 36.43 kyr b2k, Direction: Upward
+  10. Time: 37.43 kyr b2k, Direction: Downward
+  11. Time: 38.43 kyr b2k, Direction: Downward
+  12. Time: 43.43 kyr b2k, Direction: Upward
+  13. Time: 45.43 kyr b2k, Direction: Downward
+  14. Time: 47.43 kyr b2k, Direction: Upward
+  15. Time: 53.43 kyr b2k, Direction: Downward
+  16. Time: 56.43 kyr b2k, Direction: Upward
+  17. Time: 57.43 kyr b2k, Direction: Downward
+  18. Time: 60.43 kyr b2k, Direction: Upward
+  19. Time: 63.43 kyr b2k, Direction: Downward
+  20. Time: 64.43 kyr b2k, Direction: Upward
+  21. Time: 71.43 kyr b2k, Direction: Downward
+  22. Time: 74.43 kyr b2k, Direction: Upward
+  23. Time: 75.43 kyr b2k, Direction: Downward
+  24. Time: 77.43 kyr b2k, Direction: Upward
+
+Method Parameters:
+  transition_interval: (1.1123137817166013, 0.7915562801803566)
+  upper_bound: 1.1123137817166013
+  lower_bound: 0.7915562801803566
+  upper_percentile: 95
+  lower_percentile: 5
+  bootstrap_window: 50
+  bootstrap_samples: 10000
+</code></pre>
+</div>
+</div>
+<div id="f13ec55f" class="cell" data-execution_count="49">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define D/O event chronologies as numpy arrays for analysis</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>do_events <span class="op">=</span> pd.read_csv(<span class="st">'../ammonyte/data/DO_events.csv'</span>, comment <span class="op">=</span> <span class="st">'#'</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>main_do_events <span class="op">=</span> do_events[<span class="st">'main_kyr_b2k'</span>].dropna().values</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(main_do_events)) <span class="co"># The length of main DO events </span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>all_do_events <span class="op">=</span> do_events[<span class="st">'all_kyr_b2k'</span>].dropna().values</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(all_do_events))  <span class="co"># The length of all DO events</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>upward_mask <span class="op">=</span> transitions.jump_values <span class="op">==</span> <span class="dv">1</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>detected_times <span class="op">=</span> transitions.jump_times[upward_mask]                          </span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>detected_times <span class="op">=</span> detected_times[<span class="op">~</span>np.isnan(detected_times)]</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>tolerance <span class="op">=</span> <span class="fl">0.5</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> amt.utils.evaluate_detection(detected_times, main_do_events, tolerance<span class="op">=</span><span class="fl">0.5</span>)   </span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>25
+73
+Detection Evaluation Metrics
+============================
+Metrics calculated within tolerance = 0.5
+
+Performance Scores:
++-----------+---------+
+| Metric    |   Value |
++===========+=========+
+| Precision |  0.3333 |
++-----------+---------+
+| Recall    |  0.16   |
++-----------+---------+
+| F1 Score  |  0.2162 |
++-----------+---------+
+
+Detection Counts:
++-----------------+---------+
+| Category        |   Count |
++=================+=========+
+| True Positives  |       4 |
++-----------------+---------+
+| False Positives |       8 |
++-----------------+---------+
+| False Negatives |      21 |
++-----------------+---------+
+
+Summary:
+  Detected: 12 | Ground Truth: 25
+</code></pre>
+</div>
+</div>
+</section>
+<section id="step-7-visualizing-detected-transitions" class="level2">
+<h2 class="anchored" data-anchor-id="step-7-visualizing-detected-transitions">Step 7: Visualizing Detected Transitions</h2>
+<p>This dual y-axis visualization combines the Fisher Information and original climate data on a single plot. Only upward transitions are shown, since DO events are defined as abrupt warming onsets.</p>
+<p><strong>Plot Elements:</strong></p>
+<ul>
+<li><strong>Black line (left y-axis)</strong>: Original NGRIP <span class="math inline">\(\delta^{18}O\)</span> climate record (more negative = colder)</li>
+<li><strong>Green line (right y-axis)</strong>: Smoothed Fisher Information — high values indicate the system is undergoing rapid dynamical changes</li>
+<li><strong>Red vertical lines</strong>: Upward transitions</li>
+</ul>
+<div id="3623b331" class="cell" data-execution_count="50">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>fig, ax1 <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">6</span>))                                                    </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>ax1.plot(ngrip.time, ngrip.value, color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>, label<span class="op">=</span><span class="st">'NGRIP $</span><span class="er">\</span><span class="st">delta^</span><span class="sc">{18}</span><span class="er">\</span><span class="st">mathrm</span><span class="sc">{O}</span><span class="st">$'</span>)                                                                  </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                                                                                            </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Time (kyr b2k)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)                                              </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'$</span><span class="er">\</span><span class="st">delta^</span><span class="sc">{18}</span><span class="er">\</span><span class="st">mathrm</span><span class="sc">{O}</span><span class="st">(</span><span class="ch">\u2030</span><span class="st">)$'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, color<span class="op">=</span><span class="st">'black'</span>)                      </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                                                                                            </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>ax1.tick_params(axis<span class="op">=</span><span class="st">'y'</span>, labelcolor<span class="op">=</span><span class="st">'black'</span>)                                              </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>                                                                                            </span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> ax1.twinx()                                                                          </span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>ax2.plot(NGRIP_lp_smooth.time, NGRIP_lp_smooth.value, color<span class="op">=</span><span class="st">'green'</span>, linewidth<span class="op">=</span><span class="fl">1.2</span>,label<span class="op">=</span><span class="st">'Fisher Information'</span>)                                                                </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Fisher Information'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, color<span class="op">=</span><span class="st">'green'</span>)                           </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>ax2.tick_params(axis<span class="op">=</span><span class="st">'y'</span>, labelcolor<span class="op">=</span><span class="st">'green'</span>)                                              </span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>                                                                                                                          </span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>first_up <span class="op">=</span> <span class="va">True</span>                                                                                                                                                     </span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t, direction <span class="kw">in</span> <span class="bu">zip</span>(transitions.jump_times, transitions.jump_values):                  </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> direction <span class="op">&gt;</span> <span class="dv">0</span>:                                                                      </span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>        label <span class="op">=</span> <span class="st">'Upward Transition'</span> <span class="cf">if</span> first_up <span class="cf">else</span> <span class="va">None</span>                                  </span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>        ax1.axvline(x<span class="op">=</span>t, color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>, label<span class="op">=</span>label)               </span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>        first_up <span class="op">=</span> <span class="va">False</span>                                                                                                                                 </span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>                                                                                            </span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Legend                                                                                   </span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>lines1, labels1 <span class="op">=</span> ax1.get_legend_handles_labels()                                          </span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>lines2, labels2 <span class="op">=</span> ax2.get_legend_handles_labels()                                          </span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>ax1.legend(lines1 <span class="op">+</span> lines2, labels1 <span class="op">+</span> labels2, loc<span class="op">=</span><span class="st">'upper right'</span>)                          </span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>                                                                                            </span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'LERM Transition Detection: NGRIP $</span><span class="er">\</span><span class="st">delta^</span><span class="sc">{18}</span><span class="er">\</span><span class="st">mathrm</span><span class="sc">{O}</span><span class="st">$ and Fisher Information'</span>, fontsize<span class="op">=</span><span class="dv">14</span>)                                                                 </span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>                                                                                            </span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>ax1.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)                                                                  </span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()                                                                         </span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LERM_validation_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="step-8-alternative-detection-method-kolmogorov-smirnov-test" class="level2">
+<h2 class="anchored" data-anchor-id="step-8-alternative-detection-method-kolmogorov-smirnov-test">Step 8: Alternative Detection Method (Kolmogorov-Smirnov Test)</h2>
+<p>The <code>kstest()</code> method applies the augmented <strong>Kolmogorov-Smirnov (KS) test</strong> to the smoothed Fisher Information series to detect statistically significant transitions. This is a complementary approach to the deterministic LERM method.</p>
+<div id="bd302b4c" class="cell" data-execution_count="51">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>transitions_ks <span class="op">=</span> NGRIP_lp_smooth.kstest(w_min<span class="op">=</span><span class="fl">0.12</span>, w_max<span class="op">=</span><span class="fl">2.5</span>, n_w<span class="op">=</span><span class="dv">15</span>,</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                                        d_c<span class="op">=</span><span class="fl">0.77</span>, n_c<span class="op">=</span><span class="dv">3</span>, s_c<span class="op">=</span><span class="dv">2</span>, x_c<span class="op">=</span><span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<section id="ks-test-results" class="level3">
+<h3 class="anchored" data-anchor-id="ks-test-results">KS Test Results</h3>
+<p>The <code>print(transitions_ks)</code> command displays a <strong>comprehensive summary</strong> of all detected transitions from the KS test analysis.</p>
+<p>The output below shows all transitions detected by the KS test, including: - Statistical measures: D-statistics and p-values for each transition - Transition count: 52 total (compared to 31 from LERM method) - Direction classification: Upward vs.&nbsp;downward transitions</p>
+<div id="b9dd6eee" class="cell" data-execution_count="52">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(transitions_ks)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Deterministic Transition Detection Results - NGRIP Ice Core Data
+================================================================
++----------+---------------------+----------------+------------------+---------------------+
+| Method   |   Total Transitions |   Upward Jumps |   Downward Jumps | Series Label        |
++==========+=====================+================+==================+=====================+
+| KS test  |                  49 |             24 |               25 | NGRIP Ice Core Data |
++----------+---------------------+----------------+------------------+---------------------+
+
+Transition Details:
+  1. Time: 3.11 kyr b2k, Direction: Upward, d_statistics: 0.7177, p_values: &lt; 1e-7
+  2. Time: 6.79 kyr b2k, Direction: Downward, d_statistics: 0.7742, p_values: &lt; 1e-8
+  3. Time: 8.87 kyr b2k, Direction: Upward, d_statistics: 0.8125, p_values: &lt; 1e-10
+  4. Time: 11.75 kyr b2k, Direction: Upward, d_statistics: 0.2258, p_values: 0.34
+  5. Time: 13.51 kyr b2k, Direction: Downward, d_statistics: 0.4567, p_values: &lt; 1e-2
+  6. Time: 14.15 kyr b2k, Direction: Downward, d_statistics: 0.4355, p_values: &lt; 1e-2
+  7. Time: 14.79 kyr b2k, Direction: Upward, d_statistics: 0.4960, p_values: &lt; 1e-3
+  8. Time: 15.11 kyr b2k, Direction: Upward, d_statistics: 0.7500, p_values: &lt; 1e-8
+  9. Time: 25.99 kyr b2k, Direction: Downward, d_statistics: 0.9688, p_values: &lt; 1e-16
+  10. Time: 26.79 kyr b2k, Direction: Downward, d_statistics: 0.7097, p_values: &lt; 1e-7
+  11. Time: 28.55 kyr b2k, Direction: Upward, d_statistics: 0.8427, p_values: &lt; 1e-11
+  12. Time: 30.47 kyr b2k, Direction: Downward, d_statistics: 0.5625, p_values: &lt; 1e-4
+  13. Time: 30.95 kyr b2k, Direction: Downward, d_statistics: 0.8125, p_values: &lt; 1e-10
+  14. Time: 32.71 kyr b2k, Direction: Upward, d_statistics: 0.2500, p_values: 0.21
+  15. Time: 33.99 kyr b2k, Direction: Downward, d_statistics: 0.3548, p_values: 0.03
+  16. Time: 35.27 kyr b2k, Direction: Upward, d_statistics: 0.6532, p_values: &lt; 1e-6
+  17. Time: 35.59 kyr b2k, Direction: Upward, d_statistics: 0.6210, p_values: &lt; 1e-5
+  18. Time: 36.87 kyr b2k, Direction: Downward, d_statistics: 0.2500, p_values: 0.21
+  19. Time: 38.47 kyr b2k, Direction: Upward, d_statistics: 0.2500, p_values: 0.21
+  20. Time: 39.59 kyr b2k, Direction: Downward, d_statistics: 0.4355, p_values: &lt; 1e-2
+  21. Time: 40.23 kyr b2k, Direction: Upward, d_statistics: 0.4355, p_values: &lt; 1e-2
+  22. Time: 43.27 kyr b2k, Direction: Upward, d_statistics: 0.8387, p_values: &lt; 1e-10
+  23. Time: 45.51 kyr b2k, Direction: Downward, d_statistics: 0.7802, p_values: &lt; 1e-9
+  24. Time: 48.55 kyr b2k, Direction: Upward, d_statistics: 1.0000, p_values: &lt; 1e-17
+  25. Time: 52.55 kyr b2k, Direction: Downward, d_statistics: 1.0000, p_values: &lt; 1e-17
+  26. Time: 53.51 kyr b2k, Direction: Downward, d_statistics: 0.7117, p_values: &lt; 1e-7
+  27. Time: 54.63 kyr b2k, Direction: Upward, d_statistics: 0.4375, p_values: &lt; 1e-2
+  28. Time: 55.43 kyr b2k, Direction: Upward, d_statistics: 0.6472, p_values: &lt; 1e-5
+  29. Time: 57.19 kyr b2k, Direction: Downward, d_statistics: 0.9032, p_values: &lt; 1e-13
+  30. Time: 58.63 kyr b2k, Direction: Upward, d_statistics: 0.4355, p_values: &lt; 1e-2
+  31. Time: 59.59 kyr b2k, Direction: Upward, d_statistics: 0.9375, p_values: &lt; 1e-14
+  32. Time: 62.63 kyr b2k, Direction: Downward, d_statistics: 0.6794, p_values: &lt; 1e-6
+  33. Time: 67.91 kyr b2k, Direction: Downward, d_statistics: 0.7742, p_values: &lt; 1e-8
+  34. Time: 69.03 kyr b2k, Direction: Downward, d_statistics: 0.3901, p_values: 0.01
+  35. Time: 69.35 kyr b2k, Direction: Upward, d_statistics: 0.3569, p_values: 0.03
+  36. Time: 70.79 kyr b2k, Direction: Downward, d_statistics: 0.7782, p_values: &lt; 1e-9
+  37. Time: 72.39 kyr b2k, Direction: Upward, d_statistics: 0.5605, p_values: &lt; 1e-4
+  38. Time: 73.51 kyr b2k, Direction: Upward, d_statistics: 0.5827, p_values: &lt; 1e-4
+  39. Time: 74.95 kyr b2k, Direction: Downward, d_statistics: 0.3427, p_values: 0.03
+  40. Time: 76.07 kyr b2k, Direction: Downward, d_statistics: 0.3024, p_values: 0.09
+  41. Time: 76.39 kyr b2k, Direction: Upward, d_statistics: 0.4980, p_values: &lt; 1e-3
+  42. Time: 76.71 kyr b2k, Direction: Upward, d_statistics: 0.6875, p_values: &lt; 1e-7
+  43. Time: 83.59 kyr b2k, Direction: Downward, d_statistics: 0.7127, p_values: &lt; 1e-7
+  44. Time: 83.91 kyr b2k, Direction: Downward, d_statistics: 0.5544, p_values: &lt; 1e-4
+  45. Time: 85.03 kyr b2k, Direction: Upward, d_statistics: 0.6250, p_values: &lt; 1e-5
+  46. Time: 107.27 kyr b2k, Direction: Downward, d_statistics: 0.5292, p_values: &lt; 1e-4
+  47. Time: 107.59 kyr b2k, Direction: Downward, d_statistics: 0.3397, p_values: 0.03
+  48. Time: 108.55 kyr b2k, Direction: Upward, d_statistics: 0.7500, p_values: &lt; 1e-8
+  49. Time: 119.59 kyr b2k, Direction: Downward, d_statistics: 0.0000, p_values: 1.00
+
+Method Parameters:
+  w_min: 0.12
+  w_max: 2.5
+  n_w: 15
+  d_c: 0.77
+  n_c: 3
+  s_c: 2
+  x_c: 0.5
+</code></pre>
+</div>
+</div>
+<div id="2710870c" class="cell" data-execution_count="53">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter to upward transitions only (DO events are abrupt warmings)</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>upward_mask_ks <span class="op">=</span> transitions_ks.jump_values <span class="op">==</span> <span class="dv">1</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>detected_upward_ks <span class="op">=</span> transitions_ks.jump_times[upward_mask_ks]</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>detected_upward_ks <span class="op">=</span> detected_upward_ks[<span class="op">~</span>np.isnan(detected_upward_ks)]</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate KS test on Fisher Information against main DO events</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>results_ks <span class="op">=</span> amt.utils.evaluate_detection(detected_upward_ks, main_do_events, tolerance<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results_ks)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Detection Evaluation Metrics
+============================
+Metrics calculated within tolerance = 0.5
+
+Performance Scores:
++-----------+---------+
+| Metric    |   Value |
++===========+=========+
+| Precision |  0.2917 |
++-----------+---------+
+| Recall    |  0.28   |
++-----------+---------+
+| F1 Score  |  0.2857 |
++-----------+---------+
+
+Detection Counts:
++-----------------+---------+
+| Category        |   Count |
++=================+=========+
+| True Positives  |       7 |
++-----------------+---------+
+| False Positives |      17 |
++-----------------+---------+
+| False Negatives |      18 |
++-----------------+---------+
+
+Summary:
+  Detected: 24 | Ground Truth: 25
+</code></pre>
+</div>
+</div>
+</section>
+<section id="visualizing-ks-test-transitions" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-ks-test-transitions">Visualizing KS Test Transitions</h3>
+<p>This dual y-axis visualization shows the KS test detected upward transitions overlaid on both the Fisher Information and original climate data. Only upward transitions are shown, as Dansgaard-Oeschger events are defined as abrupt warming onsets.</p>
+<ul>
+<li><strong>Black line (left y-axis)</strong>: Original NGRIP <span class="math inline">\(\delta^{18}O\)</span> climate record</li>
+<li><strong>Green line (right y-axis)</strong>: Smoothed Fisher Information used for transition detection</li>
+<li><strong>Red vertical lines</strong>: Upward transitions detected by KS test</li>
+</ul>
+<div id="3a19bf62" class="cell" data-execution_count="54">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fig, ax1 <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">6</span>))                                                    </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>ax1.plot(ngrip.time, ngrip.value, color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>, label<span class="op">=</span><span class="st">'NGRIP $</span><span class="er">\</span><span class="st">delta^</span><span class="sc">{18}</span><span class="er">\</span><span class="st">mathrm</span><span class="sc">{O}</span><span class="st">$'</span>)                                                                  </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                                                                                            </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'Time (kyr b2k)'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)                                              </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'$</span><span class="er">\</span><span class="st">delta^</span><span class="sc">{18}</span><span class="er">\</span><span class="st">mathrm</span><span class="sc">{O}</span><span class="st">(</span><span class="ch">\u2030</span><span class="st">)$'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, color<span class="op">=</span><span class="st">'black'</span>)                      </span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>                                                                                            </span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>ax1.tick_params(axis<span class="op">=</span><span class="st">'y'</span>, labelcolor<span class="op">=</span><span class="st">'black'</span>)                                              </span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                                                                                            </span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> ax1.twinx()                                                                          </span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>ax2.plot(NGRIP_lp_smooth.time, NGRIP_lp_smooth.value, color<span class="op">=</span><span class="st">'green'</span>, linewidth<span class="op">=</span><span class="fl">1.2</span>,label<span class="op">=</span><span class="st">'Fisher Information'</span>)                                                                </span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'Fisher Information'</span>, fontsize<span class="op">=</span><span class="dv">12</span>, color<span class="op">=</span><span class="st">'green'</span>)                           </span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>ax2.tick_params(axis<span class="op">=</span><span class="st">'y'</span>, labelcolor<span class="op">=</span><span class="st">'green'</span>)                                              </span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>                                                                                                                          </span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>first_up <span class="op">=</span> <span class="va">True</span>                                                                                                                                                    </span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t, direction <span class="kw">in</span> <span class="bu">zip</span>(transitions_ks.jump_times, transitions_ks.jump_values):            </span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> direction <span class="op">&gt;</span> <span class="dv">0</span>:                                                                      </span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>        label <span class="op">=</span> <span class="st">'Upward Transition'</span> <span class="cf">if</span> first_up <span class="cf">else</span> <span class="va">None</span>                                  </span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>        ax1.axvline(x<span class="op">=</span>t, color<span class="op">=</span><span class="st">'red'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>, label<span class="op">=</span>label)               </span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>        first_up <span class="op">=</span> <span class="va">False</span>                                                                                                                                 </span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>                                                                                            </span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Legend                                                                                   </span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>lines1, labels1 <span class="op">=</span> ax1.get_legend_handles_labels()                                          </span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>lines2, labels2 <span class="op">=</span> ax2.get_legend_handles_labels()                                          </span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>ax1.legend(lines1 <span class="op">+</span> lines2, labels1 <span class="op">+</span> labels2, loc<span class="op">=</span><span class="st">'upper right'</span>)                          </span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>                                                                                            </span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">'KS Test Transition Detection: NGRIP $</span><span class="er">\</span><span class="st">delta^</span><span class="sc">{18}</span><span class="er">\</span><span class="st">mathrm</span><span class="sc">{O}</span><span class="st">$ and Fisher Information'</span>, fontsize<span class="op">=</span><span class="dv">14</span>)                                                                 </span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>                                                                                            </span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>ax1.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)                                                                  </span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()                                                                         </span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="LERM_validation_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>LERM alone identifies <strong>4 of 25 (16%)</strong> of the DO warming events documented by <a href="https://doi.org/10.1016/j.quascirev.2014.09.007">Rasmussen et al.&nbsp;(2014)</a>, with a precision of 33% (F1 = 0.21). Applying the KS test to the Fisher Information series (Step 8) improves this to <strong>7 of 25 (28%)</strong>, with precision 29% (F1 = 0.28).</p>
+<p><strong>Pros:</strong> LERM operates in the system’s reconstructed phase space rather than on raw values. This makes it sensitive to dynamical transitions that are invisible to amplitude-based methods, regime shifts where the climate changes state even without a large jump in <span class="math inline">\(\delta^{18}\mathrm{O}(\u2030)\)</span>.</p>
+<p><strong>Major drawback:</strong> The pipeline is more complex and computationally heavier than the KS test or ruptures. Several parameters need to be set (embedding dimension, epsilon, window size), and results can vary between runs due to bootstrap sampling.</p>
+<p>For the original method, see <a href="https://doi.org/10.1029/2023PA004700">James et al.&nbsp;(2024)</a>.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<style>
+  #version-picker-menu { min-width: 0; width: auto; }
+  #version-picker-menu .dropdown-item { padding: 0.25rem 0.75rem; }
+</style>
+<script src="https://LinkedEarth.github.io/Ammonyte/version-picker.js"></script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/niatimary\.github\.io\/Ammonyte\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

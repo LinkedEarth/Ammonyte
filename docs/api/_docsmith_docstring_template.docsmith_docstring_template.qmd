@@ -1,0 +1,35 @@
+# _docsmith_docstring_template.docsmith_docstring_template { #ammonyte._docsmith_docstring_template.docsmith_docstring_template }
+
+```python
+_docsmith_docstring_template.docsmith_docstring_template(
+    param_one,
+    param_two=None,
+)
+```
+
+One-line summary of what this function does.
+
+Longer description, if needed, goes here.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+<code>[**param_one**]{.parameter-name} [:]{.parameter-annotation-sep} [[type](`type`)]{.parameter-annotation}</code>
+
+:   What this parameter is for.
+
+<code>[**param_two**]{.parameter-name} [:]{.parameter-annotation-sep} [[type](`type`)]{.parameter-annotation} [ = ]{.parameter-default-sep} [None]{.parameter-default}</code>
+
+:   What this parameter is for. Default is None.
+
+## Returns {.doc-section .doc-section-returns}
+
+<code>[]{.parameter-name} [:]{.parameter-annotation-sep} [[type](`type`)]{.parameter-annotation}</code>
+
+:   What gets returned.
+
+## Examples {.doc-section .doc-section-examples}
+
+Add a fenced ```python block here with a runnable example. If it ends with
+``plt.savefig('docs/reference/figures/<Name>_example.png', ...)``, running
+``python scripts/make_doc_figures.py`` will turn it into a rendered figure
+on this function's reference page — see docs/MAINTAINER_NOTES.md.
