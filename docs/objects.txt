@@ -9,6 +9,7 @@ ammonyte.core.series.Series.kstest py:function 1 api/core.series.Series.html#amm
 ammonyte.core.series.Series.laminarity py:function 1 api/core.series.Series.html#ammonyte.core.series.Series.laminarity -
 ammonyte.core.series.Series.ruptures py:function 1 api/core.series.Series.html#ammonyte.core.series.Series.ruptures -
 ammonyte.core.series.Series py:class 1 api/core.series.Series.html#ammonyte.core.series.Series -
+ammonyte.core.geoseries.GeoSeries py:class 1 api/core.geoseries.GeoSeries.html#ammonyte.core.geoseries.GeoSeries -
 ammonyte.core.time_embedded_series.TimeEmbeddedSeries.create_recurrence_matrix py:function 1 api/core.time_embedded_series.TimeEmbeddedSeries.html#ammonyte.core.time_embedded_series.TimeEmbeddedSeries.create_recurrence_matrix -
 ammonyte.core.time_embedded_series.TimeEmbeddedSeries.create_recurrence_network py:function 1 api/core.time_embedded_series.TimeEmbeddedSeries.html#ammonyte.core.time_embedded_series.TimeEmbeddedSeries.create_recurrence_network -
 ammonyte.core.time_embedded_series.TimeEmbeddedSeries.find_epsilon py:function 1 api/core.time_embedded_series.TimeEmbeddedSeries.html#ammonyte.core.time_embedded_series.TimeEmbeddedSeries.find_epsilon -

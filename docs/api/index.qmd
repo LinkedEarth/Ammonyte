@@ -7,6 +7,7 @@ Core classes for time series analysis and recurrence quantification.
 | | |
 | --- | --- |
 | [core.series.Series](core.series.Series.qmd#ammonyte.core.series.Series) | Ammonyte series object, launching point for most ammonyte analysis. |
+| [core.geoseries.GeoSeries](core.geoseries.GeoSeries.qmd#ammonyte.core.geoseries.GeoSeries) | Ammonyte GeoSeries object for geographically referenced time series. |
 | [core.time_embedded_series.TimeEmbeddedSeries](core.time_embedded_series.TimeEmbeddedSeries.qmd#ammonyte.core.time_embedded_series.TimeEmbeddedSeries) | Time embedded time series object. Precursor to recurrence matrix and recurrence network. |
 | [core.recurrence_matrix.RecurrenceMatrix](core.recurrence_matrix.RecurrenceMatrix.qmd#ammonyte.core.recurrence_matrix.RecurrenceMatrix) | Recurrence matrix object. Used for Recurrence Quantification Analysis (RQA). |
 | [core.recurrence_network.RecurrenceNetwork](core.recurrence_network.RecurrenceNetwork.qmd#ammonyte.core.recurrence_network.RecurrenceNetwork) | Recurrence network object. Used for Recurrence Network Analysis (RNA). |
