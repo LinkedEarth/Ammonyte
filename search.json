@@ -999,7 +999,7 @@
     "href": "api/index.html",
     "title": "Function reference",
     "section": "",
-    "text": "Core classes for time series analysis and recurrence quantification.\n\n\n\ncore.series.Series\nAmmonyte series object, launching point for most ammonyte analysis.\n\n\ncore.time_embedded_series.TimeEmbeddedSeries\nTime embedded time series object. Precursor to recurrence matrix and recurrence network.\n\n\ncore.recurrence_matrix.RecurrenceMatrix\nRecurrence matrix object. Used for Recurrence Quantification Analysis (RQA).\n\n\ncore.recurrence_network.RecurrenceNetwork\nRecurrence network object. Used for Recurrence Network Analysis (RNA).\n\n\ncore.rqa_res.RQARes\nClass for storing the result of various RQA techniques\n\n\ncore.transitions.DeterministicTransitions\nContainer for deterministic transition detection results\n\n\n\n\n\n\nFunctions for transition detection, parameter selection, metrics, and plotting.\n\n\n\nutils.ks.KS_test\nDetect tipping points using Kolmogorov-Smirnov test\n\n\nutils.lerm_transitions.lerm_transition\nDetect transitions using LERM Fisher Information threshold crossings\n\n\nutils.ruptures_transitions.ruptures_transition\nDetect transitions using ruptures change point detection\n\n\nutils.parameters.tau_search\nFind optimal tau value for time delay embedding.\n\n\nutils.metrics.DetectionMetrics\nContainer for transition detection evaluation metrics\n\n\nutils.metrics.evaluate_detection\nComplete evaluation of transition detection performance\n\n\nutils.plotting.bootstrap_fill_plot\nPlot RQA results with bootstrap confidence bounds as a filled region\n\n\nutils.plotting.bootstrap_scatter_plot\nPlot RQA results highlighting points outside bootstrap confidence bounds as a scatter",
+    "text": "Core classes for time series analysis and recurrence quantification.\n\n\n\ncore.series.Series\nAmmonyte series object, launching point for most ammonyte analysis.\n\n\ncore.geoseries.GeoSeries\nAmmonyte GeoSeries object for geographically referenced time series.\n\n\ncore.time_embedded_series.TimeEmbeddedSeries\nTime embedded time series object. Precursor to recurrence matrix and recurrence network.\n\n\ncore.recurrence_matrix.RecurrenceMatrix\nRecurrence matrix object. Used for Recurrence Quantification Analysis (RQA).\n\n\ncore.recurrence_network.RecurrenceNetwork\nRecurrence network object. Used for Recurrence Network Analysis (RNA).\n\n\ncore.rqa_res.RQARes\nClass for storing the result of various RQA techniques\n\n\ncore.transitions.DeterministicTransitions\nContainer for deterministic transition detection results\n\n\n\n\n\n\nFunctions for transition detection, parameter selection, metrics, and plotting.\n\n\n\nutils.ks.KS_test\nDetect tipping points using Kolmogorov-Smirnov test\n\n\nutils.lerm_transitions.lerm_transition\nDetect transitions using LERM Fisher Information threshold crossings\n\n\nutils.ruptures_transitions.ruptures_transition\nDetect transitions using ruptures change point detection\n\n\nutils.parameters.tau_search\nFind optimal tau value for time delay embedding.\n\n\nutils.metrics.DetectionMetrics\nContainer for transition detection evaluation metrics\n\n\nutils.metrics.evaluate_detection\nComplete evaluation of transition detection performance\n\n\nutils.plotting.bootstrap_fill_plot\nPlot RQA results with bootstrap confidence bounds as a filled region\n\n\nutils.plotting.bootstrap_scatter_plot\nPlot RQA results highlighting points outside bootstrap confidence bounds as a scatter",
     "crumbs": [
       "API",
       "Function reference"
@@ -1010,7 +1010,7 @@
     "href": "api/index.html#core",
     "title": "Function reference",
     "section": "",
-    "text": "Core classes for time series analysis and recurrence quantification.\n\n\n\ncore.series.Series\nAmmonyte series object, launching point for most ammonyte analysis.\n\n\ncore.time_embedded_series.TimeEmbeddedSeries\nTime embedded time series object. Precursor to recurrence matrix and recurrence network.\n\n\ncore.recurrence_matrix.RecurrenceMatrix\nRecurrence matrix object. Used for Recurrence Quantification Analysis (RQA).\n\n\ncore.recurrence_network.RecurrenceNetwork\nRecurrence network object. Used for Recurrence Network Analysis (RNA).\n\n\ncore.rqa_res.RQARes\nClass for storing the result of various RQA techniques\n\n\ncore.transitions.DeterministicTransitions\nContainer for deterministic transition detection results",
+    "text": "Core classes for time series analysis and recurrence quantification.\n\n\n\ncore.series.Series\nAmmonyte series object, launching point for most ammonyte analysis.\n\n\ncore.geoseries.GeoSeries\nAmmonyte GeoSeries object for geographically referenced time series.\n\n\ncore.time_embedded_series.TimeEmbeddedSeries\nTime embedded time series object. Precursor to recurrence matrix and recurrence network.\n\n\ncore.recurrence_matrix.RecurrenceMatrix\nRecurrence matrix object. Used for Recurrence Quantification Analysis (RQA).\n\n\ncore.recurrence_network.RecurrenceNetwork\nRecurrence network object. Used for Recurrence Network Analysis (RNA).\n\n\ncore.rqa_res.RQARes\nClass for storing the result of various RQA techniques\n\n\ncore.transitions.DeterministicTransitions\nContainer for deterministic transition detection results",
     "crumbs": [
       "API",
       "Function reference"
@@ -1652,6 +1652,54 @@
       "Get Started",
       "Basic Use",
       "Contributing"
+    ]
+  },
+  {
+    "objectID": "api/core.geoseries.GeoSeries.html",
+    "href": "api/core.geoseries.GeoSeries.html",
+    "title": "core.geoseries.GeoSeries",
+    "section": "",
+    "text": "core.geoseries.GeoSeries()\nAmmonyte GeoSeries object for geographically referenced time series.\nChild of both ammonyte.Series and pyleoclim.GeoSeries. Inherits all Ammonyte transition detection methods (kstest, ruptures, embed, determinism, laminarity) from ammonyte.Series, and all geospatial methods (map, dashboard) and metadata (lat, lon, elevation, archiveType) from pyleoclim.GeoSeries.\n\n\n\ntime : list or numpy.array\n\nIndependent variable (t).\n\nvalue : list or numpy.array\n\nValues of the dependent variable (y).\n\nlat : float\n\nLatitude N in decimal degrees. Must be in the range [-90, +90].\n\nlon : float\n\nLongitude East in decimal degrees. Must be in the range [-180, +360].\n\nelevation : float\n\nElevation in meters above sea level. Negative values indicate depth below global mean sea level.\n\ntime_unit : str\n\nUnits for the time vector (e.g., ‘years’, ‘kyr BP’).\n\ntime_name : str\n\nName of the time vector (e.g., ‘Age’, ‘Time’).\n\nvalue_name : str\n\nName of the value vector (e.g., ‘temperature’, ‘δ¹⁸O’).\n\nvalue_unit : str\n\nUnits for the value vector (e.g., ‘deg C’, ‘‰’).\n\nlabel : str\n\nName of the time series (e.g., ‘NGRIP Ice Core’).\n\narchiveType : str\n\nClimate archive type (e.g., ‘GlacierIce’, ‘MarineSediment’, ‘Speleothem’, ‘LakeSediment’).\n\n\n\n\n\nammonyte.Series : Ammonyte series without geolocation. pyleoclim.GeoSeries : Pyleoclim GeoSeries with full geospatial API.\n\n\n\nCreate a GeoSeries from the NGRIP ice core record:\n&gt;&gt;&gt; import os, ammonyte as amt\n&gt;&gt;&gt; ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))\n&gt;&gt;&gt; ngrip_geo = amt.GeoSeries(\n...     time=ngrip.time,\n...     value=ngrip.value,\n...     lat=75.1,\n...     lon=-42.32,\n...     time_name=ngrip.time_name,\n...     time_unit=ngrip.time_unit,\n...     value_name=ngrip.value_name,\n...     value_unit=ngrip.value_unit,\n...     label=ngrip.label,\n...     archiveType='GlacierIce'\n... )",
+    "crumbs": [
+      "API",
+      "Core",
+      "core.geoseries.GeoSeries"
+    ]
+  },
+  {
+    "objectID": "api/core.geoseries.GeoSeries.html#parameters",
+    "href": "api/core.geoseries.GeoSeries.html#parameters",
+    "title": "core.geoseries.GeoSeries",
+    "section": "",
+    "text": "time : list or numpy.array\n\nIndependent variable (t).\n\nvalue : list or numpy.array\n\nValues of the dependent variable (y).\n\nlat : float\n\nLatitude N in decimal degrees. Must be in the range [-90, +90].\n\nlon : float\n\nLongitude East in decimal degrees. Must be in the range [-180, +360].\n\nelevation : float\n\nElevation in meters above sea level. Negative values indicate depth below global mean sea level.\n\ntime_unit : str\n\nUnits for the time vector (e.g., ‘years’, ‘kyr BP’).\n\ntime_name : str\n\nName of the time vector (e.g., ‘Age’, ‘Time’).\n\nvalue_name : str\n\nName of the value vector (e.g., ‘temperature’, ‘δ¹⁸O’).\n\nvalue_unit : str\n\nUnits for the value vector (e.g., ‘deg C’, ‘‰’).\n\nlabel : str\n\nName of the time series (e.g., ‘NGRIP Ice Core’).\n\narchiveType : str\n\nClimate archive type (e.g., ‘GlacierIce’, ‘MarineSediment’, ‘Speleothem’, ‘LakeSediment’).",
+    "crumbs": [
+      "API",
+      "Core",
+      "core.geoseries.GeoSeries"
+    ]
+  },
+  {
+    "objectID": "api/core.geoseries.GeoSeries.html#see-also",
+    "href": "api/core.geoseries.GeoSeries.html#see-also",
+    "title": "core.geoseries.GeoSeries",
+    "section": "",
+    "text": "ammonyte.Series : Ammonyte series without geolocation. pyleoclim.GeoSeries : Pyleoclim GeoSeries with full geospatial API.",
+    "crumbs": [
+      "API",
+      "Core",
+      "core.geoseries.GeoSeries"
+    ]
+  },
+  {
+    "objectID": "api/core.geoseries.GeoSeries.html#examples",
+    "href": "api/core.geoseries.GeoSeries.html#examples",
+    "title": "core.geoseries.GeoSeries",
+    "section": "",
+    "text": "Create a GeoSeries from the NGRIP ice core record:\n&gt;&gt;&gt; import os, ammonyte as amt\n&gt;&gt;&gt; ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))\n&gt;&gt;&gt; ngrip_geo = amt.GeoSeries(\n...     time=ngrip.time,\n...     value=ngrip.value,\n...     lat=75.1,\n...     lon=-42.32,\n...     time_name=ngrip.time_name,\n...     time_unit=ngrip.time_unit,\n...     value_name=ngrip.value_name,\n...     value_unit=ngrip.value_unit,\n...     label=ngrip.label,\n...     archiveType='GlacierIce'\n... )",
+    "crumbs": [
+      "API",
+      "Core",
+      "core.geoseries.GeoSeries"
     ]
   }
 ]

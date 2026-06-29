@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Ammonyte</title>
+<title>core.geoseries.geoseries – Ammonyte</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -61,23 +61,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../api/core.time_embedded_series.TimeEmbeddedSeries.html" rel="next">
+<link href="../api/core.series.Series.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -107,11 +109,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="api/_styles-quartodoc.css">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../api/_styles-quartodoc.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -124,19 +126,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./get-started/installation.html"> 
+    <a class="nav-link" href="../get-started/installation.html"> 
 <span class="menu-text">Get Started</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./methods/index.html"> 
+    <a class="nav-link" href="../methods/index.html"> 
 <span class="menu-text">Methods</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./api/index.html"> 
+    <a class="nav-link active" href="../api/index.html" aria-current="page"> 
 <span class="menu-text">API</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./tutorials/index.html"> 
+    <a class="nav-link" href="../tutorials/index.html"> 
 <span class="menu-text">Tutorials</span></a>
   </li>  
 </ul>
@@ -152,68 +154,244 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../api/core.series.Series.html">Core</a></li><li class="breadcrumb-item"><a href="../api/core.geoseries.GeoSeries.html">core.geoseries.GeoSeries</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Function reference</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Core</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/core.series.Series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">core.series.Series</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/core.geoseries.GeoSeries.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">core.geoseries.GeoSeries</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/core.time_embedded_series.TimeEmbeddedSeries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">core.time_embedded_series.TimeEmbeddedSeries</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/core.recurrence_matrix.RecurrenceMatrix.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">core.recurrence_matrix.RecurrenceMatrix</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/core.recurrence_network.RecurrenceNetwork.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">core.recurrence_network.RecurrenceNetwork</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/core.rqa_res.RQARes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">core.rqa_res.RQARes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/core.transitions.DeterministicTransitions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">core.transitions.DeterministicTransitions</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Utilities</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/utils.ks.KS_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">utils.ks.KS_test</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/utils.lerm_transitions.lerm_transition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">utils.lerm_transitions.lerm_transition</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/utils.ruptures_transitions.ruptures_transition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">utils.ruptures_transitions.ruptures_transition</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/utils.parameters.tau_search.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">utils.parameters.tau_search</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/utils.metrics.DetectionMetrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">utils.metrics.DetectionMetrics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/utils.metrics.evaluate_detection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">utils.metrics.evaluate_detection</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/utils.plotting.bootstrap_fill_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">utils.plotting.bootstrap_fill_plot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../api/utils.plotting.bootstrap_scatter_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">utils.plotting.bootstrap_scatter_plot</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#quick-install" id="toc-quick-install" class="nav-link active" data-scroll-target="#quick-install">Quick install</a></li>
-  <li><a href="#where-to-go-next" id="toc-where-to-go-next" class="nav-link" data-scroll-target="#where-to-go-next">Where to go next</a></li>
+  <li><a href="#ammonyte.core.geoseries.GeoSeries" id="toc-ammonyte.core.geoseries.GeoSeries" class="nav-link active" data-scroll-target="#ammonyte.core.geoseries.GeoSeries">core.geoseries.GeoSeries</a>
+  <ul>
+  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
+  <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Ammonyte</h1>
-<p class="subtitle lead">A Python package for multi-method detection of transitions in paleoclimate time series</p>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../api/core.series.Series.html">Core</a></li><li class="breadcrumb-item"><a href="../api/core.geoseries.GeoSeries.html">core.geoseries.GeoSeries</a></li></ol></nav></header>
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<section id="quick-install" class="level2">
-<h2 class="anchored" data-anchor-id="quick-install">Quick install</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install git+https://github.com/LinkedEarth/Ammonyte.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="ammonyte.core.geoseries.GeoSeries" class="level1">
+<h1>core.geoseries.GeoSeries</h1>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>core.geoseries.GeoSeries()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ammonyte GeoSeries object for geographically referenced time series.</p>
+<p>Child of both ammonyte.Series and pyleoclim.GeoSeries. Inherits all Ammonyte transition detection methods (kstest, ruptures, embed, determinism, laminarity) from ammonyte.Series, and all geospatial methods (map, dashboard) and metadata (lat, lon, elevation, archiveType) from pyleoclim.GeoSeries.</p>
+<section id="parameters" class="level2 doc-section doc-section-parameters">
+<h2 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h2>
+<dl>
+<dt><code><span class="parameter-name"><strong>time</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><code>list</code> or <code>numpy</code>.<code>array</code></span></code></dt>
+<dd>
+<p>Independent variable (t).</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>value</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><code>list</code> or <code>numpy</code>.<code>array</code></span></code></dt>
+<dd>
+<p>Values of the dependent variable (y).</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>lat</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><code>float</code></span></code></dt>
+<dd>
+<p>Latitude N in decimal degrees. Must be in the range [-90, +90].</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>lon</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><code>float</code></span></code></dt>
+<dd>
+<p>Longitude East in decimal degrees. Must be in the range [-180, +360].</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>elevation</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><code>float</code></span></code></dt>
+<dd>
+<p>Elevation in meters above sea level. Negative values indicate depth below global mean sea level.</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>time_unit</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><code>str</code></span></code></dt>
+<dd>
+<p>Units for the time vector (e.g., ‘years’, ‘kyr BP’).</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>time_name</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><code>str</code></span></code></dt>
+<dd>
+<p>Name of the time vector (e.g., ‘Age’, ‘Time’).</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>value_name</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><code>str</code></span></code></dt>
+<dd>
+<p>Name of the value vector (e.g., ‘temperature’, ‘δ¹⁸O’).</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>value_unit</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><code>str</code></span></code></dt>
+<dd>
+<p>Units for the value vector (e.g., ‘deg C’, ‘‰’).</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>label</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><code>str</code></span></code></dt>
+<dd>
+<p>Name of the time series (e.g., ‘NGRIP Ice Core’).</p>
+</dd>
+<dt><code><span class="parameter-name"><strong>archiveType</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><code>str</code></span></code></dt>
+<dd>
+<p>Climate archive type (e.g., ‘GlacierIce’, ‘MarineSediment’, ‘Speleothem’, ‘LakeSediment’).</p>
+</dd>
+</dl>
 </section>
-<section id="where-to-go-next" class="level2">
-<h2 class="anchored" data-anchor-id="where-to-go-next">Where to go next</h2>
-<table class="caption-top table">
-<tbody>
-<tr class="odd">
-<td><a href="./get-started/installation.html">Get Started</a></td>
-<td>Install the package and run your first example</td>
-</tr>
-<tr class="even">
-<td><a href="./tutorials/index.html">Tutorials</a></td>
-<td>Worked examples</td>
-</tr>
-<tr class="odd">
-<td><a href="./api/index.html">Reference</a></td>
-<td>Full API documentation for every class and function</td>
-</tr>
-</tbody>
-</table>
+<section id="see-also" class="level2 doc-section doc-section-see-also">
+<h2 class="doc-section doc-section-see-also anchored" data-anchor-id="see-also">See Also</h2>
+<p>ammonyte.Series : Ammonyte series without geolocation. pyleoclim.GeoSeries : Pyleoclim GeoSeries with full geospatial API.</p>
+</section>
+<section id="examples" class="level2 doc-section doc-section-examples">
+<h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
+<p>Create a GeoSeries from the NGRIP ice core record:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> os, ammonyte <span class="im">as</span> amt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> ngrip <span class="op">=</span> amt.Series.from_csv(os.path.join(os.path.dirname(amt.<span class="va">__file__</span>), <span class="st">'data'</span>, <span class="st">'NGRIP.csv'</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> ngrip_geo <span class="op">=</span> amt.GeoSeries(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>...     time<span class="op">=</span>ngrip.time,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>...     value<span class="op">=</span>ngrip.value,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>...     lat<span class="op">=</span><span class="fl">75.1</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>...     lon<span class="op">=-</span><span class="fl">42.32</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>...     time_name<span class="op">=</span>ngrip.time_name,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>...     time_unit<span class="op">=</span>ngrip.time_unit,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>...     value_name<span class="op">=</span>ngrip.value_name,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>...     value_unit<span class="op">=</span>ngrip.value_unit,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>...     label<span class="op">=</span>ngrip.label,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>...     archiveType<span class="op">=</span><span class="st">'GlacierIce'</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>... )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -622,6 +800,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../api/core.series.Series.html" class="pagination-link" aria-label="core.series.Series">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">core.series.Series</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../api/core.time_embedded_series.TimeEmbeddedSeries.html" class="pagination-link" aria-label="core.time_embedded_series.TimeEmbeddedSeries">
+        <span class="nav-page-text">core.time_embedded_series.TimeEmbeddedSeries</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
