@@ -132,6 +132,7 @@ quartodoc:
       desc: "Core classes for time series analysis and recurrence quantification."
       contents:
         - core.series.Series
+        - core.geoseries.GeoSeries
         - core.time_embedded_series.TimeEmbeddedSeries
         - core.recurrence_matrix.RecurrenceMatrix
         - core.recurrence_network.RecurrenceNetwork

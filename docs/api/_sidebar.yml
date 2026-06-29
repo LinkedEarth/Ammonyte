@@ -4,6 +4,7 @@ website:
     - api/index.qmd
     - contents:
       - api/core.series.Series.qmd
+      - api/core.geoseries.GeoSeries.qmd
       - api/core.time_embedded_series.TimeEmbeddedSeries.qmd
       - api/core.recurrence_matrix.RecurrenceMatrix.qmd
       - api/core.recurrence_network.RecurrenceNetwork.qmd
