@@ -284,7 +284,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#installation" id="toc-installation" class="nav-link active" data-scroll-target="#installation">Installation</a></li>
+  <li><a href="#what-is-ammonyte" id="toc-what-is-ammonyte" class="nav-link active" data-scroll-target="#what-is-ammonyte">What is Ammonyte?</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
   <li><a href="#importing-the-package" id="toc-importing-the-package" class="nav-link" data-scroll-target="#importing-the-package">Importing the Package</a></li>
   <li><a href="#loading-a-time-series" id="toc-loading-a-time-series" class="nav-link" data-scroll-target="#loading-a-time-series">Loading a Time Series</a></li>
   <li><a href="#exploring-the-series" id="toc-exploring-the-series" class="nav-link" data-scroll-target="#exploring-the-series">Exploring the Series</a></li>
@@ -315,6 +316,16 @@ window.Quarto = {
 </header>
 
 
+<section id="what-is-ammonyte" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-ammonyte">What is Ammonyte?</h2>
+<p><strong>Ammonyte</strong> is a Python package for detecting abrupt transitions and tipping points in paleoclimate time series. It is built on top of <a href="https://pyleoclim-util.readthedocs.io/en/latest/">pyleoclim</a>, inheriting all of its time series capabilities while adding three dedicated transition detection methods:</p>
+<ul>
+<li><strong>KS Test</strong> — Augmented Kolmogorov-Smirnov test (Bagniewski et al., 2021)</li>
+<li><strong>LERM</strong> — Laplacian Eigenmaps of Recurrence Matrices (James et al., 2024)</li>
+<li><strong>Ruptures</strong> — Change-point detection algorithms (Truong et al., 2020)</li>
+</ul>
+<p>This notebook introduces the core <code>Series</code> and <code>GeoSeries</code> objects: how to load data, attach geographic metadata, explore the series, and visualize it. The method-specific tutorials (KS Test, LERM, Ruptures) build on what is shown here.</p>
+</section>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
 <p>Install Ammonyte using pip:</p>
@@ -323,7 +334,7 @@ window.Quarto = {
 <section id="importing-the-package" class="level2">
 <h2 class="anchored" data-anchor-id="importing-the-package">Importing the Package</h2>
 <p>The standard convention is to import Ammonyte as <code>amt</code>:</p>
-<div id="cell-3" class="cell" data-execution_count="1">
+<div id="cell-4" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ammonyte <span class="im">as</span> amt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -332,7 +343,7 @@ window.Quarto = {
 <p>The central object in Ammonyte is <code>ammonyte.Series</code>. It extends <code>pyleoclim.Series</code> and serves as the starting point for all analyses.</p>
 <p>Use the <code>Series.from_csv()</code> method to load a time series from a CSV file. Throughout the Ammonyte tutorials we use the <strong>NGRIP (North Greenland Ice Core Project)</strong> dataset, which contains high-resolution <span class="math inline">\(\delta^{18}O\)</span> isotope measurements spanning the last glacial period. This dataset is well-suited for studying abrupt climate transitions such as Dansgaard-Oeschger events.</p>
 <p><strong>Key dataset features:</strong> - <strong>Proxy variable</strong>: <span class="math inline">\(\delta^{18}O\)</span> isotope measurements - <strong>Units</strong>: per mil (‰) - <strong>Time scale</strong>: Thousands of years before present (kyr b2k)</p>
-<div id="cell-5" class="cell" data-execution_count="2">
+<div id="cell-6" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ngrip <span class="op">=</span> amt.Series.from_csv(<span class="st">'../ammonyte/data/NGRIP.csv'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ngrip</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -361,7 +372,7 @@ Name: δ¹⁸O [‰], Length: 6112, dtype: float64</code></pre>
 <section id="exploring-the-series" class="level2">
 <h2 class="anchored" data-anchor-id="exploring-the-series">Exploring the Series</h2>
 <p>Once loaded, you can inspect the key metadata attributes of the series:</p>
-<div id="cell-7" class="cell" data-execution_count="3">
+<div id="cell-8" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Label:      </span><span class="sc">{</span>ngrip<span class="sc">.</span>label<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Value name: </span><span class="sc">{</span>ngrip<span class="sc">.</span>value_name<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Value unit: </span><span class="sc">{</span>ngrip<span class="sc">.</span>value_unit<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -383,7 +394,7 @@ Data points: 6112</code></pre>
 <section id="visualizing-the-series" class="level2">
 <h2 class="anchored" data-anchor-id="visualizing-the-series">Visualizing the Series</h2>
 <p>Since <code>ammonyte.Series</code> inherits from <code>pyleoclim.Series</code>, you can use the <code>.plot()</code> method directly to visualize the time series:</p>
-<div id="cell-9" class="cell" data-execution_count="4">
+<div id="cell-10" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> ngrip.plot(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">6</span>))</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'NGRIP Ice Core $</span><span class="er">\</span><span class="st">delta^</span><span class="sc">{18}</span><span class="st">O$ Record'</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>

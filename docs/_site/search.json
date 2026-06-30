@@ -219,7 +219,7 @@
     "href": "tutorials/index.html#getting-started",
     "title": "Tutorials",
     "section": "Getting Started",
-    "text": "Getting Started\n\n\n\nNotebook\nWhat it shows\n\n\n\n\nGetting Started",
+    "text": "Getting Started\n\n\n\nNotebook\nWhat it shows\n\n\n\n\nGetting Started\nIntroduction to the core Series and GeoSeries objects: loading data, exploring metadata, and visualizing time series.",
     "crumbs": [
       "Get Started",
       "Tutorials"
@@ -241,7 +241,7 @@
     "href": "tutorials/index.html#lerm",
     "title": "Tutorials",
     "section": "LERM",
-    "text": "LERM\n\n\n\nNotebook\nWhat it shows\n\n\n\n\nLERM_Validation",
+    "text": "LERM\n\n\n\nNotebook\nWhat it shows\n\n\n\n\nLERM_Validation\nDetect regime shifts in paleoclimate time series using LERM (Laplacian Eigenmaps of Recurrence Matrices) and validate detections against known Dansgaard-Oeschger events.",
     "crumbs": [
       "Get Started",
       "Tutorials"
@@ -252,7 +252,7 @@
     "href": "tutorials/index.html#ruptures",
     "title": "Tutorials",
     "section": "Ruptures",
-    "text": "Ruptures\n\n\n\nNotebook\nWhat it shows\n\n\n\n\nRuptures_Validation",
+    "text": "Ruptures\n\n\n\nNotebook\nWhat it shows\n\n\n\n\nRuptures_Validation\nDetect abrupt transitions in paleoclimate time series using change-point detection algorithms from the Ruptures library and validate results against known Dansgaard-Oeschger events.",
     "crumbs": [
       "Get Started",
       "Tutorials"
@@ -1308,7 +1308,7 @@
     "href": "notebooks/Getting_Started.html",
     "title": "Getting Started with Ammonyte",
     "section": "",
-    "text": "Install Ammonyte using pip:\npip install ammonyte",
+    "text": "Ammonyte is a Python package for detecting abrupt transitions and tipping points in paleoclimate time series. It is built on top of pyleoclim, inheriting all of its time series capabilities while adding three dedicated transition detection methods:\n\nKS Test — Augmented Kolmogorov-Smirnov test (Bagniewski et al., 2021)\nLERM — Laplacian Eigenmaps of Recurrence Matrices (James et al., 2024)\nRuptures — Change-point detection algorithms (Truong et al., 2020)\n\nThis notebook introduces the core Series and GeoSeries objects: how to load data, attach geographic metadata, explore the series, and visualize it. The method-specific tutorials (KS Test, LERM, Ruptures) build on what is shown here.",
     "crumbs": [
       "Tutorials",
       "Getting Started",
@@ -1319,8 +1319,8 @@
     "objectID": "notebooks/Getting_Started.html#installation",
     "href": "notebooks/Getting_Started.html#installation",
     "title": "Getting Started with Ammonyte",
-    "section": "",
-    "text": "Install Ammonyte using pip:\npip install ammonyte",
+    "section": "Installation",
+    "text": "Installation\nInstall Ammonyte using pip:\npip install ammonyte",
     "crumbs": [
       "Tutorials",
       "Getting Started",
@@ -1700,6 +1700,18 @@
       "API",
       "Core",
       "core.geoseries.GeoSeries"
+    ]
+  },
+  {
+    "objectID": "notebooks/Getting_Started.html#what-is-ammonyte",
+    "href": "notebooks/Getting_Started.html#what-is-ammonyte",
+    "title": "Getting Started with Ammonyte",
+    "section": "",
+    "text": "Ammonyte is a Python package for detecting abrupt transitions and tipping points in paleoclimate time series. It is built on top of pyleoclim, inheriting all of its time series capabilities while adding three dedicated transition detection methods:\n\nKS Test — Augmented Kolmogorov-Smirnov test (Bagniewski et al., 2021)\nLERM — Laplacian Eigenmaps of Recurrence Matrices (James et al., 2024)\nRuptures — Change-point detection algorithms (Truong et al., 2020)\n\nThis notebook introduces the core Series and GeoSeries objects: how to load data, attach geographic metadata, explore the series, and visualize it. The method-specific tutorials (KS Test, LERM, Ruptures) build on what is shown here.",
+    "crumbs": [
+      "Tutorials",
+      "Getting Started",
+      "Getting Started"
     ]
   }
 ]
