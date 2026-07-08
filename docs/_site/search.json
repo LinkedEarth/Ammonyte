@@ -84,6 +84,18 @@
     ]
   },
   {
+    "objectID": "get-started/contributing.html#testing-conventions",
+    "href": "get-started/contributing.html#testing-conventions",
+    "title": "Contributing",
+    "section": "Testing conventions",
+    "text": "Testing conventions\n\nPlace tests in ammonyte/tests/\nName test files test_&lt;module&gt;.py (e.g. test_core_series.py)\nName test functions test_&lt;method&gt; (e.g. test_kstest_returns_transitions)\nUse the datasets bundled with the package where possible\nKeep tests minimal and focused — each test should verify one behaviour",
+    "crumbs": [
+      "Get Started",
+      "Basic Use",
+      "Contributing"
+    ]
+  },
+  {
     "objectID": "get-started/citation.html",
     "href": "get-started/citation.html",
     "title": "Citing Ammonyte",
@@ -499,6 +511,298 @@
     ]
   },
   {
+    "objectID": "api/utils.metrics.evaluate_detection.html",
+    "href": "api/utils.metrics.evaluate_detection.html",
+    "title": "utils.metrics.evaluate_detection",
+    "section": "",
+    "text": "utils.metrics.evaluate_detection(detected, ground_truth, tolerance=0.5)\nComplete evaluation of transition detection performance\nCalculates precision, recall, F1 score, and detailed counts (true positives, false positives, false negatives) in a single pass to ensure consistency. Uses one-to-one closest matching where each ground truth point matches only one detected point.\n\n\n\ndetected : array - like\n\nDetected transition points (indices or time values)\n\nground_truth : array - like\n\nGround truth transition points (indices or time values)\n\ntolerance : float = 0.5\n\nMaximum distance for a detected transition to be considered a true positive. Default is 0.5\n\n\n\n\n\n\n : DetectionMetrics\n\nObject containing: - precision : float - Precision score (0 to 1) - recall : float - Recall score (0 to 1) - f1_score : float - F1 score (0 to 1) - true_positives : int - Number of correct detections - false_positives : int - Number of incorrect detections - false_negatives : int - Number of missed ground truth events - n_detected : int - Total number of detections - n_ground_truth : int - Total number of ground truth events - tolerance : float - Tolerance used for matching\n\n\n\n\n\nBasic usage:\n.. jupyter-execute::\nfrom ammonyte.utils.metrics import evaluate_detection\n\ndetected = [10, 25, 50, 75]\nground_truth = [10, 26, 60]\n\nmetrics = evaluate_detection(detected, ground_truth, tolerance=2)\nprint(metrics)\nAccess individual metrics:\n.. jupyter-execute::\nfrom ammonyte.utils.metrics import evaluate_detection\n\ndetected = [9.8, 23.5, 45.2]\nground_truth = [10, 25, 40, 60]\n\nmetrics = evaluate_detection(detected, ground_truth, tolerance=1.0)\n\nprint(f\"Precision: {metrics.precision:.3f}\")\nprint(f\"Recall: {metrics.recall:.3f}\")\nprint(f\"F1 Score: {metrics.f1_score:.3f}\")",
+    "crumbs": [
+      "API",
+      "Utilities",
+      "utils.metrics.evaluate_detection"
+    ]
+  },
+  {
+    "objectID": "api/utils.metrics.evaluate_detection.html#parameters",
+    "href": "api/utils.metrics.evaluate_detection.html#parameters",
+    "title": "utils.metrics.evaluate_detection",
+    "section": "",
+    "text": "detected : array - like\n\nDetected transition points (indices or time values)\n\nground_truth : array - like\n\nGround truth transition points (indices or time values)\n\ntolerance : float = 0.5\n\nMaximum distance for a detected transition to be considered a true positive. Default is 0.5",
+    "crumbs": [
+      "API",
+      "Utilities",
+      "utils.metrics.evaluate_detection"
+    ]
+  },
+  {
+    "objectID": "api/utils.metrics.evaluate_detection.html#returns",
+    "href": "api/utils.metrics.evaluate_detection.html#returns",
+    "title": "utils.metrics.evaluate_detection",
+    "section": "",
+    "text": ": DetectionMetrics\n\nObject containing: - precision : float - Precision score (0 to 1) - recall : float - Recall score (0 to 1) - f1_score : float - F1 score (0 to 1) - true_positives : int - Number of correct detections - false_positives : int - Number of incorrect detections - false_negatives : int - Number of missed ground truth events - n_detected : int - Total number of detections - n_ground_truth : int - Total number of ground truth events - tolerance : float - Tolerance used for matching",
+    "crumbs": [
+      "API",
+      "Utilities",
+      "utils.metrics.evaluate_detection"
+    ]
+  },
+  {
+    "objectID": "api/utils.metrics.evaluate_detection.html#examples",
+    "href": "api/utils.metrics.evaluate_detection.html#examples",
+    "title": "utils.metrics.evaluate_detection",
+    "section": "",
+    "text": "Basic usage:\n.. jupyter-execute::\nfrom ammonyte.utils.metrics import evaluate_detection\n\ndetected = [10, 25, 50, 75]\nground_truth = [10, 26, 60]\n\nmetrics = evaluate_detection(detected, ground_truth, tolerance=2)\nprint(metrics)\nAccess individual metrics:\n.. jupyter-execute::\nfrom ammonyte.utils.metrics import evaluate_detection\n\ndetected = [9.8, 23.5, 45.2]\nground_truth = [10, 25, 40, 60]\n\nmetrics = evaluate_detection(detected, ground_truth, tolerance=1.0)\n\nprint(f\"Precision: {metrics.precision:.3f}\")\nprint(f\"Recall: {metrics.recall:.3f}\")\nprint(f\"F1 Score: {metrics.f1_score:.3f}\")",
+    "crumbs": [
+      "API",
+      "Utilities",
+      "utils.metrics.evaluate_detection"
+    ]
+  },
+  {
+    "objectID": "api/core.transitions.DeterministicTransitions.html",
+    "href": "api/core.transitions.DeterministicTransitions.html",
+    "title": "core.transitions.DeterministicTransitions",
+    "section": "",
+    "text": "core.transitions.DeterministicTransitions(\n    series,\n    jump_times,\n    jump_values,\n    method,\n    method_args=None,\n    label=None,\n    statistics=None,\n)\nContainer for deterministic transition detection results\nStores results from tipping point detection algorithms with methods for analysis and visualization.\n\n\n\nseries : ammonyte.Series\n\nOriginal time series object\n\njump_times : array - like\n\nArray of detected transition times\n\njump_values : array - like\n\nArray of transition directions (+1 upward, -1 downward)\n\nmethod : str\n\nName of detection method used\n\nmethod_args : dict = None\n\nDictionary of method parameters\n\nlabel : str = None\n\nLabel for the results\n\nd_statistics : array - like\n\nArray of KS D-statistics corresponding to each transition\n\np_values : (array - like, optional)\n\nArray of p-values corresponding to each transition\n\n\n\n\n\nBasic transition detection:\n.. jupyter-execute::\nimport os, ammonyte as amt\nngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))\ntransitions = ngrip.kstest(w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2, x_c=0.8)\nprint(transitions)\nPlot the results:\n.. jupyter-execute::\ntransitions.plot()\nAccess transition data:\n.. jupyter-execute::\nprint(f\"Number of transitions: {len(transitions.jump_times)}\")\nprint(f\"First transition: {transitions.jump_times[0]:.2f}\")\n\n\n\nSeries.kstest : Detect transitions\n\n\n\n\n\n\nName\nDescription\n\n\n\n\ncopy\nCreate a copy of the DeterministicTransitions object.\n\n\nplot\nPlot the time series with detected transitions.\n\n\nto_csv\nExport detected transitions to CSV file\n\n\n\n\n\ncore.transitions.DeterministicTransitions.copy()\nCreate a copy of the DeterministicTransitions object.\n\n\n\n : DeterministicTransitions\n\nA deep copy of the current object.\n\n\n\n\n\n\ncore.transitions.DeterministicTransitions.plot(\n    figsize=(12, 8),\n    ylabel=None,\n    xlabel=None,\n    title=None,\n    upward_color='red',\n    downward_color='blue',\n    transition_color=None,\n    show_transitions='both',\n    ax=None,\n    title_fontsize=14,\n    label_fontsize=12,\n    tick_fontsize=10,\n    legend_fontsize=10,\n    show_legend=True,\n    legend_labels=None,\n    legend_loc='best',\n    **kwargs,\n)\nPlot the time series with detected transitions.\n\n\n\nfigsize : tuple = (12, 8)\n\nFigure size (width, height) in inches. Default is (12, 8).\n\nylabel : str = None\n\nY-axis label. If None, uses series metadata.\n\nxlabel : str = None\n\nX-axis label. If None, uses series metadata.\n\ntitle : str = None\n\nPlot title. If None, auto-generated.\n\nupward_color : str = 'red'\n\nColor for upward transition markers. Default is ‘red’. Used when show_transitions is ‘both’ or ‘upward’.\n\ndownward_color : str = 'blue'\n\nColor for downward transition markers. Default is ‘blue’. Used when show_transitions is ‘both’ or ‘downward’.\n\ntransition_color : str = None\n\nColor for all transitions when show_transitions=‘all’. Default is None. If None, falls back to upward_color. Recommended to use this parameter when show_transitions=‘all’ for clarity.\n\nshow_transitions : str = 'both'\n\nWhich transitions to show: ‘all’, ‘both’, ‘upward’, or ‘downward’. Default is ‘both’. - ‘all’: Show all transitions in one color without direction distinction (use transition_color) - ‘both’: Show upward and downward transitions in different colors (use upward_color/downward_color) - ‘upward’: Show only upward transitions (use upward_color) - ‘downward’: Show only downward transitions (use downward_color)\n\nax : matplotlib.axes.Axes = None\n\nAxes object to plot on. If None, creates new figure.\n\ntitle_fontsize : int = 14\n\nFont size for plot title. Default is 14.\n\nlabel_fontsize : int = 12\n\nFont size for axis labels. Default is 12.\n\ntick_fontsize : int = 10\n\nFont size for tick labels (numbers on axes). Default is 10.\n\nlegend_fontsize : int = 10\n\nFont size for legend. Default is 10.\n\nshow_legend : bool = True\n\nWhether to display legend. Default is True.\n\nlegend_labels : list of str = None\n\nCustom legend labels. If None, uses auto-generated labels. Provide as list: [‘label1’] for single transition type, or [‘label1’, ‘label2’] for both.\n\nlegend_loc : str = 'best'\n\nLegend location. Default is ‘best’. Options: ‘upper right’, ‘upper left’, ‘lower left’, ‘lower right’, ‘right’, ‘center left’, ‘center right’, ‘lower center’, ‘upper center’, ‘center’, ‘best’.\n\n****kwargs** :  = {}\n\nAdditional arguments passed to matplotlib plot functions.\n\n\n\n\n\n\nfig : matplotlib.figure.Figure\n\nThe figure object.\n\nax : matplotlib.axes.Axes\n\nThe axes object.\n\n\n\n\n\n&gt;&gt;&gt; # Basic plot\n&gt;&gt;&gt; result.plot()\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Custom colors and size\n&gt;&gt;&gt; result.plot(figsize=(15, 10), upward_color='green', downward_color='purple')\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Show only upward transitions\n&gt;&gt;&gt; result.plot(show_transitions='upward', upward_color='red')\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Show all transitions without direction distinction (single color, single legend)\n&gt;&gt;&gt; result.plot(show_transitions='all', transition_color='blue')\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Custom font sizes\n&gt;&gt;&gt; result.plot(title_fontsize=18, label_fontsize=16, tick_fontsize=14, legend_fontsize=14)\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Hide legend\n&gt;&gt;&gt; result.plot(show_legend=False)\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Custom legend label with 'all' mode\n&gt;&gt;&gt; result.plot(show_transitions='all', transition_color='purple',\n...             legend_labels=['Detected Transitions'])\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Custom legend location and color\n&gt;&gt;&gt; result.plot(show_transitions='all', transition_color='#1f77b4',\n...             legend_loc='upper right')\n\n\n\n\ncore.transitions.DeterministicTransitions.to_csv(path=None, **kwargs)\nExport detected transitions to CSV file\n\n\n\npath : str = None\n\nOutput file path. If None, uses default naming based on method.\n\n****kwargs** :  = {}\n\nAdditional arguments passed to pandas.to_csv()\n\n\n\n\n\n&gt;&gt;&gt; transitions = ngrip.kstest(w_min=0.12, w_max=2.5)\n&gt;&gt;&gt; transitions.to_csv('my_transitions.csv')",
+    "crumbs": [
+      "API",
+      "Core",
+      "core.transitions.DeterministicTransitions"
+    ]
+  },
+  {
+    "objectID": "api/core.transitions.DeterministicTransitions.html#parameters",
+    "href": "api/core.transitions.DeterministicTransitions.html#parameters",
+    "title": "core.transitions.DeterministicTransitions",
+    "section": "",
+    "text": "series : ammonyte.Series\n\nOriginal time series object\n\njump_times : array - like\n\nArray of detected transition times\n\njump_values : array - like\n\nArray of transition directions (+1 upward, -1 downward)\n\nmethod : str\n\nName of detection method used\n\nmethod_args : dict = None\n\nDictionary of method parameters\n\nlabel : str = None\n\nLabel for the results\n\nd_statistics : array - like\n\nArray of KS D-statistics corresponding to each transition\n\np_values : (array - like, optional)\n\nArray of p-values corresponding to each transition",
+    "crumbs": [
+      "API",
+      "Core",
+      "core.transitions.DeterministicTransitions"
+    ]
+  },
+  {
+    "objectID": "api/core.transitions.DeterministicTransitions.html#examples",
+    "href": "api/core.transitions.DeterministicTransitions.html#examples",
+    "title": "core.transitions.DeterministicTransitions",
+    "section": "",
+    "text": "Basic transition detection:\n.. jupyter-execute::\nimport os, ammonyte as amt\nngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))\ntransitions = ngrip.kstest(w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2, x_c=0.8)\nprint(transitions)\nPlot the results:\n.. jupyter-execute::\ntransitions.plot()\nAccess transition data:\n.. jupyter-execute::\nprint(f\"Number of transitions: {len(transitions.jump_times)}\")\nprint(f\"First transition: {transitions.jump_times[0]:.2f}\")",
+    "crumbs": [
+      "API",
+      "Core",
+      "core.transitions.DeterministicTransitions"
+    ]
+  },
+  {
+    "objectID": "api/core.transitions.DeterministicTransitions.html#see-also",
+    "href": "api/core.transitions.DeterministicTransitions.html#see-also",
+    "title": "core.transitions.DeterministicTransitions",
+    "section": "",
+    "text": "Series.kstest : Detect transitions",
+    "crumbs": [
+      "API",
+      "Core",
+      "core.transitions.DeterministicTransitions"
+    ]
+  },
+  {
+    "objectID": "api/core.transitions.DeterministicTransitions.html#methods",
+    "href": "api/core.transitions.DeterministicTransitions.html#methods",
+    "title": "core.transitions.DeterministicTransitions",
+    "section": "",
+    "text": "Name\nDescription\n\n\n\n\ncopy\nCreate a copy of the DeterministicTransitions object.\n\n\nplot\nPlot the time series with detected transitions.\n\n\nto_csv\nExport detected transitions to CSV file\n\n\n\n\n\ncore.transitions.DeterministicTransitions.copy()\nCreate a copy of the DeterministicTransitions object.\n\n\n\n : DeterministicTransitions\n\nA deep copy of the current object.\n\n\n\n\n\n\ncore.transitions.DeterministicTransitions.plot(\n    figsize=(12, 8),\n    ylabel=None,\n    xlabel=None,\n    title=None,\n    upward_color='red',\n    downward_color='blue',\n    transition_color=None,\n    show_transitions='both',\n    ax=None,\n    title_fontsize=14,\n    label_fontsize=12,\n    tick_fontsize=10,\n    legend_fontsize=10,\n    show_legend=True,\n    legend_labels=None,\n    legend_loc='best',\n    **kwargs,\n)\nPlot the time series with detected transitions.\n\n\n\nfigsize : tuple = (12, 8)\n\nFigure size (width, height) in inches. Default is (12, 8).\n\nylabel : str = None\n\nY-axis label. If None, uses series metadata.\n\nxlabel : str = None\n\nX-axis label. If None, uses series metadata.\n\ntitle : str = None\n\nPlot title. If None, auto-generated.\n\nupward_color : str = 'red'\n\nColor for upward transition markers. Default is ‘red’. Used when show_transitions is ‘both’ or ‘upward’.\n\ndownward_color : str = 'blue'\n\nColor for downward transition markers. Default is ‘blue’. Used when show_transitions is ‘both’ or ‘downward’.\n\ntransition_color : str = None\n\nColor for all transitions when show_transitions=‘all’. Default is None. If None, falls back to upward_color. Recommended to use this parameter when show_transitions=‘all’ for clarity.\n\nshow_transitions : str = 'both'\n\nWhich transitions to show: ‘all’, ‘both’, ‘upward’, or ‘downward’. Default is ‘both’. - ‘all’: Show all transitions in one color without direction distinction (use transition_color) - ‘both’: Show upward and downward transitions in different colors (use upward_color/downward_color) - ‘upward’: Show only upward transitions (use upward_color) - ‘downward’: Show only downward transitions (use downward_color)\n\nax : matplotlib.axes.Axes = None\n\nAxes object to plot on. If None, creates new figure.\n\ntitle_fontsize : int = 14\n\nFont size for plot title. Default is 14.\n\nlabel_fontsize : int = 12\n\nFont size for axis labels. Default is 12.\n\ntick_fontsize : int = 10\n\nFont size for tick labels (numbers on axes). Default is 10.\n\nlegend_fontsize : int = 10\n\nFont size for legend. Default is 10.\n\nshow_legend : bool = True\n\nWhether to display legend. Default is True.\n\nlegend_labels : list of str = None\n\nCustom legend labels. If None, uses auto-generated labels. Provide as list: [‘label1’] for single transition type, or [‘label1’, ‘label2’] for both.\n\nlegend_loc : str = 'best'\n\nLegend location. Default is ‘best’. Options: ‘upper right’, ‘upper left’, ‘lower left’, ‘lower right’, ‘right’, ‘center left’, ‘center right’, ‘lower center’, ‘upper center’, ‘center’, ‘best’.\n\n****kwargs** :  = {}\n\nAdditional arguments passed to matplotlib plot functions.\n\n\n\n\n\n\nfig : matplotlib.figure.Figure\n\nThe figure object.\n\nax : matplotlib.axes.Axes\n\nThe axes object.\n\n\n\n\n\n&gt;&gt;&gt; # Basic plot\n&gt;&gt;&gt; result.plot()\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Custom colors and size\n&gt;&gt;&gt; result.plot(figsize=(15, 10), upward_color='green', downward_color='purple')\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Show only upward transitions\n&gt;&gt;&gt; result.plot(show_transitions='upward', upward_color='red')\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Show all transitions without direction distinction (single color, single legend)\n&gt;&gt;&gt; result.plot(show_transitions='all', transition_color='blue')\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Custom font sizes\n&gt;&gt;&gt; result.plot(title_fontsize=18, label_fontsize=16, tick_fontsize=14, legend_fontsize=14)\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Hide legend\n&gt;&gt;&gt; result.plot(show_legend=False)\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Custom legend label with 'all' mode\n&gt;&gt;&gt; result.plot(show_transitions='all', transition_color='purple',\n...             legend_labels=['Detected Transitions'])\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Custom legend location and color\n&gt;&gt;&gt; result.plot(show_transitions='all', transition_color='#1f77b4',\n...             legend_loc='upper right')\n\n\n\n\ncore.transitions.DeterministicTransitions.to_csv(path=None, **kwargs)\nExport detected transitions to CSV file\n\n\n\npath : str = None\n\nOutput file path. If None, uses default naming based on method.\n\n****kwargs** :  = {}\n\nAdditional arguments passed to pandas.to_csv()\n\n\n\n\n\n&gt;&gt;&gt; transitions = ngrip.kstest(w_min=0.12, w_max=2.5)\n&gt;&gt;&gt; transitions.to_csv('my_transitions.csv')",
+    "crumbs": [
+      "API",
+      "Core",
+      "core.transitions.DeterministicTransitions"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Ammonyte",
+    "section": "",
+    "text": "pip install git+https://github.com/LinkedEarth/Ammonyte.git"
+  },
+  {
+    "objectID": "index.html#quick-install",
+    "href": "index.html#quick-install",
+    "title": "Ammonyte",
+    "section": "",
+    "text": "pip install git+https://github.com/LinkedEarth/Ammonyte.git"
+  },
+  {
+    "objectID": "index.html#where-to-go-next",
+    "href": "index.html#where-to-go-next",
+    "title": "Ammonyte",
+    "section": "Where to go next",
+    "text": "Where to go next\n\n\n\nGet Started\nInstall the package and run your first example\n\n\nTutorials\nWorked examples\n\n\nReference\nFull API documentation for every class and function"
+  },
+  {
+    "objectID": "methods/augmented_ks_test.html",
+    "href": "methods/augmented_ks_test.html",
+    "title": "Augmented KS Test",
+    "section": "",
+    "text": "The augmented Kolmogorov–Smirnov (KS) test [@Bagniewski2021] detects abrupt transitions by sliding windows of varying sizes along the time series and comparing the statistical distributions on either side of each candidate point. A transition is flagged when the two distributions are significantly different, subject to additional criteria on minimum sample size, rate-of-change, and standard deviation ratio, reducing false positives from noise alone.",
+    "crumbs": [
+      "Methods",
+      "Augmented KS Test"
+    ]
+  },
+  {
+    "objectID": "methods/augmented_ks_test.html#when-to-use",
+    "href": "methods/augmented_ks_test.html#when-to-use",
+    "title": "Augmented KS Test",
+    "section": "When to use",
+    "text": "When to use\nBest for: Sharp, amplitude-based transitions where the distribution of values changes abruptly.\nLimitation: Detects only distributional shifts. If the climate system changes dynamical regime without a large amplitude change, this method will miss it. For dynamically-sensitive detection, see LERM.",
+    "crumbs": [
+      "Methods",
+      "Augmented KS Test"
+    ]
+  },
+  {
+    "objectID": "methods/augmented_ks_test.html#reference",
+    "href": "methods/augmented_ks_test.html#reference",
+    "title": "Augmented KS Test",
+    "section": "Reference",
+    "text": "Reference\nBagniewski, W., Ghil, M., & Rousseau, D.-D. (2021). Automatic detection of abrupt transitions in paleoclimate records. Chaos, 31, 113129. https://doi.org/10.1063/5.0062543",
+    "crumbs": [
+      "Methods",
+      "Augmented KS Test"
+    ]
+  },
+  {
+    "objectID": "methods/augmented_ks_test.html#tutorial",
+    "href": "methods/augmented_ks_test.html#tutorial",
+    "title": "Augmented KS Test",
+    "section": "Tutorial",
+    "text": "Tutorial\nSee the KS Test Validation notebook for a worked example.",
+    "crumbs": [
+      "Methods",
+      "Augmented KS Test"
+    ]
+  },
+  {
+    "objectID": "methods/lerm.html",
+    "href": "methods/lerm.html",
+    "title": "LERM",
+    "section": "",
+    "text": "LERM (Laplacian Eigenmaps of Recurrence Matrices) [@James2024] is a nonlinear method that operates in the system’s reconstructed phase space rather than on raw values. The pipeline is: time-delay embedding → recurrence matrix → Laplacian eigenmaps over sliding windows → Fisher Information signal → transition detection as confidence-interval crossings of that signal.",
+    "crumbs": [
+      "Methods",
+      "LERM"
+    ]
+  },
+  {
+    "objectID": "methods/lerm.html#when-to-use",
+    "href": "methods/lerm.html#when-to-use",
+    "title": "LERM",
+    "section": "When to use",
+    "text": "When to use\nBest for: Dynamical regime changes where the climate system shifts state without a large amplitude jump, transitions that are invisible to amplitude-based methods like the Augmented KS Test.\nLimitation: The pipeline is more complex and computationally heavier than the other two methods.",
+    "crumbs": [
+      "Methods",
+      "LERM"
+    ]
+  },
+  {
+    "objectID": "methods/lerm.html#reference",
+    "href": "methods/lerm.html#reference",
+    "title": "LERM",
+    "section": "Reference",
+    "text": "Reference\nJames, A., Emile-Geay, J., Malik, N., & Khider, D. (2024). Detecting Paleoclimate Transitions With Laplacian Eigenmaps of Recurrence Matrices (LERM). Paleoceanography and Paleoclimatology. https://doi.org/10.1029/2023PA004700",
+    "crumbs": [
+      "Methods",
+      "LERM"
+    ]
+  },
+  {
+    "objectID": "methods/lerm.html#tutorial",
+    "href": "methods/lerm.html#tutorial",
+    "title": "LERM",
+    "section": "Tutorial",
+    "text": "Tutorial\nSee the LERM Validation notebook for a worked example.",
+    "crumbs": [
+      "Methods",
+      "LERM"
+    ]
+  },
+  {
+    "objectID": "methods/ruptures.html",
+    "href": "methods/ruptures.html",
+    "title": "Ruptures",
+    "section": "",
+    "text": "Ruptures [@Truong2020] detects transitions by partitioning the time series into homogeneous segments and finding breakpoints that minimize a cost function. Ammonyte exposes six search algorithms (Pelt, Binseg, BottomUp, Dynp, Window, and KernelCPD) and multiple cost functions, making it the most flexible of the three methods.",
+    "crumbs": [
+      "Methods",
+      "Ruptures"
+    ]
+  },
+  {
+    "objectID": "methods/ruptures.html#when-to-use",
+    "href": "methods/ruptures.html#when-to-use",
+    "title": "Ruptures",
+    "section": "When to use",
+    "text": "When to use\nBest for: Sharp structural breaks in mean or variance, when flexibility in algorithm and cost function choice is needed.\nLimitation: Like the Augmented KS Test, ruptures detects statistical breaks in amplitude. It says nothing about the dynamics, for dynamically-sensitive detection, see LERM.",
+    "crumbs": [
+      "Methods",
+      "Ruptures"
+    ]
+  },
+  {
+    "objectID": "methods/ruptures.html#reference",
+    "href": "methods/ruptures.html#reference",
+    "title": "Ruptures",
+    "section": "Reference",
+    "text": "Reference\nTruong, C., Oudre, L., & Vayatis, N. (2020). Selective review of offline change point detection methods. Signal Processing, 167, 107299. https://doi.org/10.1016/j.sigpro.2019.107299",
+    "crumbs": [
+      "Methods",
+      "Ruptures"
+    ]
+  },
+  {
+    "objectID": "methods/ruptures.html#tutorial",
+    "href": "methods/ruptures.html#tutorial",
+    "title": "Ruptures",
+    "section": "Tutorial",
+    "text": "Tutorial\nSee the Ruptures Validation notebook for a worked example.",
+    "crumbs": [
+      "Methods",
+      "Ruptures"
+    ]
+  },
+  {
+    "objectID": "methods/index.html",
+    "href": "methods/index.html",
+    "title": "Methods",
+    "section": "",
+    "text": "Ammonyte provides three methodologically distinct approaches for detecting abrupt transitions in paleoclimate time series:\n\nAugmented KS Test — statistical distribution-based detection using the augmented Kolmogorov–Smirnov test\nRuptures — optimization-based changepoint detection via cost function minimization\nLERM — nonlinear dynamical analysis using Laplacian Eigenmaps of Recurrence Matrices",
+    "crumbs": [
+      "Methods"
+    ]
+  },
+  {
+    "objectID": "MAINTAINER_NOTES.html",
+    "href": "MAINTAINER_NOTES.html",
+    "title": "Maintainer Notes — Docs Build Pipeline",
+    "section": "",
+    "text": "This file is not part of the published site (it isn’t linked from _quarto.yml). It documents how the doc-build scripts in docs/scripts/ expect things to be set up, so the conventions don’t have to be rediscovered by reading the scripts each time.\n\n\nquartodoc (via griffe) parses your package’s docstrings to build docs/api/. Use numpy-style docstrings — Parameters, Returns, Examples, etc. as Section\\n---------- headers.\n\n\ndocs/scripts/make_doc_figures.py scans every docstring for a fenced ```python block that calls plt.savefig(...), executes that block, and writes the resulting image to docs/figures/. docs/scripts/inject_doc_figures.py then inserts a Markdown image reference into the rendered docs/api/*.qmd page, right after the code block.\nFor this to work, the plt.savefig(...) call inside your docstring’s Examples section must:\n\nEnd the filename in _example.png — the prefix before _example becomes the figure’s name.\nUse the literal path prefix docs/reference/figures/ in the string, even though the file is actually written to docs/figures/ and referenced as ../figures/&lt;name&gt;.png in the rendered page. inject_doc_figures.py’s regex matches on that literal substring — it is a convention marker, not a real path, and changing it will make the figure stop being detected.\n\nExample:\ndef my_function():\n    \"\"\"One-line summary.\n\n    Examples\n    --------\n    ```python\n    import matplotlib.pyplot as plt\n    import ammonyte\n\n    # ... build and plot something ...\n    plt.savefig('docs/reference/figures/MyFunction_example.png', dpi=150, bbox_inches='tight')\n    ```\n    \"\"\"\nRun python scripts/make_doc_figures.py --list to see every example discovered, or --name MyFunction to regenerate just one figure. Figures are not regenerated automatically on every render — rerun the script after changing an example’s code.\n\n\n\n\nA few paths are hardcoded in the scripts rather than read from _quarto.yml or a config file. If you rename or add notebook subdirectories, or rename the tutorials/ directory, update these:\n\ndocs/scripts/sync_notebooks.py: NOTEBOOK_DIR (currently 'notebooks') and NOTEBOOK_SUBDIRS (currently [\"model_demos\", \"functionality_demos\", \"base_classes\"]) — only notebooks inside the listed subdirectories get mirrored into docs/notebooks/ before each render. A new subdirectory under notebooks/ will be silently skipped until it’s added here.\ndocs/scripts/generate_tutorials_index.py: the sidebar lookup hardcodes sidebar.get(\"id\") == \"tutorials\" and writes its output to DOCS_DIR / \"tutorials\" / \"_tutorials_table.qmd\". If you rename the tutorials/ directory or its sidebar id in _quarto.yml, update both of these to match.\ndocs/scripts/sync_notebooks.py: GITHUB_REPO and GITHUB_BRANCH drive the generated “Launch on Binder” / “Download notebook” links — keep these in sync if the repo moves or the default branch changes (they are set from the docsmith spec at generation time, but won’t auto-update afterward)."
+  },
+  {
+    "objectID": "MAINTAINER_NOTES.html#writing-docstrings-that-render-correctly",
+    "href": "MAINTAINER_NOTES.html#writing-docstrings-that-render-correctly",
+    "title": "Maintainer Notes — Docs Build Pipeline",
+    "section": "",
+    "text": "quartodoc (via griffe) parses your package’s docstrings to build docs/api/. Use numpy-style docstrings — Parameters, Returns, Examples, etc. as Section\\n---------- headers.\n\n\ndocs/scripts/make_doc_figures.py scans every docstring for a fenced ```python block that calls plt.savefig(...), executes that block, and writes the resulting image to docs/figures/. docs/scripts/inject_doc_figures.py then inserts a Markdown image reference into the rendered docs/api/*.qmd page, right after the code block.\nFor this to work, the plt.savefig(...) call inside your docstring’s Examples section must:\n\nEnd the filename in _example.png — the prefix before _example becomes the figure’s name.\nUse the literal path prefix docs/reference/figures/ in the string, even though the file is actually written to docs/figures/ and referenced as ../figures/&lt;name&gt;.png in the rendered page. inject_doc_figures.py’s regex matches on that literal substring — it is a convention marker, not a real path, and changing it will make the figure stop being detected.\n\nExample:\ndef my_function():\n    \"\"\"One-line summary.\n\n    Examples\n    --------\n    ```python\n    import matplotlib.pyplot as plt\n    import ammonyte\n\n    # ... build and plot something ...\n    plt.savefig('docs/reference/figures/MyFunction_example.png', dpi=150, bbox_inches='tight')\n    ```\n    \"\"\"\nRun python scripts/make_doc_figures.py --list to see every example discovered, or --name MyFunction to regenerate just one figure. Figures are not regenerated automatically on every render — rerun the script after changing an example’s code."
+  },
+  {
+    "objectID": "MAINTAINER_NOTES.html#hardcoded-paths-to-update-if-you-reorganize-notebooks-or-tutorials",
+    "href": "MAINTAINER_NOTES.html#hardcoded-paths-to-update-if-you-reorganize-notebooks-or-tutorials",
+    "title": "Maintainer Notes — Docs Build Pipeline",
+    "section": "",
+    "text": "A few paths are hardcoded in the scripts rather than read from _quarto.yml or a config file. If you rename or add notebook subdirectories, or rename the tutorials/ directory, update these:\n\ndocs/scripts/sync_notebooks.py: NOTEBOOK_DIR (currently 'notebooks') and NOTEBOOK_SUBDIRS (currently [\"model_demos\", \"functionality_demos\", \"base_classes\"]) — only notebooks inside the listed subdirectories get mirrored into docs/notebooks/ before each render. A new subdirectory under notebooks/ will be silently skipped until it’s added here.\ndocs/scripts/generate_tutorials_index.py: the sidebar lookup hardcodes sidebar.get(\"id\") == \"tutorials\" and writes its output to DOCS_DIR / \"tutorials\" / \"_tutorials_table.qmd\". If you rename the tutorials/ directory or its sidebar id in _quarto.yml, update both of these to match.\ndocs/scripts/sync_notebooks.py: GITHUB_REPO and GITHUB_BRANCH drive the generated “Launch on Binder” / “Download notebook” links — keep these in sync if the repo moves or the default branch changes (they are set from the docsmith spec at generation time, but won’t auto-update afterward)."
+  },
+  {
     "objectID": "api/utils.ks.KS_test.html",
     "href": "api/utils.ks.KS_test.html",
     "title": "utils.ks.KS_test",
@@ -571,295 +875,51 @@
     ]
   },
   {
-    "objectID": "MAINTAINER_NOTES.html",
-    "href": "MAINTAINER_NOTES.html",
-    "title": "Maintainer Notes — Docs Build Pipeline",
+    "objectID": "api/core.geoseries.GeoSeries.html",
+    "href": "api/core.geoseries.GeoSeries.html",
+    "title": "core.geoseries.GeoSeries",
     "section": "",
-    "text": "This file is not part of the published site (it isn’t linked from _quarto.yml). It documents how the doc-build scripts in docs/scripts/ expect things to be set up, so the conventions don’t have to be rediscovered by reading the scripts each time.\n\n\nquartodoc (via griffe) parses your package’s docstrings to build docs/api/. Use numpy-style docstrings — Parameters, Returns, Examples, etc. as Section\\n---------- headers.\n\n\ndocs/scripts/make_doc_figures.py scans every docstring for a fenced ```python block that calls plt.savefig(...), executes that block, and writes the resulting image to docs/figures/. docs/scripts/inject_doc_figures.py then inserts a Markdown image reference into the rendered docs/api/*.qmd page, right after the code block.\nFor this to work, the plt.savefig(...) call inside your docstring’s Examples section must:\n\nEnd the filename in _example.png — the prefix before _example becomes the figure’s name.\nUse the literal path prefix docs/reference/figures/ in the string, even though the file is actually written to docs/figures/ and referenced as ../figures/&lt;name&gt;.png in the rendered page. inject_doc_figures.py’s regex matches on that literal substring — it is a convention marker, not a real path, and changing it will make the figure stop being detected.\n\nExample:\ndef my_function():\n    \"\"\"One-line summary.\n\n    Examples\n    --------\n    ```python\n    import matplotlib.pyplot as plt\n    import ammonyte\n\n    # ... build and plot something ...\n    plt.savefig('docs/reference/figures/MyFunction_example.png', dpi=150, bbox_inches='tight')\n    ```\n    \"\"\"\nRun python scripts/make_doc_figures.py --list to see every example discovered, or --name MyFunction to regenerate just one figure. Figures are not regenerated automatically on every render — rerun the script after changing an example’s code.\n\n\n\n\nA few paths are hardcoded in the scripts rather than read from _quarto.yml or a config file. If you rename or add notebook subdirectories, or rename the tutorials/ directory, update these:\n\ndocs/scripts/sync_notebooks.py: NOTEBOOK_DIR (currently 'notebooks') and NOTEBOOK_SUBDIRS (currently [\"model_demos\", \"functionality_demos\", \"base_classes\"]) — only notebooks inside the listed subdirectories get mirrored into docs/notebooks/ before each render. A new subdirectory under notebooks/ will be silently skipped until it’s added here.\ndocs/scripts/generate_tutorials_index.py: the sidebar lookup hardcodes sidebar.get(\"id\") == \"tutorials\" and writes its output to DOCS_DIR / \"tutorials\" / \"_tutorials_table.qmd\". If you rename the tutorials/ directory or its sidebar id in _quarto.yml, update both of these to match.\ndocs/scripts/sync_notebooks.py: GITHUB_REPO and GITHUB_BRANCH drive the generated “Launch on Binder” / “Download notebook” links — keep these in sync if the repo moves or the default branch changes (they are set from the docsmith spec at generation time, but won’t auto-update afterward)."
-  },
-  {
-    "objectID": "MAINTAINER_NOTES.html#writing-docstrings-that-render-correctly",
-    "href": "MAINTAINER_NOTES.html#writing-docstrings-that-render-correctly",
-    "title": "Maintainer Notes — Docs Build Pipeline",
-    "section": "",
-    "text": "quartodoc (via griffe) parses your package’s docstrings to build docs/api/. Use numpy-style docstrings — Parameters, Returns, Examples, etc. as Section\\n---------- headers.\n\n\ndocs/scripts/make_doc_figures.py scans every docstring for a fenced ```python block that calls plt.savefig(...), executes that block, and writes the resulting image to docs/figures/. docs/scripts/inject_doc_figures.py then inserts a Markdown image reference into the rendered docs/api/*.qmd page, right after the code block.\nFor this to work, the plt.savefig(...) call inside your docstring’s Examples section must:\n\nEnd the filename in _example.png — the prefix before _example becomes the figure’s name.\nUse the literal path prefix docs/reference/figures/ in the string, even though the file is actually written to docs/figures/ and referenced as ../figures/&lt;name&gt;.png in the rendered page. inject_doc_figures.py’s regex matches on that literal substring — it is a convention marker, not a real path, and changing it will make the figure stop being detected.\n\nExample:\ndef my_function():\n    \"\"\"One-line summary.\n\n    Examples\n    --------\n    ```python\n    import matplotlib.pyplot as plt\n    import ammonyte\n\n    # ... build and plot something ...\n    plt.savefig('docs/reference/figures/MyFunction_example.png', dpi=150, bbox_inches='tight')\n    ```\n    \"\"\"\nRun python scripts/make_doc_figures.py --list to see every example discovered, or --name MyFunction to regenerate just one figure. Figures are not regenerated automatically on every render — rerun the script after changing an example’s code."
-  },
-  {
-    "objectID": "MAINTAINER_NOTES.html#hardcoded-paths-to-update-if-you-reorganize-notebooks-or-tutorials",
-    "href": "MAINTAINER_NOTES.html#hardcoded-paths-to-update-if-you-reorganize-notebooks-or-tutorials",
-    "title": "Maintainer Notes — Docs Build Pipeline",
-    "section": "",
-    "text": "A few paths are hardcoded in the scripts rather than read from _quarto.yml or a config file. If you rename or add notebook subdirectories, or rename the tutorials/ directory, update these:\n\ndocs/scripts/sync_notebooks.py: NOTEBOOK_DIR (currently 'notebooks') and NOTEBOOK_SUBDIRS (currently [\"model_demos\", \"functionality_demos\", \"base_classes\"]) — only notebooks inside the listed subdirectories get mirrored into docs/notebooks/ before each render. A new subdirectory under notebooks/ will be silently skipped until it’s added here.\ndocs/scripts/generate_tutorials_index.py: the sidebar lookup hardcodes sidebar.get(\"id\") == \"tutorials\" and writes its output to DOCS_DIR / \"tutorials\" / \"_tutorials_table.qmd\". If you rename the tutorials/ directory or its sidebar id in _quarto.yml, update both of these to match.\ndocs/scripts/sync_notebooks.py: GITHUB_REPO and GITHUB_BRANCH drive the generated “Launch on Binder” / “Download notebook” links — keep these in sync if the repo moves or the default branch changes (they are set from the docsmith spec at generation time, but won’t auto-update afterward)."
-  },
-  {
-    "objectID": "methods/index.html",
-    "href": "methods/index.html",
-    "title": "Methods",
-    "section": "",
-    "text": "Ammonyte provides three methodologically distinct approaches for detecting abrupt transitions in paleoclimate time series:\n\nAugmented KS Test — statistical distribution-based detection using the augmented Kolmogorov–Smirnov test\nRuptures — optimization-based changepoint detection via cost function minimization\nLERM — nonlinear dynamical analysis using Laplacian Eigenmaps of Recurrence Matrices",
-    "crumbs": [
-      "Methods"
-    ]
-  },
-  {
-    "objectID": "methods/ruptures.html",
-    "href": "methods/ruptures.html",
-    "title": "Ruptures",
-    "section": "",
-    "text": "Ruptures [@Truong2020] detects transitions by partitioning the time series into homogeneous segments and finding breakpoints that minimize a cost function. Ammonyte exposes six search algorithms (Pelt, Binseg, BottomUp, Dynp, Window, and KernelCPD) and multiple cost functions, making it the most flexible of the three methods.",
-    "crumbs": [
-      "Methods",
-      "Ruptures"
-    ]
-  },
-  {
-    "objectID": "methods/ruptures.html#when-to-use",
-    "href": "methods/ruptures.html#when-to-use",
-    "title": "Ruptures",
-    "section": "When to use",
-    "text": "When to use\nBest for: Sharp structural breaks in mean or variance, when flexibility in algorithm and cost function choice is needed.\nLimitation: Like the Augmented KS Test, ruptures detects statistical breaks in amplitude. It says nothing about the dynamics, for dynamically-sensitive detection, see LERM.",
-    "crumbs": [
-      "Methods",
-      "Ruptures"
-    ]
-  },
-  {
-    "objectID": "methods/ruptures.html#reference",
-    "href": "methods/ruptures.html#reference",
-    "title": "Ruptures",
-    "section": "Reference",
-    "text": "Reference\nTruong, C., Oudre, L., & Vayatis, N. (2020). Selective review of offline change point detection methods. Signal Processing, 167, 107299. https://doi.org/10.1016/j.sigpro.2019.107299",
-    "crumbs": [
-      "Methods",
-      "Ruptures"
-    ]
-  },
-  {
-    "objectID": "methods/ruptures.html#tutorial",
-    "href": "methods/ruptures.html#tutorial",
-    "title": "Ruptures",
-    "section": "Tutorial",
-    "text": "Tutorial\nSee the Ruptures Validation notebook for a worked example.",
-    "crumbs": [
-      "Methods",
-      "Ruptures"
-    ]
-  },
-  {
-    "objectID": "methods/lerm.html",
-    "href": "methods/lerm.html",
-    "title": "LERM",
-    "section": "",
-    "text": "LERM (Laplacian Eigenmaps of Recurrence Matrices) [@James2024] is a nonlinear method that operates in the system’s reconstructed phase space rather than on raw values. The pipeline is: time-delay embedding → recurrence matrix → Laplacian eigenmaps over sliding windows → Fisher Information signal → transition detection as confidence-interval crossings of that signal.",
-    "crumbs": [
-      "Methods",
-      "LERM"
-    ]
-  },
-  {
-    "objectID": "methods/lerm.html#when-to-use",
-    "href": "methods/lerm.html#when-to-use",
-    "title": "LERM",
-    "section": "When to use",
-    "text": "When to use\nBest for: Dynamical regime changes where the climate system shifts state without a large amplitude jump, transitions that are invisible to amplitude-based methods like the Augmented KS Test.\nLimitation: The pipeline is more complex and computationally heavier than the other two methods.",
-    "crumbs": [
-      "Methods",
-      "LERM"
-    ]
-  },
-  {
-    "objectID": "methods/lerm.html#reference",
-    "href": "methods/lerm.html#reference",
-    "title": "LERM",
-    "section": "Reference",
-    "text": "Reference\nJames, A., Emile-Geay, J., Malik, N., & Khider, D. (2024). Detecting Paleoclimate Transitions With Laplacian Eigenmaps of Recurrence Matrices (LERM). Paleoceanography and Paleoclimatology. https://doi.org/10.1029/2023PA004700",
-    "crumbs": [
-      "Methods",
-      "LERM"
-    ]
-  },
-  {
-    "objectID": "methods/lerm.html#tutorial",
-    "href": "methods/lerm.html#tutorial",
-    "title": "LERM",
-    "section": "Tutorial",
-    "text": "Tutorial\nSee the LERM Validation notebook for a worked example.",
-    "crumbs": [
-      "Methods",
-      "LERM"
-    ]
-  },
-  {
-    "objectID": "methods/augmented_ks_test.html",
-    "href": "methods/augmented_ks_test.html",
-    "title": "Augmented KS Test",
-    "section": "",
-    "text": "The augmented Kolmogorov–Smirnov (KS) test [@Bagniewski2021] detects abrupt transitions by sliding windows of varying sizes along the time series and comparing the statistical distributions on either side of each candidate point. A transition is flagged when the two distributions are significantly different, subject to additional criteria on minimum sample size, rate-of-change, and standard deviation ratio, reducing false positives from noise alone.",
-    "crumbs": [
-      "Methods",
-      "Augmented KS Test"
-    ]
-  },
-  {
-    "objectID": "methods/augmented_ks_test.html#when-to-use",
-    "href": "methods/augmented_ks_test.html#when-to-use",
-    "title": "Augmented KS Test",
-    "section": "When to use",
-    "text": "When to use\nBest for: Sharp, amplitude-based transitions where the distribution of values changes abruptly.\nLimitation: Detects only distributional shifts. If the climate system changes dynamical regime without a large amplitude change, this method will miss it. For dynamically-sensitive detection, see LERM.",
-    "crumbs": [
-      "Methods",
-      "Augmented KS Test"
-    ]
-  },
-  {
-    "objectID": "methods/augmented_ks_test.html#reference",
-    "href": "methods/augmented_ks_test.html#reference",
-    "title": "Augmented KS Test",
-    "section": "Reference",
-    "text": "Reference\nBagniewski, W., Ghil, M., & Rousseau, D.-D. (2021). Automatic detection of abrupt transitions in paleoclimate records. Chaos, 31, 113129. https://doi.org/10.1063/5.0062543",
-    "crumbs": [
-      "Methods",
-      "Augmented KS Test"
-    ]
-  },
-  {
-    "objectID": "methods/augmented_ks_test.html#tutorial",
-    "href": "methods/augmented_ks_test.html#tutorial",
-    "title": "Augmented KS Test",
-    "section": "Tutorial",
-    "text": "Tutorial\nSee the KS Test Validation notebook for a worked example.",
-    "crumbs": [
-      "Methods",
-      "Augmented KS Test"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Ammonyte",
-    "section": "",
-    "text": "pip install git+https://github.com/LinkedEarth/Ammonyte.git"
-  },
-  {
-    "objectID": "index.html#quick-install",
-    "href": "index.html#quick-install",
-    "title": "Ammonyte",
-    "section": "",
-    "text": "pip install git+https://github.com/LinkedEarth/Ammonyte.git"
-  },
-  {
-    "objectID": "index.html#where-to-go-next",
-    "href": "index.html#where-to-go-next",
-    "title": "Ammonyte",
-    "section": "Where to go next",
-    "text": "Where to go next\n\n\n\nGet Started\nInstall the package and run your first example\n\n\nTutorials\nWorked examples\n\n\nReference\nFull API documentation for every class and function"
-  },
-  {
-    "objectID": "api/core.transitions.DeterministicTransitions.html",
-    "href": "api/core.transitions.DeterministicTransitions.html",
-    "title": "core.transitions.DeterministicTransitions",
-    "section": "",
-    "text": "core.transitions.DeterministicTransitions(\n    series,\n    jump_times,\n    jump_values,\n    method,\n    method_args=None,\n    label=None,\n    statistics=None,\n)\nContainer for deterministic transition detection results\nStores results from tipping point detection algorithms with methods for analysis and visualization.\n\n\n\nseries : ammonyte.Series\n\nOriginal time series object\n\njump_times : array - like\n\nArray of detected transition times\n\njump_values : array - like\n\nArray of transition directions (+1 upward, -1 downward)\n\nmethod : str\n\nName of detection method used\n\nmethod_args : dict = None\n\nDictionary of method parameters\n\nlabel : str = None\n\nLabel for the results\n\nd_statistics : array - like\n\nArray of KS D-statistics corresponding to each transition\n\np_values : (array - like, optional)\n\nArray of p-values corresponding to each transition\n\n\n\n\n\nBasic transition detection:\n.. jupyter-execute::\nimport os, ammonyte as amt\nngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))\ntransitions = ngrip.kstest(w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2, x_c=0.8)\nprint(transitions)\nPlot the results:\n.. jupyter-execute::\ntransitions.plot()\nAccess transition data:\n.. jupyter-execute::\nprint(f\"Number of transitions: {len(transitions.jump_times)}\")\nprint(f\"First transition: {transitions.jump_times[0]:.2f}\")\n\n\n\nSeries.kstest : Detect transitions\n\n\n\n\n\n\nName\nDescription\n\n\n\n\ncopy\nCreate a copy of the DeterministicTransitions object.\n\n\nplot\nPlot the time series with detected transitions.\n\n\nto_csv\nExport detected transitions to CSV file\n\n\n\n\n\ncore.transitions.DeterministicTransitions.copy()\nCreate a copy of the DeterministicTransitions object.\n\n\n\n : DeterministicTransitions\n\nA deep copy of the current object.\n\n\n\n\n\n\ncore.transitions.DeterministicTransitions.plot(\n    figsize=(12, 8),\n    ylabel=None,\n    xlabel=None,\n    title=None,\n    upward_color='red',\n    downward_color='blue',\n    transition_color=None,\n    show_transitions='both',\n    ax=None,\n    title_fontsize=14,\n    label_fontsize=12,\n    tick_fontsize=10,\n    legend_fontsize=10,\n    show_legend=True,\n    legend_labels=None,\n    legend_loc='best',\n    **kwargs,\n)\nPlot the time series with detected transitions.\n\n\n\nfigsize : tuple = (12, 8)\n\nFigure size (width, height) in inches. Default is (12, 8).\n\nylabel : str = None\n\nY-axis label. If None, uses series metadata.\n\nxlabel : str = None\n\nX-axis label. If None, uses series metadata.\n\ntitle : str = None\n\nPlot title. If None, auto-generated.\n\nupward_color : str = 'red'\n\nColor for upward transition markers. Default is ‘red’. Used when show_transitions is ‘both’ or ‘upward’.\n\ndownward_color : str = 'blue'\n\nColor for downward transition markers. Default is ‘blue’. Used when show_transitions is ‘both’ or ‘downward’.\n\ntransition_color : str = None\n\nColor for all transitions when show_transitions=‘all’. Default is None. If None, falls back to upward_color. Recommended to use this parameter when show_transitions=‘all’ for clarity.\n\nshow_transitions : str = 'both'\n\nWhich transitions to show: ‘all’, ‘both’, ‘upward’, or ‘downward’. Default is ‘both’. - ‘all’: Show all transitions in one color without direction distinction (use transition_color) - ‘both’: Show upward and downward transitions in different colors (use upward_color/downward_color) - ‘upward’: Show only upward transitions (use upward_color) - ‘downward’: Show only downward transitions (use downward_color)\n\nax : matplotlib.axes.Axes = None\n\nAxes object to plot on. If None, creates new figure.\n\ntitle_fontsize : int = 14\n\nFont size for plot title. Default is 14.\n\nlabel_fontsize : int = 12\n\nFont size for axis labels. Default is 12.\n\ntick_fontsize : int = 10\n\nFont size for tick labels (numbers on axes). Default is 10.\n\nlegend_fontsize : int = 10\n\nFont size for legend. Default is 10.\n\nshow_legend : bool = True\n\nWhether to display legend. Default is True.\n\nlegend_labels : list of str = None\n\nCustom legend labels. If None, uses auto-generated labels. Provide as list: [‘label1’] for single transition type, or [‘label1’, ‘label2’] for both.\n\nlegend_loc : str = 'best'\n\nLegend location. Default is ‘best’. Options: ‘upper right’, ‘upper left’, ‘lower left’, ‘lower right’, ‘right’, ‘center left’, ‘center right’, ‘lower center’, ‘upper center’, ‘center’, ‘best’.\n\n****kwargs** :  = {}\n\nAdditional arguments passed to matplotlib plot functions.\n\n\n\n\n\n\nfig : matplotlib.figure.Figure\n\nThe figure object.\n\nax : matplotlib.axes.Axes\n\nThe axes object.\n\n\n\n\n\n&gt;&gt;&gt; # Basic plot\n&gt;&gt;&gt; result.plot()\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Custom colors and size\n&gt;&gt;&gt; result.plot(figsize=(15, 10), upward_color='green', downward_color='purple')\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Show only upward transitions\n&gt;&gt;&gt; result.plot(show_transitions='upward', upward_color='red')\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Show all transitions without direction distinction (single color, single legend)\n&gt;&gt;&gt; result.plot(show_transitions='all', transition_color='blue')\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Custom font sizes\n&gt;&gt;&gt; result.plot(title_fontsize=18, label_fontsize=16, tick_fontsize=14, legend_fontsize=14)\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Hide legend\n&gt;&gt;&gt; result.plot(show_legend=False)\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Custom legend label with 'all' mode\n&gt;&gt;&gt; result.plot(show_transitions='all', transition_color='purple',\n...             legend_labels=['Detected Transitions'])\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Custom legend location and color\n&gt;&gt;&gt; result.plot(show_transitions='all', transition_color='#1f77b4',\n...             legend_loc='upper right')\n\n\n\n\ncore.transitions.DeterministicTransitions.to_csv(path=None, **kwargs)\nExport detected transitions to CSV file\n\n\n\npath : str = None\n\nOutput file path. If None, uses default naming based on method.\n\n****kwargs** :  = {}\n\nAdditional arguments passed to pandas.to_csv()\n\n\n\n\n\n&gt;&gt;&gt; transitions = ngrip.kstest(w_min=0.12, w_max=2.5)\n&gt;&gt;&gt; transitions.to_csv('my_transitions.csv')",
+    "text": "core.geoseries.GeoSeries()\nAmmonyte GeoSeries object for geographically referenced time series.\nChild of both ammonyte.Series and pyleoclim.GeoSeries. Inherits all Ammonyte transition detection methods (kstest, ruptures, embed, determinism, laminarity) from ammonyte.Series, and all geospatial methods (map, dashboard) and metadata (lat, lon, elevation, archiveType) from pyleoclim.GeoSeries.\n\n\n\ntime : list or numpy.array\n\nIndependent variable (t).\n\nvalue : list or numpy.array\n\nValues of the dependent variable (y).\n\nlat : float\n\nLatitude N in decimal degrees. Must be in the range [-90, +90].\n\nlon : float\n\nLongitude East in decimal degrees. Must be in the range [-180, +360].\n\nelevation : float\n\nElevation in meters above sea level. Negative values indicate depth below global mean sea level.\n\ntime_unit : str\n\nUnits for the time vector (e.g., ‘years’, ‘kyr BP’).\n\ntime_name : str\n\nName of the time vector (e.g., ‘Age’, ‘Time’).\n\nvalue_name : str\n\nName of the value vector (e.g., ‘temperature’, ‘δ¹⁸O’).\n\nvalue_unit : str\n\nUnits for the value vector (e.g., ‘deg C’, ‘‰’).\n\nlabel : str\n\nName of the time series (e.g., ‘NGRIP Ice Core’).\n\narchiveType : str\n\nClimate archive type (e.g., ‘GlacierIce’, ‘MarineSediment’, ‘Speleothem’, ‘LakeSediment’).\n\n\n\n\n\nammonyte.Series : Ammonyte series without geolocation. pyleoclim.GeoSeries : Pyleoclim GeoSeries with full geospatial API.\n\n\n\nCreate a GeoSeries from the NGRIP ice core record:\n&gt;&gt;&gt; import os, ammonyte as amt\n&gt;&gt;&gt; ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))\n&gt;&gt;&gt; ngrip_geo = amt.GeoSeries(\n...     time=ngrip.time,\n...     value=ngrip.value,\n...     lat=75.1,\n...     lon=-42.32,\n...     time_name=ngrip.time_name,\n...     time_unit=ngrip.time_unit,\n...     value_name=ngrip.value_name,\n...     value_unit=ngrip.value_unit,\n...     label=ngrip.label,\n...     archiveType='GlacierIce'\n... )",
     "crumbs": [
       "API",
       "Core",
-      "core.transitions.DeterministicTransitions"
+      "core.geoseries.GeoSeries"
     ]
   },
   {
-    "objectID": "api/core.transitions.DeterministicTransitions.html#parameters",
-    "href": "api/core.transitions.DeterministicTransitions.html#parameters",
-    "title": "core.transitions.DeterministicTransitions",
+    "objectID": "api/core.geoseries.GeoSeries.html#parameters",
+    "href": "api/core.geoseries.GeoSeries.html#parameters",
+    "title": "core.geoseries.GeoSeries",
     "section": "",
-    "text": "series : ammonyte.Series\n\nOriginal time series object\n\njump_times : array - like\n\nArray of detected transition times\n\njump_values : array - like\n\nArray of transition directions (+1 upward, -1 downward)\n\nmethod : str\n\nName of detection method used\n\nmethod_args : dict = None\n\nDictionary of method parameters\n\nlabel : str = None\n\nLabel for the results\n\nd_statistics : array - like\n\nArray of KS D-statistics corresponding to each transition\n\np_values : (array - like, optional)\n\nArray of p-values corresponding to each transition",
+    "text": "time : list or numpy.array\n\nIndependent variable (t).\n\nvalue : list or numpy.array\n\nValues of the dependent variable (y).\n\nlat : float\n\nLatitude N in decimal degrees. Must be in the range [-90, +90].\n\nlon : float\n\nLongitude East in decimal degrees. Must be in the range [-180, +360].\n\nelevation : float\n\nElevation in meters above sea level. Negative values indicate depth below global mean sea level.\n\ntime_unit : str\n\nUnits for the time vector (e.g., ‘years’, ‘kyr BP’).\n\ntime_name : str\n\nName of the time vector (e.g., ‘Age’, ‘Time’).\n\nvalue_name : str\n\nName of the value vector (e.g., ‘temperature’, ‘δ¹⁸O’).\n\nvalue_unit : str\n\nUnits for the value vector (e.g., ‘deg C’, ‘‰’).\n\nlabel : str\n\nName of the time series (e.g., ‘NGRIP Ice Core’).\n\narchiveType : str\n\nClimate archive type (e.g., ‘GlacierIce’, ‘MarineSediment’, ‘Speleothem’, ‘LakeSediment’).",
     "crumbs": [
       "API",
       "Core",
-      "core.transitions.DeterministicTransitions"
+      "core.geoseries.GeoSeries"
     ]
   },
   {
-    "objectID": "api/core.transitions.DeterministicTransitions.html#examples",
-    "href": "api/core.transitions.DeterministicTransitions.html#examples",
-    "title": "core.transitions.DeterministicTransitions",
+    "objectID": "api/core.geoseries.GeoSeries.html#see-also",
+    "href": "api/core.geoseries.GeoSeries.html#see-also",
+    "title": "core.geoseries.GeoSeries",
     "section": "",
-    "text": "Basic transition detection:\n.. jupyter-execute::\nimport os, ammonyte as amt\nngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))\ntransitions = ngrip.kstest(w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2, x_c=0.8)\nprint(transitions)\nPlot the results:\n.. jupyter-execute::\ntransitions.plot()\nAccess transition data:\n.. jupyter-execute::\nprint(f\"Number of transitions: {len(transitions.jump_times)}\")\nprint(f\"First transition: {transitions.jump_times[0]:.2f}\")",
+    "text": "ammonyte.Series : Ammonyte series without geolocation. pyleoclim.GeoSeries : Pyleoclim GeoSeries with full geospatial API.",
     "crumbs": [
       "API",
       "Core",
-      "core.transitions.DeterministicTransitions"
+      "core.geoseries.GeoSeries"
     ]
   },
   {
-    "objectID": "api/core.transitions.DeterministicTransitions.html#see-also",
-    "href": "api/core.transitions.DeterministicTransitions.html#see-also",
-    "title": "core.transitions.DeterministicTransitions",
+    "objectID": "api/core.geoseries.GeoSeries.html#examples",
+    "href": "api/core.geoseries.GeoSeries.html#examples",
+    "title": "core.geoseries.GeoSeries",
     "section": "",
-    "text": "Series.kstest : Detect transitions",
+    "text": "Create a GeoSeries from the NGRIP ice core record:\n&gt;&gt;&gt; import os, ammonyte as amt\n&gt;&gt;&gt; ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))\n&gt;&gt;&gt; ngrip_geo = amt.GeoSeries(\n...     time=ngrip.time,\n...     value=ngrip.value,\n...     lat=75.1,\n...     lon=-42.32,\n...     time_name=ngrip.time_name,\n...     time_unit=ngrip.time_unit,\n...     value_name=ngrip.value_name,\n...     value_unit=ngrip.value_unit,\n...     label=ngrip.label,\n...     archiveType='GlacierIce'\n... )",
     "crumbs": [
       "API",
       "Core",
-      "core.transitions.DeterministicTransitions"
-    ]
-  },
-  {
-    "objectID": "api/core.transitions.DeterministicTransitions.html#methods",
-    "href": "api/core.transitions.DeterministicTransitions.html#methods",
-    "title": "core.transitions.DeterministicTransitions",
-    "section": "",
-    "text": "Name\nDescription\n\n\n\n\ncopy\nCreate a copy of the DeterministicTransitions object.\n\n\nplot\nPlot the time series with detected transitions.\n\n\nto_csv\nExport detected transitions to CSV file\n\n\n\n\n\ncore.transitions.DeterministicTransitions.copy()\nCreate a copy of the DeterministicTransitions object.\n\n\n\n : DeterministicTransitions\n\nA deep copy of the current object.\n\n\n\n\n\n\ncore.transitions.DeterministicTransitions.plot(\n    figsize=(12, 8),\n    ylabel=None,\n    xlabel=None,\n    title=None,\n    upward_color='red',\n    downward_color='blue',\n    transition_color=None,\n    show_transitions='both',\n    ax=None,\n    title_fontsize=14,\n    label_fontsize=12,\n    tick_fontsize=10,\n    legend_fontsize=10,\n    show_legend=True,\n    legend_labels=None,\n    legend_loc='best',\n    **kwargs,\n)\nPlot the time series with detected transitions.\n\n\n\nfigsize : tuple = (12, 8)\n\nFigure size (width, height) in inches. Default is (12, 8).\n\nylabel : str = None\n\nY-axis label. If None, uses series metadata.\n\nxlabel : str = None\n\nX-axis label. If None, uses series metadata.\n\ntitle : str = None\n\nPlot title. If None, auto-generated.\n\nupward_color : str = 'red'\n\nColor for upward transition markers. Default is ‘red’. Used when show_transitions is ‘both’ or ‘upward’.\n\ndownward_color : str = 'blue'\n\nColor for downward transition markers. Default is ‘blue’. Used when show_transitions is ‘both’ or ‘downward’.\n\ntransition_color : str = None\n\nColor for all transitions when show_transitions=‘all’. Default is None. If None, falls back to upward_color. Recommended to use this parameter when show_transitions=‘all’ for clarity.\n\nshow_transitions : str = 'both'\n\nWhich transitions to show: ‘all’, ‘both’, ‘upward’, or ‘downward’. Default is ‘both’. - ‘all’: Show all transitions in one color without direction distinction (use transition_color) - ‘both’: Show upward and downward transitions in different colors (use upward_color/downward_color) - ‘upward’: Show only upward transitions (use upward_color) - ‘downward’: Show only downward transitions (use downward_color)\n\nax : matplotlib.axes.Axes = None\n\nAxes object to plot on. If None, creates new figure.\n\ntitle_fontsize : int = 14\n\nFont size for plot title. Default is 14.\n\nlabel_fontsize : int = 12\n\nFont size for axis labels. Default is 12.\n\ntick_fontsize : int = 10\n\nFont size for tick labels (numbers on axes). Default is 10.\n\nlegend_fontsize : int = 10\n\nFont size for legend. Default is 10.\n\nshow_legend : bool = True\n\nWhether to display legend. Default is True.\n\nlegend_labels : list of str = None\n\nCustom legend labels. If None, uses auto-generated labels. Provide as list: [‘label1’] for single transition type, or [‘label1’, ‘label2’] for both.\n\nlegend_loc : str = 'best'\n\nLegend location. Default is ‘best’. Options: ‘upper right’, ‘upper left’, ‘lower left’, ‘lower right’, ‘right’, ‘center left’, ‘center right’, ‘lower center’, ‘upper center’, ‘center’, ‘best’.\n\n****kwargs** :  = {}\n\nAdditional arguments passed to matplotlib plot functions.\n\n\n\n\n\n\nfig : matplotlib.figure.Figure\n\nThe figure object.\n\nax : matplotlib.axes.Axes\n\nThe axes object.\n\n\n\n\n\n&gt;&gt;&gt; # Basic plot\n&gt;&gt;&gt; result.plot()\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Custom colors and size\n&gt;&gt;&gt; result.plot(figsize=(15, 10), upward_color='green', downward_color='purple')\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Show only upward transitions\n&gt;&gt;&gt; result.plot(show_transitions='upward', upward_color='red')\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Show all transitions without direction distinction (single color, single legend)\n&gt;&gt;&gt; result.plot(show_transitions='all', transition_color='blue')\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Custom font sizes\n&gt;&gt;&gt; result.plot(title_fontsize=18, label_fontsize=16, tick_fontsize=14, legend_fontsize=14)\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Hide legend\n&gt;&gt;&gt; result.plot(show_legend=False)\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Custom legend label with 'all' mode\n&gt;&gt;&gt; result.plot(show_transitions='all', transition_color='purple',\n...             legend_labels=['Detected Transitions'])\n&gt;&gt;&gt;\n&gt;&gt;&gt; # Custom legend location and color\n&gt;&gt;&gt; result.plot(show_transitions='all', transition_color='#1f77b4',\n...             legend_loc='upper right')\n\n\n\n\ncore.transitions.DeterministicTransitions.to_csv(path=None, **kwargs)\nExport detected transitions to CSV file\n\n\n\npath : str = None\n\nOutput file path. If None, uses default naming based on method.\n\n****kwargs** :  = {}\n\nAdditional arguments passed to pandas.to_csv()\n\n\n\n\n\n&gt;&gt;&gt; transitions = ngrip.kstest(w_min=0.12, w_max=2.5)\n&gt;&gt;&gt; transitions.to_csv('my_transitions.csv')",
-    "crumbs": [
-      "API",
-      "Core",
-      "core.transitions.DeterministicTransitions"
-    ]
-  },
-  {
-    "objectID": "api/utils.metrics.evaluate_detection.html",
-    "href": "api/utils.metrics.evaluate_detection.html",
-    "title": "utils.metrics.evaluate_detection",
-    "section": "",
-    "text": "utils.metrics.evaluate_detection(detected, ground_truth, tolerance=0.5)\nComplete evaluation of transition detection performance\nCalculates precision, recall, F1 score, and detailed counts (true positives, false positives, false negatives) in a single pass to ensure consistency. Uses one-to-one closest matching where each ground truth point matches only one detected point.\n\n\n\ndetected : array - like\n\nDetected transition points (indices or time values)\n\nground_truth : array - like\n\nGround truth transition points (indices or time values)\n\ntolerance : float = 0.5\n\nMaximum distance for a detected transition to be considered a true positive. Default is 0.5\n\n\n\n\n\n\n : DetectionMetrics\n\nObject containing: - precision : float - Precision score (0 to 1) - recall : float - Recall score (0 to 1) - f1_score : float - F1 score (0 to 1) - true_positives : int - Number of correct detections - false_positives : int - Number of incorrect detections - false_negatives : int - Number of missed ground truth events - n_detected : int - Total number of detections - n_ground_truth : int - Total number of ground truth events - tolerance : float - Tolerance used for matching\n\n\n\n\n\nBasic usage:\n.. jupyter-execute::\nfrom ammonyte.utils.metrics import evaluate_detection\n\ndetected = [10, 25, 50, 75]\nground_truth = [10, 26, 60]\n\nmetrics = evaluate_detection(detected, ground_truth, tolerance=2)\nprint(metrics)\nAccess individual metrics:\n.. jupyter-execute::\nfrom ammonyte.utils.metrics import evaluate_detection\n\ndetected = [9.8, 23.5, 45.2]\nground_truth = [10, 25, 40, 60]\n\nmetrics = evaluate_detection(detected, ground_truth, tolerance=1.0)\n\nprint(f\"Precision: {metrics.precision:.3f}\")\nprint(f\"Recall: {metrics.recall:.3f}\")\nprint(f\"F1 Score: {metrics.f1_score:.3f}\")",
-    "crumbs": [
-      "API",
-      "Utilities",
-      "utils.metrics.evaluate_detection"
-    ]
-  },
-  {
-    "objectID": "api/utils.metrics.evaluate_detection.html#parameters",
-    "href": "api/utils.metrics.evaluate_detection.html#parameters",
-    "title": "utils.metrics.evaluate_detection",
-    "section": "",
-    "text": "detected : array - like\n\nDetected transition points (indices or time values)\n\nground_truth : array - like\n\nGround truth transition points (indices or time values)\n\ntolerance : float = 0.5\n\nMaximum distance for a detected transition to be considered a true positive. Default is 0.5",
-    "crumbs": [
-      "API",
-      "Utilities",
-      "utils.metrics.evaluate_detection"
-    ]
-  },
-  {
-    "objectID": "api/utils.metrics.evaluate_detection.html#returns",
-    "href": "api/utils.metrics.evaluate_detection.html#returns",
-    "title": "utils.metrics.evaluate_detection",
-    "section": "",
-    "text": ": DetectionMetrics\n\nObject containing: - precision : float - Precision score (0 to 1) - recall : float - Recall score (0 to 1) - f1_score : float - F1 score (0 to 1) - true_positives : int - Number of correct detections - false_positives : int - Number of incorrect detections - false_negatives : int - Number of missed ground truth events - n_detected : int - Total number of detections - n_ground_truth : int - Total number of ground truth events - tolerance : float - Tolerance used for matching",
-    "crumbs": [
-      "API",
-      "Utilities",
-      "utils.metrics.evaluate_detection"
-    ]
-  },
-  {
-    "objectID": "api/utils.metrics.evaluate_detection.html#examples",
-    "href": "api/utils.metrics.evaluate_detection.html#examples",
-    "title": "utils.metrics.evaluate_detection",
-    "section": "",
-    "text": "Basic usage:\n.. jupyter-execute::\nfrom ammonyte.utils.metrics import evaluate_detection\n\ndetected = [10, 25, 50, 75]\nground_truth = [10, 26, 60]\n\nmetrics = evaluate_detection(detected, ground_truth, tolerance=2)\nprint(metrics)\nAccess individual metrics:\n.. jupyter-execute::\nfrom ammonyte.utils.metrics import evaluate_detection\n\ndetected = [9.8, 23.5, 45.2]\nground_truth = [10, 25, 40, 60]\n\nmetrics = evaluate_detection(detected, ground_truth, tolerance=1.0)\n\nprint(f\"Precision: {metrics.precision:.3f}\")\nprint(f\"Recall: {metrics.recall:.3f}\")\nprint(f\"F1 Score: {metrics.f1_score:.3f}\")",
-    "crumbs": [
-      "API",
-      "Utilities",
-      "utils.metrics.evaluate_detection"
+      "core.geoseries.GeoSeries"
     ]
   },
   {
@@ -1306,6 +1366,18 @@
   {
     "objectID": "notebooks/Getting_Started.html",
     "href": "notebooks/Getting_Started.html",
+    "title": "Getting Started with Ammonyte",
+    "section": "",
+    "text": "Ammonyte is a Python package for detecting abrupt transitions and tipping points in paleoclimate time series. It is built on top of pyleoclim, inheriting all of its time series capabilities while adding three dedicated transition detection methods:\n\nKS Test — Augmented Kolmogorov-Smirnov test (Bagniewski et al., 2021)\nLERM — Laplacian Eigenmaps of Recurrence Matrices (James et al., 2024)\nRuptures — Change-point detection algorithms (Truong et al., 2020)\n\nThis notebook introduces the core Series and GeoSeries objects: how to load data, attach geographic metadata, explore the series, and visualize it. The method-specific tutorials (KS Test, LERM, Ruptures) build on what is shown here.",
+    "crumbs": [
+      "Tutorials",
+      "Getting Started",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "notebooks/Getting_Started.html#what-is-ammonyte",
+    "href": "notebooks/Getting_Started.html#what-is-ammonyte",
     "title": "Getting Started with Ammonyte",
     "section": "",
     "text": "Ammonyte is a Python package for detecting abrupt transitions and tipping points in paleoclimate time series. It is built on top of pyleoclim, inheriting all of its time series capabilities while adding three dedicated transition detection methods:\n\nKS Test — Augmented Kolmogorov-Smirnov test (Bagniewski et al., 2021)\nLERM — Laplacian Eigenmaps of Recurrence Matrices (James et al., 2024)\nRuptures — Change-point detection algorithms (Truong et al., 2020)\n\nThis notebook introduces the core Series and GeoSeries objects: how to load data, attach geographic metadata, explore the series, and visualize it. The method-specific tutorials (KS Test, LERM, Ruptures) build on what is shown here.",
