@@ -35,10 +35,10 @@ dependencies = [
     "tqdm",
     "tabulate",
     "seaborn",
+    "ruptures",
 ]
 
 [project.optional-dependencies]
-ruptures = ["ruptures"]
 dev = ["pytest", "pytest-cov"]
 
 [project.urls]
