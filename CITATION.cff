@@ -15,7 +15,7 @@ authors:
     orcid: "https://orcid.org/0000-0001-7501-8430"
 title: "Ammonyte: A Python Package for Multi-Method Detection of Transitions in Paleoclimate Time Series"
 version: 1.0.0
-doi: 10.5281/zenodo.XXXXXXX
+doi: 10.5281/zenodo.7843881
 date-released: 2026-06-16
 url: "https://github.com/LinkedEarth/Ammonyte"
 license: GPL-3.0-or-later

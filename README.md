@@ -36,12 +36,40 @@ pip install ammonyte
 
 ## Documentation
 
-Full documentation is available at: [link coming soon]
+Full documentation is available at: [linked.earth/Ammonyte](https://linked.earth/Ammonyte/)
 
-- [Installation Guide](#)
-- [API Reference](#)
-- [Method Descriptions](#)
-- [Tutorials](#)
+- [Installation Guide](https://linked.earth/Ammonyte/stable/get-started/installation.html)
+- [API Reference](https://linked.earth/Ammonyte/stable/api/)
+- [Method Descriptions](https://linked.earth/Ammonyte/stable/methods/)
+- [Tutorials](https://linked.earth/Ammonyte/stable/tutorials/)
+
+## Usage
+
+A minimal example using the Augmented KS Test on the NGRIP ice core record included with the package:
+
+```python
+import os
+import ammonyte as amt
+
+# Load the NGRIP ice core record
+ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
+
+# Detect transitions with the Augmented KS Test
+transitions = ngrip.kstest(w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2, x_c=0.8)
+
+# Access transition statistics
+print(f"D-statistics: {transitions.d_statistics}")
+print(f"P-values: {transitions.p_values}")
+
+# Plot the results
+transitions.plot()
+```
+
+See the [Tutorials](https://linked.earth/Ammonyte/stable/tutorials/) for worked examples of the other two methods (Ruptures, LERM).
+
+## Versions
+
+See the [releases page](https://github.com/LinkedEarth/Ammonyte/releases) for details on what's included in each version.
 
 ## Citation
 
@@ -51,7 +79,7 @@ If you use Ammonyte in your research, please cite it using the metadata in [`CIT
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 — see [`LICENSE`](LICENSE) for details.
+This project is licensed under the GNU General Public License v3.0 (or later) (see [`LICENSE`](LICENSE) for details.)
 
 ## Contributing
 
