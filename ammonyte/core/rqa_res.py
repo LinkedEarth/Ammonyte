@@ -22,6 +22,53 @@ class RQARes(Series):
 
     def __init__(self, time, value, time_name=None, time_unit=None, value_name=None, value_unit=None, series=None,label=None, m=None,
                 tau=None,eps=None,eigenmap=None,w_size=None,w_incre=None):
+        '''
+        Parameters
+        ----------
+
+        time : array-like
+            Time axis of the RQA result series.
+
+        value : array-like
+            Values of the RQA result (e.g. Fisher Information, determinism, laminarity).
+
+        time_name : str, optional
+            Name of the time variable.
+
+        time_unit : str, optional
+            Units of the time variable.
+
+        value_name : str, optional
+            Name of the value variable (e.g. 'Fisher Information', 'DET', 'LAM').
+
+        value_unit : str, optional
+            Units of the value variable.
+
+        series : ammonyte.Series or pyleoclim.Series, optional
+            Original time series from which the RQA result was computed.
+
+        label : str, optional
+            Label for the object.
+
+        m : int, optional
+            Embedding dimension used to compute this result.
+
+        tau : int, optional
+            Time delay used to compute this result.
+
+        eps : float, optional
+            Epsilon (radius) value used to compute the recurrence matrix.
+
+        eigenmap : numpy.ndarray, optional
+            Eigenvector matrix from Laplacian eigenmaps. Stored when RQARes is created
+            via RecurrenceMatrix.laplacian_eigenmaps.
+
+        w_size : int, optional
+            Window size used in the Fisher Information calculation.
+
+        w_incre : int, optional
+            Window increment used in the Fisher Information calculation.
+        '''
         super().__init__(time,value,time_name,time_unit,value_name,value_unit,label,sort_ts=None)
         self.time=time
         self.value=value
@@ -35,7 +82,6 @@ class RQARes(Series):
         self.tau = tau
         self.eps = eps
         self.eigenmap = eigenmap
-        self.series = series
         self.w_size = w_size
         self.w_incre = w_incre
 
@@ -54,10 +100,11 @@ class RQARes(Series):
         smoothed_series : ammonyte.RQARes
             Smoothed version of your original RQARes object
             
-        See also
+        See Also
         --------
-        
-        ammonyte.utils.fisher.smooth_series'''
+
+        ammonyte.utils.fisher.smooth_series
+        '''
 
         if block_size is None:
             block_size = int(len(self.time)/15)
@@ -105,15 +152,16 @@ class RQARes(Series):
 
         .. jupyter-execute::
 
-            import ammonyte as amt
+            import os, ammonyte as amt
 
             # Load data
-            ngrip = amt.Series.from_csv('../data/NGRIP.csv')
+            ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
 
             # LERM analysis
             NGRIP_td = amt.TimeEmbeddedSeries(ngrip, m=11)
             NGRIP_epsilon = NGRIP_td.find_epsilon(eps=1, target_density=0.05)
-            NGRIP_lp = NGRIP_epsilon.laplacian_eigenmaps(w_size=20, w_incre=4)
+            NGRIP_rm = NGRIP_epsilon['Output']
+            NGRIP_lp = NGRIP_rm.laplacian_eigenmaps(w_size=20, w_incre=4)
             NGRIP_lp_smooth = amt.utils.fisher.smooth_series(NGRIP_lp, block_size=3)
 
             # Detect transitions
@@ -246,7 +294,7 @@ class RQARes(Series):
             See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html>`_ for details.
 
 
-        See also
+        See Also
         --------
 
         ammonyte.utils.sampling.confidence_interval
@@ -376,10 +424,13 @@ class RQARes(Series):
         ----------
 
         block_size : int
-            Size of smoothing block to use
+            Size of smoothing block to use.
 
-        ax : matplotlib.axes object
-            Axes to plot on, if None new plot will be generated
+        figsize : tuple, optional
+            Size of the figure. Default is (12, 8).
+
+        ax : matplotlib.axes.Axes, optional
+            Axes to plot on. If None, a new figure will be generated.
 
         transition_interval : list,tuple
             Upper and lower bound for the transition interval
@@ -430,7 +481,7 @@ class RQARes(Series):
             See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html>`_ for details.
 
 
-        See also
+        See Also
         --------
 
         ammonyte.utils.sampling.confidence_interval
@@ -525,14 +576,6 @@ class RQARes(Series):
             if not isinstance(background_series,pyleo.core.Series):
                 raise ValueError('background_series does not appear to be a pyleoclim.Series object')
             
-            # #Standardize background_series values
-            # background_series.value -= np.mean(background_series.value)
-            # background_series.value /= max(background_series.value)
-
-            # #Adjust scaling to match that of main series
-            # background_series.value *= max(self.value - np.mean(self.value))
-            # background_series.value += np.mean(self.value)
-
             background_kwargs = {} if background_kwargs is None else background_kwargs.copy()
 
             if 'alpha' not in background_kwargs:
@@ -563,41 +606,55 @@ class RQARes(Series):
             return ax
 
     def plot_eigenmaps(self,groups,axes,figsize=(12,12),cmap='viridis',cmap_kwargs = None,ax=None,title=None):
-        '''Function to display eigenmaps
+        '''Plot Laplacian eigenmaps coloured by time group
 
-        Only works when the RQARes has been created via the laplacian eigenmaps function
-        
+        Displays a 2D scatter plot of two eigenvector axes from the Laplacian eigenmaps,
+        colour-coded by the time groups provided. Useful for visually identifying distinct
+        dynamical regimes or state-space structures in the data.
+
+        Only works when the RQARes has been created via RecurrenceMatrix.laplacian_eigenmaps.
+
         Parameters
         ----------
 
-        groups : list,tuple; (start,stop)
-            List of lists or tuples containing start stop time indices for coloring. Should be ordered in time.
+        groups : list of list or tuple; (start, stop)
+            List of (start, stop) time pairs defining the groups for colour coding.
+            Should be ordered in time.
 
-        axes : list,tuple
-            Axes of the eigenvectors. Should be list or tuple of length 2.
-        
-        figsize : list,tuple
-            Size of the figure
+        axes : list or tuple
+            Indices of the eigenvector axes to plot. Must be of length 2.
 
-        cmap : str, list
-            Color map to use for color coding according to time. Can either be the name of a color map or a list of colors
-        
-        cmap_kwargs : dict
-            Dictionary of key word arguments for ax.figure.colorbar
+        figsize : list or tuple, optional
+            Size of the figure. Default is (12, 12).
 
-        ax : matplotlib.axes.Axes
-            Ax object to plot on.
+        cmap : str or list, optional
+            Colour map for coding groups by time. Either the name of a matplotlib
+            colour map or a list of colours. Default is 'viridis'.
+
+        cmap_kwargs : dict, optional
+            Keyword arguments passed to ax.figure.colorbar.
+
+        ax : matplotlib.axes.Axes, optional
+            Axes object to plot on. If None, a new figure is created.
+
+        title : str, optional
+            Title for the plot. If None, auto-generated from the object label.
 
         Returns
         -------
 
-        fig : matplotlib.figure
+        fig : matplotlib.figure.Figure
             The figure object from matplotlib.
             See `matplotlib.pyplot.figure <https://matplotlib.org/stable/api/figure_api.html>`_ for details.
 
-        ax : matplotlib.axis 
-            The axis object from matplotlib. 
+        ax : matplotlib.axes.Axes
+            The axis object from matplotlib.
             See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html>`_ for details.
+
+        See Also
+        --------
+
+        ammonyte.RecurrenceMatrix.laplacian_eigenmaps
 
         '''
 
@@ -640,8 +697,8 @@ class RQARes(Series):
             title = f'Eigenmaps for {self.label}'
 
         ax.set_title(title)
-        ax.set_xlabel(f'$\Phi_{axes[0]}$',labelpad=10)
-        ax.set_ylabel(f'$\Phi_{axes[1]}$',labelpad=10)
+        ax.set_xlabel(f'$\\Phi_{{{axes[0]}}}$',labelpad=10)
+        ax.set_ylabel(f'$\\Phi_{{{axes[1]}}}$',labelpad=10)
         ax.ticklabel_format(axis='x', scilimits=[0, 0])
         ax.ticklabel_format(axis='y', scilimits=[0, 0])
 
@@ -664,47 +721,69 @@ class RQARes(Series):
 
     def plot_eigenmaps_FI(self,groups,axes,block_smooth=True,cmap='viridis',cmap_kwargs=None,figsize=(18,12),
                           ax=None,FI_axis_lims=None,scale=(1,1,1),title=None):
-        '''Function to display eigenmaps as a function of fisher information
-        
-        Only works when the RQARes has been created via the laplacian eigenmaps function
-        
+        '''Plot Laplacian eigenmaps as a function of Fisher Information in 3D
+
+        Displays a 3D scatter plot with Fisher Information on one axis and two eigenvector
+        axes on the others, colour-coded by the time groups provided. Useful for inspecting
+        how dynamical regimes relate to Fisher Information values.
+
+        Only works when the RQARes has been created via RecurrenceMatrix.laplacian_eigenmaps.
+
         Parameters
         ----------
-        
-        groups : list,tuple; (start,stop)
-            List of lists or tuples containing start stop time indices for block smoothing.
 
-        axes : list,tuple
-            Axes of the eigenvectors to plot against Fisher Information. Should be list or tuple of length 2.
+        groups : list of list or tuple; (start, stop)
+            List of (start, stop) time pairs used for block smoothing and colour coding.
+
+        axes : list or tuple
+            Indices of the eigenvector axes to plot against Fisher Information.
+            Must be of length 2.
 
         block_smooth : bool; {True,False}
-            Whether or not to calculate and display the mean of the fisher information.
+            Whether to calculate and display the block mean of Fisher Information.
+            Default is True.
 
-        cmap : str
-            Color map to use for color coding according to time
+        cmap : str or list, optional
+            Colour map for coding groups by time. Either the name of a matplotlib
+            colour map or a list of colours. Default is 'viridis'.
 
-        cmap_kwargs : dict
-            Dictionary of key word arguments for ax.figure.colorbar
+        cmap_kwargs : dict, optional
+            Keyword arguments passed to ax.figure.colorbar.
 
-        figsize : list,tuple
-            Size of the figure
+        figsize : list or tuple, optional
+            Size of the figure. Default is (18, 12).
 
-        ax : matplotlib.axes.Axes
-            Ax object to plot on. If passed must use projection = '3d'.
+        ax : matplotlib.axes.Axes, optional
+            Axes object to plot on. Must use projection='3d' if passed.
+            If None, a new 3D figure is created.
 
-        FI_axis_lims : list,tuple
-            Boundaries for the fisher information axis
+        FI_axis_lims : list or tuple, optional
+            (min, max) boundaries for the Fisher Information axis.
+
+        scale : tuple, optional
+            (x, y, z) scaling factors to stretch or compress the 3D axes independently.
+            Default is (1, 1, 1).
+
+        title : str, optional
+            Title for the plot.
 
         Returns
         -------
 
-        fig : matplotlib.figure
+        fig : matplotlib.figure.Figure
             The figure object from matplotlib.
             See `matplotlib.pyplot.figure <https://matplotlib.org/stable/api/figure_api.html>`_ for details.
 
-        ax : matplotlib.axis 
-            The axis object from matplotlib. 
+        ax : matplotlib.axes.Axes
+            The axis object from matplotlib.
             See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html>`_ for details.
+
+        See Also
+        --------
+
+        ammonyte.RecurrenceMatrix.laplacian_eigenmaps
+
+        ammonyte.RQARes.plot_eigenmaps
 
         '''
 
@@ -750,11 +829,6 @@ class RQARes(Series):
                 ax.scatter(FI,eig1,eig2,color=cmap_plot(idx),norm=norm)
             elif not block_smooth:
                 raise ValueError("Value for block smoothing must be passed because I haven't figured out how to properly do it without it yet.")
-                # FI = np.concatenate([np.ones(math.floor(len(eig1)/self.w_incre))*value for value in self.value[start_index:stop_index]])
-                # print(FI.shape)
-                # print(eig1.shape)
-                # print(eig2.shape)
-                # ax.scatter(FI,eig1,eig2,c = cmap(norm(self.series.time[start_index:stop_index])))
 
         if FI_axis_lims:
             ax.set_xlim(left=min(FI_axis_lims),right=max(FI_axis_lims))

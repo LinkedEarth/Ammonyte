@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-'''
+"""
 Ruptures Change Point Detection
 ================================
 
@@ -12,7 +12,7 @@ Functions
 ---------
 ruptures_transition : Detect transitions using ruptures algorithms
 
-'''
+"""
 
 import numpy as np
 import ruptures as rpt
@@ -105,9 +105,9 @@ def ruptures_transition(series, algo='Pelt', cost='rbf', pen=None, n_bkps=None,
 
     .. jupyter-execute::
 
-        import ammonyte as amt
+        import os, ammonyte as amt
         from ammonyte.utils.ruptures_transitions import ruptures_transition
-        ngrip = amt.Series.from_csv('../data/NGRIP.csv')
+        ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
         transitions = ngrip.ruptures(algo='Pelt', cost='rbf', pen=5)
         print(f"Detected {len(transitions.jump_times)} transitions")
 
@@ -124,10 +124,6 @@ def ruptures_transition(series, algo='Pelt', cost='rbf', pen=None, n_bkps=None,
     # Input validation and preprocessing
     time = series.time
     signal = series.value
-
-    # Check if data is evenly spaced
-    if not series.is_evenly_spaced():
-        raise ValueError('This method assumes evenly-spaced timeseries, while the input is not. Use the ".interp()", ".bin()" or ".gkernel()" methods prior to ".ruptures()".')
 
     # Convert to numpy array if needed
     if not isinstance(signal, np.ndarray):

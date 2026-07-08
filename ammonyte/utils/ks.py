@@ -71,11 +71,11 @@ def KS_test(series, w_min, w_max, n_w, d_c, n_c, s_c, x_c=None):
     
     .. jupyter-execute::
     
-        import ammonyte as amt
+        import os, ammonyte as amt
         from ammonyte.utils.ks import KS_test
-        ngrip = amt.Series.from_csv('ammonyte/data/NGRIP.csv')
-        transitions = KS_test(ngrip, w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2.0)
-        print(f"Detected {len(transitions)} transitions")
+        ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
+        transitions = KS_test(ngrip, w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2.0, x_c=0.8)
+        print(f"Detected {len(transitions[0])} transitions")
     
     See Also
     --------
@@ -110,6 +110,7 @@ def KS_test(series, w_min, w_max, n_w, d_c, n_c, s_c, x_c=None):
     # For dates that are equal find the mean value of x 
     # Using stable unique to preserve order 
     def unique_stable(t):
+        '''Return unique values of t preserving first-occurrence order.'''
         _, idx, inv_idx = np.unique(t, return_index=True, return_inverse=True)
         # Sort by first occurrence order to preserve stability
         sort_order = np.argsort(idx)
@@ -334,6 +335,7 @@ def KS_test(series, w_min, w_max, n_w, d_c, n_c, s_c, x_c=None):
     
     # For each detected jump, find the corresponding statistics
     def find_stats_for_jump(jump_time, jump_direction):
+        '''Return the KS D-statistic and p-value closest to a given jump time.'''
         # Find the closest time point in tt to the jump
         time_idx = np.argmin(np.abs(tt - jump_time))
         

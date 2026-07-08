@@ -1,0 +1,25 @@
+website:
+  sidebar:
+  - contents:
+    - api/index.qmd
+    - contents:
+      - api/core.series.Series.qmd
+      - api/core.geoseries.GeoSeries.qmd
+      - api/core.time_embedded_series.TimeEmbeddedSeries.qmd
+      - api/core.recurrence_matrix.RecurrenceMatrix.qmd
+      - api/core.recurrence_network.RecurrenceNetwork.qmd
+      - api/core.rqa_res.RQARes.qmd
+      - api/core.transitions.DeterministicTransitions.qmd
+      section: Core
+    - contents:
+      - api/utils.ks.KS_test.qmd
+      - api/utils.lerm_transitions.lerm_transition.qmd
+      - api/utils.ruptures_transitions.ruptures_transition.qmd
+      - api/utils.parameters.tau_search.qmd
+      - api/utils.metrics.DetectionMetrics.qmd
+      - api/utils.metrics.evaluate_detection.qmd
+      - api/utils.plotting.bootstrap_fill_plot.qmd
+      - api/utils.plotting.bootstrap_scatter_plot.qmd
+      section: Utilities
+    id: api
+  - id: dummy-sidebar

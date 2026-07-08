@@ -1,30 +1,86 @@
+[![PyPI version](https://badge.fury.io/py/ammonyte.svg)](https://badge.fury.io/py/ammonyte)
+[![PyPI](https://img.shields.io/badge/python-3.8+-yellow.svg)]()
+[![license](https://img.shields.io/github/license/linkedearth/ammonyte.svg)](https://github.com/LinkedEarth/Ammonyte/blob/main/LICENSE)
 [![DOI](https://zenodo.org/badge/450291131.svg)](https://zenodo.org/badge/latestdoi/450291131)
+[![PyPI Downloads](https://static.pepy.tech/badge/ammonyte)](https://pepy.tech/projects/ammonyte)
 
 # Ammonyte
 
-Python package designed for conducting non-linear time series analysis of paleoclimate data. Recommended for usage in tandem with [Pyleoclim](https://github.com/LinkedEarth/Pyleoclim_util). Developed by [Alexander James](https://alexkjames.github.io/) and Maryam Niati with the [University of Southern California Climate Dynamics Lab Group](https://climdyn.usc.edu/). Currently under heavy construction.
+A Python package for multi-method detection of transitions in paleoclimate time series. Developed by [Maryam Niati](https://orcid.org/0009-0001-1523-7989), [Alexander James](https://orcid.org/0000-0001-8561-3188), [Julien Emile-Geay](https://orcid.org/0000-0001-5920-4751), and [Deborah Khider](https://orcid.org/0000-0001-7501-8430) at the [University of Southern California](https://climdyn.usc.edu/).
 
-Much of Ammonyte's capabilities with recurrence networks are enabled by [PyRQA](https://pypi.org/project/PyRQA/), a tool designed to conduct recurrence analysis in a massively parallel manner. Many of our functions are essentially wrappers around PyRQA functions, so we recommend looking into that package if you're curious about the bones of how recurrence analysis is done within Ammonyte.
+## Overview
 
-## Installation:
+Proxy records from ice cores, marine sediments, and speleothems reveal that Earth's climate has undergone repeated regime shifts that fundamentally reorganized global climate patterns. Identifying when and how these transitions occurred is essential for understanding past climate variability and assessing the sensitivity of the modern climate system to future forcing.
 
-1) It is recommended you create a new environment using anaconda before installing.
+Ammonyte provides a unified, paleoclimate-oriented interface to three methodologically distinct approaches for transition detection, making cross-validation of results across methods a natural part of the workflow. It extends [Pyleoclim](https://github.com/LinkedEarth/Pyleoclim_util) and inherits its full suite of tools for preprocessing irregularly sampled, age-uncertain proxy records.
 
-2) Inside your environment install cartopy with the command `conda install -c conda-forge cartopy`
+## Methods
 
-3) Run `pip install ammonyte`
+- **Augmented Kolmogorov–Smirnov (KS) Test** — identifies points where the statistical distribution of values changes abruptly using a sliding-window approach
+- **Optimization-based Changepoint Detection (Ruptures)** — finds breakpoints by minimizing a cost function across multiple search algorithms
+- **Laplacian Eigenmaps of Recurrence Matrices (LERM)** — exploits the geometry of the system's reconstructed state space via recurrence analysis, uniquely sensitive to gradual or dynamical regime changes
+
+## Installation
+
+```bash
+pip install ammonyte
+```
+
+It is recommended to install inside a dedicated environment:
+
+```bash
+conda create -n ammonyte_env python=3.10
+conda activate ammonyte_env
+pip install ammonyte
+```
 
 ## Documentation
 
-- A proper documentation on ReadTheDocs is under construction
-- Please refer to the [PaleoBook Gallery](https://linked.earth/PaleoBooks/) for examples of scientific use. 
+Full documentation is available at: [linked.earth/Ammonyte](https://linked.earth/Ammonyte/)
 
-## Notes:
+- [Installation Guide](https://linked.earth/Ammonyte/stable/get-started/installation.html)
+- [API Reference](https://linked.earth/Ammonyte/stable/api/)
+- [Method Descriptions](https://linked.earth/Ammonyte/stable/methods/)
+- [Tutorials](https://linked.earth/Ammonyte/stable/tutorials/)
 
-* Current releases of Ammonyte are highly experimental. These are mainly done to facilitate our research, though others are welcome to use the functionality. Just be aware that the package is currently subject to constant change and will remain unstable for some time.
+## Usage
 
-* Certain functionalities such as RecurrenceNetwork and the synthetic_series utilities are currently non-functional and are acting as placeholders for features that will be included in the future.
+A minimal example using the Augmented KS Test on the NGRIP ice core record included with the package:
 
-* This function has only been tested on macOS/Unix based operating systems, so if you encounter errors they may be system specific.
+```python
+import os
+import ammonyte as amt
 
-* Raising issues/feature requests is appreciated but there is no guarantee they'll be addressed hastily at this stage of the package's development as we are focused on building core features that are of use to our lab.
+# Load the NGRIP ice core record
+ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
+
+# Detect transitions with the Augmented KS Test
+transitions = ngrip.kstest(w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2, x_c=0.8)
+
+# Access transition statistics
+print(f"D-statistics: {transitions.d_statistics}")
+print(f"P-values: {transitions.p_values}")
+
+# Plot the results
+transitions.plot()
+```
+
+See the [Tutorials](https://linked.earth/Ammonyte/stable/tutorials/) for worked examples of the other two methods (Ruptures, LERM).
+
+## Versions
+
+See the [releases page](https://github.com/LinkedEarth/Ammonyte/releases) for details on what's included in each version.
+
+## Citation
+
+If you use Ammonyte in your research, please cite it using the metadata in [`CITATION.cff`](CITATION.cff):
+
+> Niati, M., James, A., Emile-Geay, J., & Khider, D. (2026). Ammonyte: A Python Package for Multi-Method Detection of Transitions in Paleoclimate Time Series (v1.0.0). https://github.com/LinkedEarth/Ammonyte
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 (or later) (see [`LICENSE`](LICENSE) for details.)
+
+## Contributing
+
+Contributions, bug reports, and feature requests are welcome. Please submit them via [GitHub Issues](https://github.com/LinkedEarth/Ammonyte/issues).

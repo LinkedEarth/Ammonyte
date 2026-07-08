@@ -1,8 +1,11 @@
 build/
+!docs/build/
 __pycache__/
 dist/
 ammonyte.egg-info/
 .*
 *.log
+paper.html
+paper.pdf
 
 !/.gitignore

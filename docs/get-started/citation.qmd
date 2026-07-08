@@ -1,0 +1,25 @@
+---
+title: Citing Ammonyte
+sidebar: get-started
+---
+
+If you use Ammonyte in your research, please cite the following paper:
+
+Niati, M., James, A., Emile-Geay, J., & Khider, D. (2026). *Ammonyte: A Python Package for Multi-Method Detection of Transitions in Paleoclimate Time Series*. Journal of Open Source Software. <https://doi.org/10.5281/zenodo.7843881>
+
+## BibTeX
+
+```bibtex
+@article{niati2026ammonyte,
+  author  = {Niati, Maryam and James, Alexander and Emile-Geay, Julien and Khider, Deborah},
+  title   = {Ammonyte: A Python Package for Multi-Method Detection of Transitions in Paleoclimate Time Series},
+  journal = {Journal of Open Source Software},
+  year    = {2026},
+  doi     = {10.5281/zenodo.7843881},
+  url     = {https://github.com/LinkedEarth/Ammonyte}
+}
+```
+
+## CITATION.cff
+
+A `CITATION.cff` file is included at the root of the repository, which is automatically recognized by GitHub and Zenodo.

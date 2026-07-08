@@ -1,0 +1,78 @@
+# utils.metrics.DetectionMetrics { #ammonyte.utils.metrics.DetectionMetrics }
+
+```python
+utils.metrics.DetectionMetrics(
+    precision,
+    recall,
+    f1_score,
+    true_positives,
+    false_positives,
+    false_negatives,
+    n_detected,
+    n_ground_truth,
+    tolerance,
+)
+```
+
+Container for transition detection evaluation metrics
+
+Stores precision, recall, F1 score, and detailed counts from comparing
+detected transitions against ground truth.
+
+## Parameters {.doc-section .doc-section-parameters}
+
+<code>[**precision**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation}</code>
+
+:   Precision score (TP / (TP + FP))
+
+<code>[**recall**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation}</code>
+
+:   Recall score (TP / (TP + FN))
+
+<code>[**f1_score**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation}</code>
+
+:   F1 score (harmonic mean of precision and recall)
+
+<code>[**true_positives**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation}</code>
+
+:   Number of correct detections
+
+<code>[**false_positives**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation}</code>
+
+:   Number of incorrect detections
+
+<code>[**false_negatives**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation}</code>
+
+:   Number of missed ground truth events
+
+<code>[**n_detected**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation}</code>
+
+:   Total number of detections
+
+<code>[**n_ground_truth**]{.parameter-name} [:]{.parameter-annotation-sep} [[int](`int`)]{.parameter-annotation}</code>
+
+:   Total number of ground truth events
+
+<code>[**tolerance**]{.parameter-name} [:]{.parameter-annotation-sep} [[float](`float`)]{.parameter-annotation}</code>
+
+:   Maximum distance for matching detected to ground truth
+
+## Methods
+
+| Name | Description |
+| --- | --- |
+| [to_dict](#ammonyte.utils.metrics.DetectionMetrics.to_dict) | Convert metrics to dictionary. |
+
+### to_dict { #ammonyte.utils.metrics.DetectionMetrics.to_dict }
+
+```python
+utils.metrics.DetectionMetrics.to_dict()
+```
+
+Convert metrics to dictionary.
+
+#### Returns {.doc-section .doc-section-returns}
+
+<code>[]{.parameter-name} [:]{.parameter-annotation-sep} [[dict](`dict`)]{.parameter-annotation}</code>
+
+:   Dictionary containing all metrics.
