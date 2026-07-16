@@ -1,0 +1,78 @@
+name: Deploy latest docs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "ammonyte/**"
+      - "notebooks/**"
+      - "docs/**"
+      - "pyproject.toml"
+  workflow_dispatch:
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Install quartodoc interlinks filter
+        run: python -m quartodoc interlinks
+        working-directory: docs
+
+      - name: Sync notebooks
+        run: python scripts/sync_notebooks.py
+        working-directory: docs
+
+      - name: Generate tutorials index
+        run: python scripts/generate_tutorials_index.py
+        working-directory: docs
+
+      - name: Add quartodoc extension
+        run: quarto add machow/quartodoc --no-prompt
+        working-directory: docs
+
+      - name: Build Quartodoc
+        run: quartodoc build
+        working-directory: docs
+
+      - name: Render site
+        run: quarto render
+        working-directory: docs
+
+      - name: Deploy to gh-pages /latest/
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/_site
+          destination_dir: latest
+          keep_files: true
+
+      - name: Update shared root files at gh-pages root
+        run: |
+          cp docs/gh-pages-root/version-picker.js /tmp/version-picker.js
+          cp docs/gh-pages-root/index.html /tmp/gh-pages-index.html
+          git checkout -- .
+          git fetch origin gh-pages
+          git checkout gh-pages
+          cp /tmp/version-picker.js version-picker.js
+          cp /tmp/gh-pages-index.html index.html
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add version-picker.js index.html
+          git diff --cached --quiet || git commit -m "docs: update shared root files"
+          git push origin gh-pages

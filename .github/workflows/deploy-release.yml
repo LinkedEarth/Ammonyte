@@ -1,0 +1,118 @@
+name: Deploy versioned docs
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag to rebuild (e.g. v0.1.0b1). Leave empty to use current HEAD.'
+        required: false
+        type: string
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Resolve version
+        run: |
+          if [ -n "${{ inputs.version }}" ]; then
+            echo "RELEASE_VERSION=${{ inputs.version }}" >> $GITHUB_ENV
+          else
+            echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+          fi
+
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.version || github.ref }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Install quartodoc interlinks filter
+        run: python -m quartodoc interlinks
+        working-directory: docs
+
+      - name: Sync notebooks
+        run: python scripts/sync_notebooks.py
+        working-directory: docs
+
+      - name: Generate tutorials index
+        run: python scripts/generate_tutorials_index.py
+        working-directory: docs
+
+      - name: Add quartodoc extension
+        run: quarto add machow/quartodoc --no-prompt
+        working-directory: docs
+
+      - name: Build Quartodoc
+        run: quartodoc build
+        working-directory: docs
+
+      - name: Render site
+        run: quarto render
+        working-directory: docs
+
+      - name: Deploy versioned docs
+        if: startsWith(env.RELEASE_VERSION, 'v')
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/_site
+          destination_dir: ${{ env.RELEASE_VERSION }}
+          keep_files: true
+
+      - name: Update /stable/, versions.json, and version-picker.js
+        run: |
+          cp -r docs/_site /tmp/site_build
+          # always pull root files from main, not the release tag (they may not exist on old tags)
+          git fetch origin main
+          git show origin/main:docs/gh-pages-root/version-picker.js > /tmp/version-picker.js
+          git show origin/main:docs/gh-pages-root/index.html > /tmp/gh-pages-index.html
+
+          # discard build artifacts (e.g. docs/objects.txt) so checkout doesn't abort
+          git checkout -- .
+
+          git fetch origin gh-pages
+          git checkout gh-pages
+
+          # update shared root files (fixes picker in all deployed versions at once)
+          cp /tmp/version-picker.js version-picker.js
+          cp /tmp/gh-pages-index.html index.html
+          git add version-picker.js index.html
+
+          # only update stable/ and versions.json for real version tags (not bare workflow_dispatch)
+          if [[ "${{ env.RELEASE_VERSION }}" == v* ]]; then
+            rm -rf stable
+            cp -r /tmp/site_build stable
+
+            if [ ! -f versions.json ]; then
+              echo "[]" > versions.json
+            fi
+            python3 -c "
+          import json
+          v = '${{ env.RELEASE_VERSION }}'
+          versions = json.load(open('versions.json'))
+          if v not in versions:
+              versions.insert(0, v)
+          json.dump(versions, open('versions.json', 'w'), indent=2)
+          "
+            git add stable versions.json
+          fi
+
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git diff --cached --quiet || git commit -m "docs: stable -> ${{ env.RELEASE_VERSION }}"
+          git push origin gh-pages
