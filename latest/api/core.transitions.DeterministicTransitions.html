@@ -385,18 +385,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
 <p>Basic transition detection:</p>
-<p>.. jupyter-execute::</p>
-<pre><code>import os, ammonyte as amt
-ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
-transitions = ngrip.kstest(w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2, x_c=0.8)
-print(transitions)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, ammonyte <span class="im">as</span> amt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ngrip <span class="op">=</span> amt.Series.from_csv(os.path.join(os.path.dirname(amt.<span class="va">__file__</span>), <span class="st">'data'</span>, <span class="st">'NGRIP.csv'</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>transitions <span class="op">=</span> ngrip.kstest(w_min<span class="op">=</span><span class="fl">0.12</span>, w_max<span class="op">=</span><span class="fl">2.5</span>, n_w<span class="op">=</span><span class="dv">15</span>, d_c<span class="op">=</span><span class="fl">0.77</span>, n_c<span class="op">=</span><span class="dv">3</span>, s_c<span class="op">=</span><span class="dv">2</span>, x_c<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(transitions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Plot the results:</p>
-<p>.. jupyter-execute::</p>
-<pre><code>transitions.plot()</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>transitions.plot()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Access transition data:</p>
-<p>.. jupyter-execute::</p>
-<pre><code>print(f"Number of transitions: {len(transitions.jump_times)}")
-print(f"First transition: {transitions.jump_times[0]:.2f}")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of transitions: </span><span class="sc">{</span><span class="bu">len</span>(transitions.jump_times)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"First transition: </span><span class="sc">{</span>transitions<span class="sc">.</span>jump_times[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="see-also" class="level2 doc-section doc-section-see-also">
 <h2 class="doc-section doc-section-see-also anchored" data-anchor-id="see-also">See Also</h2>

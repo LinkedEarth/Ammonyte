@@ -381,22 +381,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
 <p>Basic usage (typically called via Series.lerm_transitions):</p>
-<p>.. jupyter-execute::</p>
-<pre><code>import os, ammonyte as amt
-from ammonyte.utils.lerm_transitions import lerm_transition
-
-# Load data and perform LERM analysis
-ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
-NGRIP_td = amt.TimeEmbeddedSeries(ngrip, m=11)
-NGRIP_epsilon = NGRIP_td.find_epsilon(eps=1, target_density=0.05)
-NGRIP_rm = NGRIP_epsilon['Output']
-NGRIP_lp = NGRIP_rm.laplacian_eigenmaps(w_size=20, w_incre=4)
-NGRIP_lp_smooth = amt.utils.fisher.smooth_series(NGRIP_lp, block_size=3)
-
-# Detect transitions
-jump_times, jump_directions, upper_bound, lower_bound = lerm_transition(NGRIP_lp_smooth)
-print(f"Detected {len(jump_times)} transitions")
-print(f"Bounds used: upper={upper_bound:.4f}, lower={lower_bound:.4f}")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, ammonyte <span class="im">as</span> amt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ammonyte.utils.lerm_transitions <span class="im">import</span> lerm_transition</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data and perform LERM analysis</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ngrip <span class="op">=</span> amt.Series.from_csv(os.path.join(os.path.dirname(amt.<span class="va">__file__</span>), <span class="st">'data'</span>, <span class="st">'NGRIP.csv'</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>NGRIP_td <span class="op">=</span> amt.TimeEmbeddedSeries(ngrip, m<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>NGRIP_epsilon <span class="op">=</span> NGRIP_td.find_epsilon(eps<span class="op">=</span><span class="dv">1</span>, target_density<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>NGRIP_rm <span class="op">=</span> NGRIP_epsilon[<span class="st">'Output'</span>]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>NGRIP_lp <span class="op">=</span> NGRIP_rm.laplacian_eigenmaps(w_size<span class="op">=</span><span class="dv">20</span>, w_incre<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>NGRIP_lp_smooth <span class="op">=</span> amt.utils.fisher.smooth_series(NGRIP_lp, block_size<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Detect transitions</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>jump_times, jump_directions, upper_bound, lower_bound <span class="op">=</span> lerm_transition(NGRIP_lp_smooth)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Detected </span><span class="sc">{</span><span class="bu">len</span>(jump_times)<span class="sc">}</span><span class="ss"> transitions"</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Bounds used: upper=</span><span class="sc">{</span>upper_bound<span class="sc">:.4f}</span><span class="ss">, lower=</span><span class="sc">{</span>lower_bound<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="see-also" class="level2 doc-section doc-section-see-also">
 <h2 class="doc-section doc-section-see-also anchored" data-anchor-id="see-also">See Also</h2>

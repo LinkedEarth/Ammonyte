@@ -391,12 +391,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
 <p>Basic usage (typically called via Series.ruptures):</p>
-<p>.. jupyter-execute::</p>
-<pre><code>import os, ammonyte as amt
-from ammonyte.utils.ruptures_transitions import ruptures_transition
-ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
-transitions = ngrip.ruptures(algo='Pelt', cost='rbf', pen=5)
-print(f"Detected {len(transitions.jump_times)} transitions")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, ammonyte <span class="im">as</span> amt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ammonyte.utils.ruptures_transitions <span class="im">import</span> ruptures_transition</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ngrip <span class="op">=</span> amt.Series.from_csv(os.path.join(os.path.dirname(amt.<span class="va">__file__</span>), <span class="st">'data'</span>, <span class="st">'NGRIP.csv'</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>transitions <span class="op">=</span> ngrip.ruptures(algo<span class="op">=</span><span class="st">'Pelt'</span>, cost<span class="op">=</span><span class="st">'rbf'</span>, pen<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Detected </span><span class="sc">{</span><span class="bu">len</span>(transitions.jump_times)<span class="sc">}</span><span class="ss"> transitions"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="see-also" class="level2 doc-section doc-section-see-also">
 <h2 class="doc-section doc-section-see-also anchored" data-anchor-id="see-also">See Also</h2>

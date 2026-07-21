@@ -348,26 +348,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
 <p>Basic usage:</p>
-<p>.. jupyter-execute::</p>
-<pre><code>from ammonyte.utils.metrics import evaluate_detection
-
-detected = [10, 25, 50, 75]
-ground_truth = [10, 26, 60]
-
-metrics = evaluate_detection(detected, ground_truth, tolerance=2)
-print(metrics)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ammonyte.utils.metrics <span class="im">import</span> evaluate_detection</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>detected <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ground_truth <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">26</span>, <span class="dv">60</span>]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>metrics <span class="op">=</span> evaluate_detection(detected, ground_truth, tolerance<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(metrics)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Access individual metrics:</p>
-<p>.. jupyter-execute::</p>
-<pre><code>from ammonyte.utils.metrics import evaluate_detection
-
-detected = [9.8, 23.5, 45.2]
-ground_truth = [10, 25, 40, 60]
-
-metrics = evaluate_detection(detected, ground_truth, tolerance=1.0)
-
-print(f"Precision: {metrics.precision:.3f}")
-print(f"Recall: {metrics.recall:.3f}")
-print(f"F1 Score: {metrics.f1_score:.3f}")</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ammonyte.utils.metrics <span class="im">import</span> evaluate_detection</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>detected <span class="op">=</span> [<span class="fl">9.8</span>, <span class="fl">23.5</span>, <span class="fl">45.2</span>]</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ground_truth <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">60</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>metrics <span class="op">=</span> evaluate_detection(detected, ground_truth, tolerance<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Precision: </span><span class="sc">{</span>metrics<span class="sc">.</span>precision<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Recall: </span><span class="sc">{</span>metrics<span class="sc">.</span>recall<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"F1 Score: </span><span class="sc">{</span>metrics<span class="sc">.</span>f1_score<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>

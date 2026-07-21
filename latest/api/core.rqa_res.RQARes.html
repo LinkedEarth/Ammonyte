@@ -692,28 +692,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="examples" class="level4 doc-section doc-section-examples">
 <h4 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h4>
 <p>Complete LERM workflow:</p>
-<p>.. jupyter-execute::</p>
-<pre><code>import os, ammonyte as amt
-
-# Load data
-ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
-
-# LERM analysis
-NGRIP_td = amt.TimeEmbeddedSeries(ngrip, m=11)
-NGRIP_epsilon = NGRIP_td.find_epsilon(eps=1, target_density=0.05)
-NGRIP_rm = NGRIP_epsilon['Output']
-NGRIP_lp = NGRIP_rm.laplacian_eigenmaps(w_size=20, w_incre=4)
-NGRIP_lp_smooth = amt.utils.fisher.smooth_series(NGRIP_lp, block_size=3)
-
-# Detect transitions
-transitions = NGRIP_lp_smooth.lerm_transitions()
-print(transitions)
-transitions.plot()</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, ammonyte <span class="im">as</span> amt</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>ngrip <span class="op">=</span> amt.Series.from_csv(os.path.join(os.path.dirname(amt.<span class="va">__file__</span>), <span class="st">'data'</span>, <span class="st">'NGRIP.csv'</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># LERM analysis</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>NGRIP_td <span class="op">=</span> amt.TimeEmbeddedSeries(ngrip, m<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>NGRIP_epsilon <span class="op">=</span> NGRIP_td.find_epsilon(eps<span class="op">=</span><span class="dv">1</span>, target_density<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>NGRIP_rm <span class="op">=</span> NGRIP_epsilon[<span class="st">'Output'</span>]</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>NGRIP_lp <span class="op">=</span> NGRIP_rm.laplacian_eigenmaps(w_size<span class="op">=</span><span class="dv">20</span>, w_incre<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>NGRIP_lp_smooth <span class="op">=</span> amt.utils.fisher.smooth_series(NGRIP_lp, block_size<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Detect transitions</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>transitions <span class="op">=</span> NGRIP_lp_smooth.lerm_transitions()</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(transitions)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>transitions.plot()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Custom confidence bounds:</p>
-<p>.. jupyter-execute::</p>
-<pre><code>transitions = NGRIP_lp_smooth.lerm_transitions(
-    transition_interval=(0.025, 0.010)
-)</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>transitions <span class="op">=</span> NGRIP_lp_smooth.lerm_transitions(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    transition_interval<span class="op">=</span>(<span class="fl">0.025</span>, <span class="fl">0.010</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="ammonyte.core.rqa_res.RQARes.plot_eigenmaps" class="level3">
