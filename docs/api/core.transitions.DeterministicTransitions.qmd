@@ -54,25 +54,25 @@ Stores results from tipping point detection algorithms with methods for analysis
 
 Basic transition detection:
 
-.. jupyter-execute::
+```python
+import os, ammonyte as amt
+ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
+transitions = ngrip.kstest(w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2, x_c=0.8)
+print(transitions)
+```
 
-    import os, ammonyte as amt
-    ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
-    transitions = ngrip.kstest(w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2, x_c=0.8)
-    print(transitions)
-    
 Plot the results:
 
-.. jupyter-execute::
+```python
+transitions.plot()
+```
 
-    transitions.plot()
-    
 Access transition data:
 
-.. jupyter-execute::
-
-    print(f"Number of transitions: {len(transitions.jump_times)}")
-    print(f"First transition: {transitions.jump_times[0]:.2f}")
+```python
+print(f"Number of transitions: {len(transitions.jump_times)}")
+print(f"First transition: {transitions.jump_times[0]:.2f}")
+```
 
 ## See Also {.doc-section .doc-section-see-also}
 

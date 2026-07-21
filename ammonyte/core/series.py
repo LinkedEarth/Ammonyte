@@ -321,27 +321,27 @@ class Series(pyleo.Series):
         --------
         
         Basic tipping point detection:
-        
-        .. jupyter-execute::
-        
-            import os, ammonyte as amt
-            ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
-            transitions = ngrip.kstest(w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2, x_c=0.8)
-            print(transitions)
-        
+
+        ```python
+        import os, ammonyte as amt
+        ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
+        transitions = ngrip.kstest(w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2, x_c=0.8)
+        print(transitions)
+        ```
+
         Access transition statistics:
-        
-        .. jupyter-execute::
-        
-            print(f"D-statistics: {transitions.d_statistics}")
-            print(f"P-values: {transitions.p_values}")
-        
+
+        ```python
+        print(f"D-statistics: {transitions.d_statistics}")
+        print(f"P-values: {transitions.p_values}")
+        ```
+
         Plot the results:
-        
-        .. jupyter-execute::
-        
-            transitions.plot()
-        
+
+        ```python
+        transitions.plot()
+        ```
+
         See Also
         --------
         DeterministicTransitions.plot : Visualize detected transitions
@@ -449,18 +449,18 @@ class Series(pyleo.Series):
 
         Basic transition detection:
 
-        .. jupyter-execute::
-
-            import os, ammonyte as amt
-            ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
-            transitions = ngrip.ruptures(algo='Pelt', cost='rbf', pen=5)
-            print(transitions)
+        ```python
+        import os, ammonyte as amt
+        ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
+        transitions = ngrip.ruptures(algo='Pelt', cost='rbf', pen=5)
+        print(transitions)
+        ```
 
         Plot the results:
 
-        .. jupyter-execute::
-
-            transitions.plot()
+        ```python
+        transitions.plot()
+        ```
 
 
         References
