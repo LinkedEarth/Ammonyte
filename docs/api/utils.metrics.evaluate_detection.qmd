@@ -35,27 +35,27 @@ one detected point.
 
 Basic usage:
 
-.. jupyter-execute::
+```python
+from ammonyte.utils.metrics import evaluate_detection
 
-    from ammonyte.utils.metrics import evaluate_detection
+detected = [10, 25, 50, 75]
+ground_truth = [10, 26, 60]
 
-    detected = [10, 25, 50, 75]
-    ground_truth = [10, 26, 60]
-
-    metrics = evaluate_detection(detected, ground_truth, tolerance=2)
-    print(metrics)
+metrics = evaluate_detection(detected, ground_truth, tolerance=2)
+print(metrics)
+```
 
 Access individual metrics:
 
-.. jupyter-execute::
+```python
+from ammonyte.utils.metrics import evaluate_detection
 
-    from ammonyte.utils.metrics import evaluate_detection
+detected = [9.8, 23.5, 45.2]
+ground_truth = [10, 25, 40, 60]
 
-    detected = [9.8, 23.5, 45.2]
-    ground_truth = [10, 25, 40, 60]
+metrics = evaluate_detection(detected, ground_truth, tolerance=1.0)
 
-    metrics = evaluate_detection(detected, ground_truth, tolerance=1.0)
-
-    print(f"Precision: {metrics.precision:.3f}")
-    print(f"Recall: {metrics.recall:.3f}")
-    print(f"F1 Score: {metrics.f1_score:.3f}")
+print(f"Precision: {metrics.precision:.3f}")
+print(f"Recall: {metrics.recall:.3f}")
+print(f"F1 Score: {metrics.f1_score:.3f}")
+```

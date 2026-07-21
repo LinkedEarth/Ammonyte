@@ -72,23 +72,23 @@ def lerm_transition(series, transition_interval=None,
 
     Basic usage (typically called via Series.lerm_transitions):
 
-    .. jupyter-execute::
+    ```python
+    import os, ammonyte as amt
+    from ammonyte.utils.lerm_transitions import lerm_transition
 
-        import os, ammonyte as amt
-        from ammonyte.utils.lerm_transitions import lerm_transition
+    # Load data and perform LERM analysis
+    ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
+    NGRIP_td = amt.TimeEmbeddedSeries(ngrip, m=11)
+    NGRIP_epsilon = NGRIP_td.find_epsilon(eps=1, target_density=0.05)
+    NGRIP_rm = NGRIP_epsilon['Output']
+    NGRIP_lp = NGRIP_rm.laplacian_eigenmaps(w_size=20, w_incre=4)
+    NGRIP_lp_smooth = amt.utils.fisher.smooth_series(NGRIP_lp, block_size=3)
 
-        # Load data and perform LERM analysis
-        ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
-        NGRIP_td = amt.TimeEmbeddedSeries(ngrip, m=11)
-        NGRIP_epsilon = NGRIP_td.find_epsilon(eps=1, target_density=0.05)
-        NGRIP_rm = NGRIP_epsilon['Output']
-        NGRIP_lp = NGRIP_rm.laplacian_eigenmaps(w_size=20, w_incre=4)
-        NGRIP_lp_smooth = amt.utils.fisher.smooth_series(NGRIP_lp, block_size=3)
-
-        # Detect transitions
-        jump_times, jump_directions, upper_bound, lower_bound = lerm_transition(NGRIP_lp_smooth)
-        print(f"Detected {len(jump_times)} transitions")
-        print(f"Bounds used: upper={upper_bound:.4f}, lower={lower_bound:.4f}")
+    # Detect transitions
+    jump_times, jump_directions, upper_bound, lower_bound = lerm_transition(NGRIP_lp_smooth)
+    print(f"Detected {len(jump_times)} transitions")
+    print(f"Bounds used: upper={upper_bound:.4f}, lower={lower_bound:.4f}")
+    ```
 
     See Also
     --------

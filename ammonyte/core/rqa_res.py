@@ -150,32 +150,32 @@ class RQARes(Series):
 
         Complete LERM workflow:
 
-        .. jupyter-execute::
+        ```python
+        import os, ammonyte as amt
 
-            import os, ammonyte as amt
+        # Load data
+        ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
 
-            # Load data
-            ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
+        # LERM analysis
+        NGRIP_td = amt.TimeEmbeddedSeries(ngrip, m=11)
+        NGRIP_epsilon = NGRIP_td.find_epsilon(eps=1, target_density=0.05)
+        NGRIP_rm = NGRIP_epsilon['Output']
+        NGRIP_lp = NGRIP_rm.laplacian_eigenmaps(w_size=20, w_incre=4)
+        NGRIP_lp_smooth = amt.utils.fisher.smooth_series(NGRIP_lp, block_size=3)
 
-            # LERM analysis
-            NGRIP_td = amt.TimeEmbeddedSeries(ngrip, m=11)
-            NGRIP_epsilon = NGRIP_td.find_epsilon(eps=1, target_density=0.05)
-            NGRIP_rm = NGRIP_epsilon['Output']
-            NGRIP_lp = NGRIP_rm.laplacian_eigenmaps(w_size=20, w_incre=4)
-            NGRIP_lp_smooth = amt.utils.fisher.smooth_series(NGRIP_lp, block_size=3)
-
-            # Detect transitions
-            transitions = NGRIP_lp_smooth.lerm_transitions()
-            print(transitions)
-            transitions.plot()
+        # Detect transitions
+        transitions = NGRIP_lp_smooth.lerm_transitions()
+        print(transitions)
+        transitions.plot()
+        ```
 
         Custom confidence bounds:
 
-        .. jupyter-execute::
-
-            transitions = NGRIP_lp_smooth.lerm_transitions(
-                transition_interval=(0.025, 0.010)
-            )
+        ```python
+        transitions = NGRIP_lp_smooth.lerm_transitions(
+            transition_interval=(0.025, 0.010)
+        )
+        ```
         '''
 
         # Call the detection function from utils
