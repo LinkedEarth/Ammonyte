@@ -38,10 +38,10 @@ pip install ammonyte
 
 Full documentation is available at: [linked.earth/Ammonyte](https://linked.earth/Ammonyte/)
 
-- [Installation Guide](https://linked.earth/Ammonyte/stable/get-started/installation.html)
-- [API Reference](https://linked.earth/Ammonyte/stable/api/)
-- [Method Descriptions](https://linked.earth/Ammonyte/stable/methods/)
-- [Tutorials](https://linked.earth/Ammonyte/stable/tutorials/)
+- [Installation Guide](https://linked.earth/Ammonyte/latest/get-started/installation.html)
+- [API Reference](https://linked.earth/Ammonyte/latest/api/)
+- [Method Descriptions](https://linked.earth/Ammonyte/latest/methods/)
+- [Tutorials](https://linked.earth/Ammonyte/latest/tutorials/)
 
 ## Usage
 
@@ -65,7 +65,7 @@ print(f"P-values: {transitions.p_values}")
 transitions.plot()
 ```
 
-See the [Tutorials](https://linked.earth/Ammonyte/stable/tutorials/) for worked examples of the other two methods (Ruptures, LERM).
+See the [Tutorials](https://linked.earth/Ammonyte/latest/tutorials/) for worked examples of the other two methods (Ruptures, LERM).
 
 ## Versions
 
