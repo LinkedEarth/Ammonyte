@@ -37,3 +37,5 @@ is "optimal" in this case in accordance with Abarnabel's "Analysis of Observed C
 
 
 I., Abarbanel Henry D. Analysis of Observed Chaotic Data. Springer, 1997.
+
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/utils/parameters.py#L16-L78){.source-link target="_blank"}

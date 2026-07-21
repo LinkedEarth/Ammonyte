@@ -35,7 +35,7 @@ one detected point.
 
 Basic usage:
 
-```python
+```{python}
 from ammonyte.utils.metrics import evaluate_detection
 
 detected = [10, 25, 50, 75]
@@ -47,7 +47,7 @@ print(metrics)
 
 Access individual metrics:
 
-```python
+```{python}
 from ammonyte.utils.metrics import evaluate_detection
 
 detected = [9.8, 23.5, 45.2]
@@ -59,3 +59,5 @@ print(f"Precision: {metrics.precision:.3f}")
 print(f"Recall: {metrics.recall:.3f}")
 print(f"F1 Score: {metrics.f1_score:.3f}")
 ```
+
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/utils/metrics.py#L126-L280){.source-link target="_blank"}

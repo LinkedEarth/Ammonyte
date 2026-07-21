@@ -4,6 +4,8 @@
 core.geoseries.GeoSeries()
 ```
 
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/geoseries.py#L9-L79){.source-link target="_blank"}
+
 Ammonyte GeoSeries object for geographically referenced time series.
 
 Child of both ammonyte.Series and pyleoclim.GeoSeries. Inherits all

@@ -12,6 +12,8 @@ core.transitions.DeterministicTransitions(
 )
 ```
 
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/transitions.py#L25-L445){.source-link target="_blank"}
+
 Container for deterministic transition detection results
 
 Stores results from tipping point detection algorithms with methods for analysis and visualization.
@@ -54,7 +56,7 @@ Stores results from tipping point detection algorithms with methods for analysis
 
 Basic transition detection:
 
-```python
+```{python}
 import os, ammonyte as amt
 ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
 transitions = ngrip.kstest(w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2, x_c=0.8)
@@ -63,13 +65,13 @@ print(transitions)
 
 Plot the results:
 
-```python
+```{python}
 transitions.plot()
 ```
 
 Access transition data:
 
-```python
+```{python}
 print(f"Number of transitions: {len(transitions.jump_times)}")
 print(f"First transition: {transitions.jump_times[0]:.2f}")
 ```
@@ -99,6 +101,8 @@ Create a copy of the DeterministicTransitions object.
 <code>[]{.parameter-name} [:]{.parameter-annotation-sep} [[DeterministicTransitions](`ammonyte.core.transitions.DeterministicTransitions`)]{.parameter-annotation}</code>
 
 :   A deep copy of the current object.
+
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/transitions.py#L103-L112){.source-link target="_blank"}
 
 ### plot { #ammonyte.core.transitions.DeterministicTransitions.plot }
 
@@ -236,6 +240,8 @@ Plot the time series with detected transitions.
 ...             legend_loc='upper right')
 ```
 
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/transitions.py#L194-L396){.source-link target="_blank"}
+
 ### to_csv { #ammonyte.core.transitions.DeterministicTransitions.to_csv }
 
 ```python
@@ -260,3 +266,5 @@ Export detected transitions to CSV file
 >>> transitions = ngrip.kstest(w_min=0.12, w_max=2.5)
 >>> transitions.to_csv('my_transitions.csv')
 ```
+
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/transitions.py#L398-L445){.source-link target="_blank"}

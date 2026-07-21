@@ -3,22 +3,35 @@
 This renderer extends quartodoc's MdRenderer to add [source] links that point
 to the corresponding GitHub file and line numbers for functions and classes.
 
-Usage in _quarto.yml:
+It also upgrades plain, non-doctest ```python``` fences in docstring
+Examples sections to executable ```{python}``` cells, so `quarto render`
+actually runs them and shows their output (print statements, plots, reprs)
+instead of just displaying the source text. Doctest-style (``>>>``) examples
+are left as static code display, since they aren't valid standalone Python.
+
+Usage in _quarto.yml (quartodoc build/render must be run with cwd=docs/,
+so the module is importable as scripts._renderer):
     quartodoc:
       renderer:
-        style: _renderer.py
-        repo_url: https://github.com/michaelaye/planetarypy
+        style: scripts._renderer.py
+        repo_url: https://github.com/LinkedEarth/Ammonyte
         branch: main
-        source_dir: src
+        source_dir: ammonyte
 """
 
 from __future__ import annotations
 
+import re
 from typing import Union
 
 from plum import dispatch
+from quartodoc import ast as qast
 from quartodoc import layout
 from quartodoc.renderers import MdRenderer
+
+# Matches a fenced ```python block within a block of markdown text, capturing
+# its body (used to upgrade plain example fences to executable {python} cells).
+_PYTHON_FENCE_RE = re.compile(r"```python\n(.*?)```", re.DOTALL)
 
 
 class SourceLinkMdRenderer(MdRenderer):
@@ -52,6 +65,50 @@ class SourceLinkMdRenderer(MdRenderer):
         self.repo_url = repo_url.rstrip("/")
         self.branch = branch
         self.source_dir = source_dir
+
+    # executable examples ----
+
+    @staticmethod
+    def _is_doctest(code: str) -> bool:
+        """True if *code* is a doctest-style (``>>>``) snippet.
+
+        Doctest snippets aren't valid Python on their own (the ``>>>`` /
+        ``...`` prompts are part of the text), so they must stay as plain,
+        non-executed code fences.
+        """
+        return ">>>" in code
+
+    @dispatch
+    def render(self, el: qast.ExampleCode):
+        """Render a docstring Examples block classified entirely as code.
+
+        Plain runnable snippets become executable ```{python}``` cells so
+        Quarto actually runs them and shows their output (print, plots,
+        reprs). Doctest-style snippets fall back to the default static
+        rendering, since ``>>>`` prompts aren't executable as-is.
+        """
+        if self._is_doctest(el.value):
+            return super().render(el)
+        return f"""```{{python}}\n{el.value}\n```"""
+
+    @dispatch
+    def render(self, el: qast.ExampleText):
+        """Render a docstring Examples block that mixes prose and code.
+
+        Numpydoc-style Examples sections that use plain fenced code blocks
+        (rather than ``>>>`` doctests) are parsed by griffe as a single text
+        blob rather than separate code/text items. Upgrade each embedded
+        ```python``` fence that isn't a doctest snippet to an executable
+        ```{python}``` cell in place, leaving surrounding prose untouched.
+        """
+
+        def _upgrade(match: re.Match) -> str:
+            code = match.group(1)
+            if self._is_doctest(code):
+                return match.group(0)
+            return f"```{{python}}\n{code}```"
+
+        return _PYTHON_FENCE_RE.sub(_upgrade, el.value)
 
     def _get_source_link(self, obj) -> str:
         """Generate a GitHub source link for a griffe object.
@@ -92,8 +149,9 @@ class SourceLinkMdRenderer(MdRenderer):
             else:
                 return ""
 
-        # Build the full path: src/planetarypy/module.py
-        full_path = f"{self.source_dir}/{rel_path}"
+        # Build the full path: src/planetarypy/module.py (or just rel_path
+        # when the package lives at the repo root, e.g. source_dir="").
+        full_path = f"{self.source_dir}/{rel_path}" if self.source_dir else rel_path
 
         # Build the URL with line numbers
         url = f"{self.repo_url}/blob/{self.branch}/{full_path}#L{lineno}"

@@ -16,6 +16,8 @@ core.recurrence_matrix.RecurrenceMatrix(
 )
 ```
 
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/recurrence_matrix.py#L11-L194){.source-link target="_blank"}
+
 Recurrence matrix object. Used for Recurrence Quantification Analysis (RQA).
 
 ## Methods
@@ -48,6 +50,8 @@ Function to run regime change detection workflow
 <code>[**FI_series**]{.parameter-name} [:]{.parameter-annotation-sep} [[ammonyte](`ammonyte`).[RQARes](`ammonyte.RQARes`)]{.parameter-annotation}</code>
 
 :   RQARes object containing the Fisher Information time series derived from the Laplacian eigenmaps of the recurrence matrix.
+
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/recurrence_matrix.py#L65-L121){.source-link target="_blank"}
 
 ### plot { #ammonyte.core.recurrence_matrix.RecurrenceMatrix.plot }
 
@@ -99,3 +103,5 @@ Plotting function for recurrence matrices
 
 
 matplotlib.axes.Axes.imshow
+
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/recurrence_matrix.py#L123-L194){.source-link target="_blank"}

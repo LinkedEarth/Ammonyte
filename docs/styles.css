@@ -15,6 +15,11 @@ html { font-family: 'Inter', sans-serif; }
   white-space: pre-wrap;
 }
 
+.cell-output-display img {
+  max-width: 100%;
+  height: auto;
+}
+
 
 /* sidebar formatting */
 

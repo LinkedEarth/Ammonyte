@@ -122,8 +122,11 @@ quartodoc:
   out_index: index.qmd
   render_interlinks: true
   renderer:
-    style: markdown
+    style: scripts._renderer.py
     table_style: description-list
+    repo_url: https://github.com/LinkedEarth/Ammonyte
+    branch: main
+    source_dir: ""
   sidebar: "api/_sidebar.yml"
   css: "api/_styles-quartodoc.css"
 
