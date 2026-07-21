@@ -299,41 +299,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ammonyte.core.transitions.DeterministicTransitions" id="toc-ammonyte.core.transitions.DeterministicTransitions" class="nav-link active" data-scroll-target="#ammonyte.core.transitions.DeterministicTransitions">core.transitions.DeterministicTransitions</a>
-  <ul>
-  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
+  <li><a href="#parameters" id="toc-parameters" class="nav-link active" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
   <ul>
   <li><a href="#ammonyte.core.transitions.DeterministicTransitions.copy" id="toc-ammonyte.core.transitions.DeterministicTransitions.copy" class="nav-link" data-scroll-target="#ammonyte.core.transitions.DeterministicTransitions.copy">copy</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
   </ul></li>
   <li><a href="#ammonyte.core.transitions.DeterministicTransitions.plot" id="toc-ammonyte.core.transitions.DeterministicTransitions.plot" class="nav-link" data-scroll-target="#ammonyte.core.transitions.DeterministicTransitions.plot">plot</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#parameters-1" id="toc-parameters-1" class="nav-link" data-scroll-target="#parameters-1">Parameters</a></li>
   <li><a href="#returns-1" id="toc-returns-1" class="nav-link" data-scroll-target="#returns-1">Returns</a></li>
   <li><a href="#examples-1" id="toc-examples-1" class="nav-link" data-scroll-target="#examples-1">Examples</a></li>
   </ul></li>
   <li><a href="#ammonyte.core.transitions.DeterministicTransitions.to_csv" id="toc-ammonyte.core.transitions.DeterministicTransitions.to_csv" class="nav-link" data-scroll-target="#ammonyte.core.transitions.DeterministicTransitions.to_csv">to_csv</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#parameters-2" id="toc-parameters-2" class="nav-link" data-scroll-target="#parameters-2">Parameters</a></li>
   <li><a href="#examples-2" id="toc-examples-2" class="nav-link" data-scroll-target="#examples-2">Examples</a></li>
-  </ul></li>
   </ul></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../api/core.series.Series.html">Core</a></li><li class="breadcrumb-item"><a href="../api/core.transitions.DeterministicTransitions.html">core.transitions.DeterministicTransitions</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../api/core.series.Series.html">Core</a></li><li class="breadcrumb-item"><a href="../api/core.transitions.DeterministicTransitions.html">core.transitions.DeterministicTransitions</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">core.transitions.DeterministicTransitions</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="ammonyte.core.transitions.DeterministicTransitions" class="level1">
-<h1>core.transitions.DeterministicTransitions</h1>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>core.transitions.DeterministicTransitions(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    series,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    jump_times,</span>
@@ -343,6 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    statistics<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/transitions.py#L25-L445" class="source-link" target="_blank">[source]</a></p>
 <p>Container for deterministic transition detection results</p>
 <p>Stores results from tipping point detection algorithms with methods for analysis and visualization.</p>
 <section id="parameters" class="level2 doc-section doc-section-parameters">
@@ -385,15 +397,163 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
 <p>Basic transition detection:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, ammonyte <span class="im">as</span> amt</span>
+<div id="7e8f6177" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, ammonyte <span class="im">as</span> amt</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ngrip <span class="op">=</span> amt.Series.from_csv(os.path.join(os.path.dirname(amt.<span class="va">__file__</span>), <span class="st">'data'</span>, <span class="st">'NGRIP.csv'</span>))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>transitions <span class="op">=</span> ngrip.kstest(w_min<span class="op">=</span><span class="fl">0.12</span>, w_max<span class="op">=</span><span class="fl">2.5</span>, n_w<span class="op">=</span><span class="dv">15</span>, d_c<span class="op">=</span><span class="fl">0.77</span>, n_c<span class="op">=</span><span class="dv">3</span>, s_c<span class="op">=</span><span class="dv">2</span>, x_c<span class="op">=</span><span class="fl">0.8</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(transitions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time axis values sorted in ascending order
+Time axis values sorted in ascending order
+Deterministic Transition Detection Results - NGRIP Ice Core Data
+================================================================
++----------+---------------------+----------------+------------------+---------------------+
+| Method   |   Total Transitions |   Upward Jumps |   Downward Jumps | Series Label        |
++==========+=====================+================+==================+=====================+
+| KS test  |                 104 |             49 |               55 | NGRIP Ice Core Data |
++----------+---------------------+----------------+------------------+---------------------+
+
+Transition Details:
+  1. Time: 8.14 kyr b2k, Direction: Upward, d_statistics: 0.4080, p_values: &lt; 1e-8
+  2. Time: 8.30 kyr b2k, Direction: Downward, d_statistics: 0.3760, p_values: &lt; 1e-7
+  3. Time: 10.20 kyr b2k, Direction: Upward, d_statistics: 0.9203, p_values: &lt; 1e-56
+  4. Time: 10.86 kyr b2k, Direction: Upward, d_statistics: 0.9680, p_values: &lt; 1e-65
+  5. Time: 11.52 kyr b2k, Direction: Downward, d_statistics: 0.9040, p_values: &lt; 1e-53
+  6. Time: 11.68 kyr b2k, Direction: Upward, d_statistics: 0.9520, p_values: &lt; 1e-62
+  7. Time: 12.78 kyr b2k, Direction: Downward, d_statistics: 0.3520, p_values: &lt; 1e-6
+  8. Time: 13.26 kyr b2k, Direction: Downward, d_statistics: 0.2160, p_values: &lt; 1e-2
+  9. Time: 13.56 kyr b2k, Direction: Upward, d_statistics: 0.2640, p_values: &lt; 1e-3
+  10. Time: 13.96 kyr b2k, Direction: Upward, d_statistics: 0.3760, p_values: &lt; 1e-7
+  11. Time: 14.18 kyr b2k, Direction: Downward, d_statistics: 0.4240, p_values: &lt; 1e-9
+  12. Time: 14.68 kyr b2k, Direction: Upward, d_statistics: 0.6160, p_values: &lt; 1e-21
+  13. Time: 19.94 kyr b2k, Direction: Upward, d_statistics: 0.4320, p_values: &lt; 1e-10
+  14. Time: 21.88 kyr b2k, Direction: Downward, d_statistics: 0.1600, p_values: 0.08
+  15. Time: 23.36 kyr b2k, Direction: Upward, d_statistics: 0.4800, p_values: &lt; 1e-12
+  16. Time: 24.92 kyr b2k, Direction: Downward, d_statistics: 0.2640, p_values: &lt; 1e-3
+  17. Time: 27.50 kyr b2k, Direction: Downward, d_statistics: 0.2000, p_values: 0.01
+  18. Time: 27.78 kyr b2k, Direction: Upward, d_statistics: 0.2880, p_values: &lt; 1e-4
+  19. Time: 28.60 kyr b2k, Direction: Downward, d_statistics: 0.2320, p_values: &lt; 1e-2
+  20. Time: 28.90 kyr b2k, Direction: Upward, d_statistics: 0.3120, p_values: &lt; 1e-5
+  21. Time: 32.04 kyr b2k, Direction: Downward, d_statistics: 0.4640, p_values: &lt; 1e-11
+  22. Time: 32.52 kyr b2k, Direction: Upward, d_statistics: 0.2596, p_values: &lt; 1e-3
+  23. Time: 33.36 kyr b2k, Direction: Downward, d_statistics: 0.4880, p_values: &lt; 1e-13
+  24. Time: 33.74 kyr b2k, Direction: Upward, d_statistics: 0.3157, p_values: &lt; 1e-5
+  25. Time: 34.74 kyr b2k, Direction: Downward, d_statistics: 0.3520, p_values: &lt; 1e-6
+  26. Time: 35.02 kyr b2k, Direction: Downward, d_statistics: 0.3440, p_values: &lt; 1e-6
+  27. Time: 35.48 kyr b2k, Direction: Upward, d_statistics: 0.1520, p_values: 0.11
+  28. Time: 35.76 kyr b2k, Direction: Upward, d_statistics: 0.2080, p_values: &lt; 1e-2
+  29. Time: 35.94 kyr b2k, Direction: Downward, d_statistics: 0.2320, p_values: &lt; 1e-2
+  30. Time: 37.06 kyr b2k, Direction: Downward, d_statistics: 0.2320, p_values: &lt; 1e-2
+  31. Time: 38.22 kyr b2k, Direction: Upward, d_statistics: 0.5600, p_values: &lt; 1e-17
+  32. Time: 39.90 kyr b2k, Direction: Downward, d_statistics: 0.2240, p_values: &lt; 1e-2
+  33. Time: 40.16 kyr b2k, Direction: Upward, d_statistics: 0.2160, p_values: &lt; 1e-2
+  34. Time: 40.96 kyr b2k, Direction: Downward, d_statistics: 0.5440, p_values: &lt; 1e-16
+  35. Time: 41.46 kyr b2k, Direction: Upward, d_statistics: 0.2160, p_values: &lt; 1e-2
+  36. Time: 42.28 kyr b2k, Direction: Downward, d_statistics: 0.2960, p_values: &lt; 1e-4
+  37. Time: 43.36 kyr b2k, Direction: Upward, d_statistics: 0.2160, p_values: &lt; 1e-2
+  38. Time: 43.66 kyr b2k, Direction: Downward, d_statistics: 0.1440, p_values: 0.15
+  39. Time: 44.36 kyr b2k, Direction: Downward, d_statistics: 0.4880, p_values: &lt; 1e-13
+  40. Time: 44.56 kyr b2k, Direction: Upward, d_statistics: 0.3440, p_values: &lt; 1e-6
+  41. Time: 46.84 kyr b2k, Direction: Upward, d_statistics: 0.5840, p_values: &lt; 1e-19
+  42. Time: 48.46 kyr b2k, Direction: Downward, d_statistics: 0.4720, p_values: &lt; 1e-12
+  43. Time: 48.84 kyr b2k, Direction: Downward, d_statistics: 0.5200, p_values: &lt; 1e-15
+  44. Time: 49.14 kyr b2k, Direction: Downward, d_statistics: 0.5360, p_values: &lt; 1e-16
+  45. Time: 49.28 kyr b2k, Direction: Upward, d_statistics: 0.5360, p_values: &lt; 1e-16
+  46. Time: 49.58 kyr b2k, Direction: Downward, d_statistics: 0.6240, p_values: &lt; 1e-22
+  47. Time: 51.64 kyr b2k, Direction: Downward, d_statistics: 0.7520, p_values: &lt; 1e-34
+  48. Time: 54.22 kyr b2k, Direction: Upward, d_statistics: 0.7680, p_values: &lt; 1e-35
+  49. Time: 55.00 kyr b2k, Direction: Upward, d_statistics: 0.4560, p_values: &lt; 1e-11
+  50. Time: 55.42 kyr b2k, Direction: Downward, d_statistics: 0.2320, p_values: &lt; 1e-2
+  51. Time: 55.78 kyr b2k, Direction: Upward, d_statistics: 0.2160, p_values: &lt; 1e-2
+  52. Time: 56.58 kyr b2k, Direction: Downward, d_statistics: 0.5120, p_values: &lt; 1e-14
+  53. Time: 58.04 kyr b2k, Direction: Upward, d_statistics: 0.4240, p_values: &lt; 1e-9
+  54. Time: 58.16 kyr b2k, Direction: Downward, d_statistics: 0.4080, p_values: &lt; 1e-8
+  55. Time: 58.62 kyr b2k, Direction: Downward, d_statistics: 0.5280, p_values: &lt; 1e-15
+  56. Time: 58.90 kyr b2k, Direction: Downward, d_statistics: 0.6960, p_values: &lt; 1e-28
+  57. Time: 59.08 kyr b2k, Direction: Upward, d_statistics: 0.7840, p_values: &lt; 1e-37
+  58. Time: 59.30 kyr b2k, Direction: Downward, d_statistics: 0.7200, p_values: &lt; 1e-30
+  59. Time: 59.44 kyr b2k, Direction: Upward, d_statistics: 0.7760, p_values: &lt; 1e-36
+  60. Time: 61.62 kyr b2k, Direction: Downward, d_statistics: 0.2480, p_values: &lt; 1e-3
+  61. Time: 63.86 kyr b2k, Direction: Downward, d_statistics: 0.1680, p_values: 0.06
+  62. Time: 64.14 kyr b2k, Direction: Upward, d_statistics: 0.1292, p_values: 0.23
+  63. Time: 66.96 kyr b2k, Direction: Upward, d_statistics: 0.1200, p_values: 0.33
+  64. Time: 67.26 kyr b2k, Direction: Downward, d_statistics: 0.1600, p_values: 0.08
+  65. Time: 68.56 kyr b2k, Direction: Downward, d_statistics: 0.2960, p_values: &lt; 1e-4
+  66. Time: 69.36 kyr b2k, Direction: Downward, d_statistics: 0.5920, p_values: &lt; 1e-19
+  67. Time: 69.64 kyr b2k, Direction: Upward, d_statistics: 0.5440, p_values: &lt; 1e-16
+  68. Time: 70.38 kyr b2k, Direction: Downward, d_statistics: 0.6240, p_values: &lt; 1e-22
+  69. Time: 70.84 kyr b2k, Direction: Downward, d_statistics: 0.5040, p_values: &lt; 1e-14
+  70. Time: 72.34 kyr b2k, Direction: Upward, d_statistics: 0.5200, p_values: &lt; 1e-15
+  71. Time: 74.18 kyr b2k, Direction: Downward, d_statistics: 0.6960, p_values: &lt; 1e-28
+  72. Time: 76.44 kyr b2k, Direction: Upward, d_statistics: 0.5520, p_values: &lt; 1e-17
+  73. Time: 77.76 kyr b2k, Direction: Downward, d_statistics: 0.5040, p_values: &lt; 1e-14
+  74. Time: 78.14 kyr b2k, Direction: Upward, d_statistics: 0.5200, p_values: &lt; 1e-15
+  75. Time: 78.74 kyr b2k, Direction: Downward, d_statistics: 0.6720, p_values: &lt; 1e-26
+  76. Time: 79.24 kyr b2k, Direction: Upward, d_statistics: 0.5520, p_values: &lt; 1e-17
+  77. Time: 82.24 kyr b2k, Direction: Upward, d_statistics: 0.5120, p_values: &lt; 1e-14
+  78. Time: 83.02 kyr b2k, Direction: Downward, d_statistics: 0.2720, p_values: &lt; 1e-3
+  79. Time: 84.42 kyr b2k, Direction: Downward, d_statistics: 0.8400, p_values: &lt; 1e-44
+  80. Time: 84.76 kyr b2k, Direction: Upward, d_statistics: 0.9760, p_values: &lt; 1e-67
+  81. Time: 85.20 kyr b2k, Direction: Upward, d_statistics: 0.8640, p_values: &lt; 1e-47
+  82. Time: 87.66 kyr b2k, Direction: Downward, d_statistics: 0.8880, p_values: &lt; 1e-51
+  83. Time: 88.00 kyr b2k, Direction: Downward, d_statistics: 0.8720, p_values: &lt; 1e-48
+  84. Time: 88.96 kyr b2k, Direction: Downward, d_statistics: 0.5120, p_values: &lt; 1e-14
+  85. Time: 90.06 kyr b2k, Direction: Upward, d_statistics: 0.5840, p_values: &lt; 1e-19
+  86. Time: 91.72 kyr b2k, Direction: Downward, d_statistics: 0.2640, p_values: &lt; 1e-3
+  87. Time: 96.54 kyr b2k, Direction: Upward, d_statistics: 0.4560, p_values: &lt; 1e-11
+  88. Time: 97.54 kyr b2k, Direction: Upward, d_statistics: 0.4320, p_values: &lt; 1e-10
+  89. Time: 104.02 kyr b2k, Direction: Upward, d_statistics: 0.6320, p_values: &lt; 1e-23
+  90. Time: 104.38 kyr b2k, Direction: Downward, d_statistics: 0.4800, p_values: &lt; 1e-12
+  91. Time: 104.54 kyr b2k, Direction: Upward, d_statistics: 0.4880, p_values: &lt; 1e-13
+  92. Time: 105.54 kyr b2k, Direction: Downward, d_statistics: 0.4480, p_values: &lt; 1e-10
+  93. Time: 106.20 kyr b2k, Direction: Upward, d_statistics: 0.2960, p_values: &lt; 1e-4
+  94. Time: 106.32 kyr b2k, Direction: Downward, d_statistics: 0.3120, p_values: &lt; 1e-5
+  95. Time: 106.76 kyr b2k, Direction: Upward, d_statistics: 0.3600, p_values: &lt; 1e-6
+  96. Time: 106.90 kyr b2k, Direction: Downward, d_statistics: 0.4080, p_values: &lt; 1e-8
+  97. Time: 108.30 kyr b2k, Direction: Upward, d_statistics: 0.9040, p_values: &lt; 1e-53
+  98. Time: 109.30 kyr b2k, Direction: Upward, d_statistics: 0.5360, p_values: &lt; 1e-16
+  99. Time: 110.62 kyr b2k, Direction: Downward, d_statistics: 0.9120, p_values: &lt; 1e-54
+  100. Time: 110.94 kyr b2k, Direction: Upward, d_statistics: 0.8560, p_values: &lt; 1e-46
+  101. Time: 111.34 kyr b2k, Direction: Downward, d_statistics: 0.8720, p_values: &lt; 1e-48
+  102. Time: 111.94 kyr b2k, Direction: Downward, d_statistics: 0.9360, p_values: &lt; 1e-59
+  103. Time: 115.38 kyr b2k, Direction: Upward, d_statistics: 0.7600, p_values: &lt; 1e-34
+  104. Time: 119.14 kyr b2k, Direction: Downward, d_statistics: 1.0000, p_values: &lt; 1e-73
+
+Method Parameters:
+  w_min: 0.12
+  w_max: 2.5
+  n_w: 15
+  d_c: 0.77
+  n_c: 3
+  s_c: 2
+  x_c: 0.8
+</code></pre>
+</div>
+</div>
 <p>Plot the results:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>transitions.plot()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="cb1fe8de" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>transitions.plot()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>(&lt;Figure size 1152x768 with 1 Axes&gt;,
+ &lt;Axes: title={'center': 'Transition Detection - NGRIP Ice Core Data'}, xlabel='Age [kyr b2k]', ylabel='δ¹⁸O [‰]'&gt;)</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="core.transitions.DeterministicTransitions_files/figure-html/cell-3-output-2.png" width="1143" height="757" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>Access transition data:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of transitions: </span><span class="sc">{</span><span class="bu">len</span>(transitions.jump_times)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"First transition: </span><span class="sc">{</span>transitions<span class="sc">.</span>jump_times[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="e1a8b896" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Number of transitions: </span><span class="sc">{</span><span class="bu">len</span>(transitions.jump_times)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"First transition: </span><span class="sc">{</span>transitions<span class="sc">.</span>jump_times[<span class="dv">0</span>]<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of transitions: 104
+First transition: 8.14</code></pre>
+</div>
+</div>
 </section>
 <section id="see-also" class="level2 doc-section doc-section-see-also">
 <h2 class="doc-section doc-section-see-also anchored" data-anchor-id="see-also">See Also</h2>
@@ -425,7 +585,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <section id="ammonyte.core.transitions.DeterministicTransitions.copy" class="level3">
 <h3 class="anchored" data-anchor-id="ammonyte.core.transitions.DeterministicTransitions.copy">copy</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>core.transitions.DeterministicTransitions.copy()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>core.transitions.DeterministicTransitions.copy()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Create a copy of the DeterministicTransitions object.</p>
 <section id="returns" class="level4 doc-section doc-section-returns">
 <h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h4>
@@ -435,29 +595,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A deep copy of the current object.</p>
 </dd>
 </dl>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/transitions.py#L103-L112" class="source-link" target="_blank">[source]</a></p>
 </section>
 </section>
 <section id="ammonyte.core.transitions.DeterministicTransitions.plot" class="level3">
 <h3 class="anchored" data-anchor-id="ammonyte.core.transitions.DeterministicTransitions.plot">plot</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>core.transitions.DeterministicTransitions.plot(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>),</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    ylabel<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    xlabel<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    upward_color<span class="op">=</span><span class="st">'red'</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    downward_color<span class="op">=</span><span class="st">'blue'</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    transition_color<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    show_transitions<span class="op">=</span><span class="st">'both'</span>,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    title_fontsize<span class="op">=</span><span class="dv">14</span>,</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    label_fontsize<span class="op">=</span><span class="dv">12</span>,</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    tick_fontsize<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    legend_fontsize<span class="op">=</span><span class="dv">10</span>,</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    show_legend<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    legend_labels<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    legend_loc<span class="op">=</span><span class="st">'best'</span>,</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">**</span>kwargs,</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>core.transitions.DeterministicTransitions.plot(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    ylabel<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    xlabel<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    upward_color<span class="op">=</span><span class="st">'red'</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    downward_color<span class="op">=</span><span class="st">'blue'</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    transition_color<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    show_transitions<span class="op">=</span><span class="st">'both'</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    title_fontsize<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    label_fontsize<span class="op">=</span><span class="dv">12</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    tick_fontsize<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    legend_fontsize<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    show_legend<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    legend_labels<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    legend_loc<span class="op">=</span><span class="st">'best'</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">**</span>kwargs,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Plot the time series with detected transitions.</p>
 <section id="parameters-1" class="level4 doc-section doc-section-parameters">
 <h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-1">Parameters</h4>
@@ -547,36 +708,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="examples-1" class="level4 doc-section doc-section-examples">
 <h4 class="doc-section doc-section-examples anchored" data-anchor-id="examples-1">Examples</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Basic plot</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> result.plot()</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Custom colors and size</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> result.plot(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">10</span>), upward_color<span class="op">=</span><span class="st">'green'</span>, downward_color<span class="op">=</span><span class="st">'purple'</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Show only upward transitions</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> result.plot(show_transitions<span class="op">=</span><span class="st">'upward'</span>, upward_color<span class="op">=</span><span class="st">'red'</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Show all transitions without direction distinction (single color, single legend)</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> result.plot(show_transitions<span class="op">=</span><span class="st">'all'</span>, transition_color<span class="op">=</span><span class="st">'blue'</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Custom font sizes</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> result.plot(title_fontsize<span class="op">=</span><span class="dv">18</span>, label_fontsize<span class="op">=</span><span class="dv">16</span>, tick_fontsize<span class="op">=</span><span class="dv">14</span>, legend_fontsize<span class="op">=</span><span class="dv">14</span>)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Hide legend</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> result.plot(show_legend<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Custom legend label with 'all' mode</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> result.plot(show_transitions<span class="op">=</span><span class="st">'all'</span>, transition_color<span class="op">=</span><span class="st">'purple'</span>,</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>...             legend_labels<span class="op">=</span>[<span class="st">'Detected Transitions'</span>])</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Custom legend location and color</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> result.plot(show_transitions<span class="op">=</span><span class="st">'all'</span>, transition_color<span class="op">=</span><span class="st">'#1f77b4'</span>,</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>...             legend_loc<span class="op">=</span><span class="st">'upper right'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Basic plot</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> result.plot()</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Custom colors and size</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> result.plot(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">10</span>), upward_color<span class="op">=</span><span class="st">'green'</span>, downward_color<span class="op">=</span><span class="st">'purple'</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Show only upward transitions</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> result.plot(show_transitions<span class="op">=</span><span class="st">'upward'</span>, upward_color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Show all transitions without direction distinction (single color, single legend)</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> result.plot(show_transitions<span class="op">=</span><span class="st">'all'</span>, transition_color<span class="op">=</span><span class="st">'blue'</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Custom font sizes</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> result.plot(title_fontsize<span class="op">=</span><span class="dv">18</span>, label_fontsize<span class="op">=</span><span class="dv">16</span>, tick_fontsize<span class="op">=</span><span class="dv">14</span>, legend_fontsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Hide legend</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> result.plot(show_legend<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Custom legend label with 'all' mode</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> result.plot(show_transitions<span class="op">=</span><span class="st">'all'</span>, transition_color<span class="op">=</span><span class="st">'purple'</span>,</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>...             legend_labels<span class="op">=</span>[<span class="st">'Detected Transitions'</span>])</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Custom legend location and color</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> result.plot(show_transitions<span class="op">=</span><span class="st">'all'</span>, transition_color<span class="op">=</span><span class="st">'#1f77b4'</span>,</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>...             legend_loc<span class="op">=</span><span class="st">'upper right'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/transitions.py#L194-L396" class="source-link" target="_blank">[source]</a></p>
 </section>
 </section>
 <section id="ammonyte.core.transitions.DeterministicTransitions.to_csv" class="level3">
 <h3 class="anchored" data-anchor-id="ammonyte.core.transitions.DeterministicTransitions.to_csv">to_csv</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>core.transitions.DeterministicTransitions.to_csv(path<span class="op">=</span><span class="va">None</span>, <span class="op">**</span>kwargs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>core.transitions.DeterministicTransitions.to_csv(path<span class="op">=</span><span class="va">None</span>, <span class="op">**</span>kwargs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Export detected transitions to CSV file</p>
 <section id="parameters-2" class="level4 doc-section doc-section-parameters">
 <h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-2">Parameters</h4>
@@ -593,11 +755,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="examples-2" class="level4 doc-section doc-section-examples">
 <h4 class="doc-section doc-section-examples anchored" data-anchor-id="examples-2">Examples</h4>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> transitions <span class="op">=</span> ngrip.kstest(w_min<span class="op">=</span><span class="fl">0.12</span>, w_max<span class="op">=</span><span class="fl">2.5</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> transitions.to_csv(<span class="st">'my_transitions.csv'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> transitions <span class="op">=</span> ngrip.kstest(w_min<span class="op">=</span><span class="fl">0.12</span>, w_max<span class="op">=</span><span class="fl">2.5</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> transitions.to_csv(<span class="st">'my_transitions.csv'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/transitions.py#L398-L445" class="source-link" target="_blank">[source]</a></p>
 
 
-</section>
 </section>
 </section>
 </section>

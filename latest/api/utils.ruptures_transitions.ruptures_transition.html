@@ -299,25 +299,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ammonyte.utils.ruptures_transitions.ruptures_transition" id="toc-ammonyte.utils.ruptures_transitions.ruptures_transition" class="nav-link active" data-scroll-target="#ammonyte.utils.ruptures_transitions.ruptures_transition">utils.ruptures_transitions.ruptures_transition</a>
-  <ul>
-  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
+  <li><a href="#parameters" id="toc-parameters" class="nav-link active" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
   <li><a href="#see-also" id="toc-see-also" class="nav-link" data-scroll-target="#see-also">See Also</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../api/utils.ks.KS_test.html">Utilities</a></li><li class="breadcrumb-item"><a href="../api/utils.ruptures_transitions.ruptures_transition.html">utils.ruptures_transitions.ruptures_transition</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../api/utils.ks.KS_test.html">Utilities</a></li><li class="breadcrumb-item"><a href="../api/utils.ruptures_transitions.ruptures_transition.html">utils.ruptures_transitions.ruptures_transition</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">utils.ruptures_transitions.ruptures_transition</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="ammonyte.utils.ruptures_transitions.ruptures_transition" class="level1">
-<h1>utils.ruptures_transitions.ruptures_transition</h1>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>utils.ruptures_transitions.ruptures_transition(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    series,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    algo<span class="op">=</span><span class="st">'Pelt'</span>,</span>
@@ -391,11 +402,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
 <p>Basic usage (typically called via Series.ruptures):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, ammonyte <span class="im">as</span> amt</span>
+<div id="8145e994" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, ammonyte <span class="im">as</span> amt</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ammonyte.utils.ruptures_transitions <span class="im">import</span> ruptures_transition</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ngrip <span class="op">=</span> amt.Series.from_csv(os.path.join(os.path.dirname(amt.<span class="va">__file__</span>), <span class="st">'data'</span>, <span class="st">'NGRIP.csv'</span>))</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>transitions <span class="op">=</span> ngrip.ruptures(algo<span class="op">=</span><span class="st">'Pelt'</span>, cost<span class="op">=</span><span class="st">'rbf'</span>, pen<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Detected </span><span class="sc">{</span><span class="bu">len</span>(transitions.jump_times)<span class="sc">}</span><span class="ss"> transitions"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time axis values sorted in ascending order
+Time axis values sorted in ascending order
+Detected 64 transitions</code></pre>
+</div>
+</div>
 </section>
 <section id="see-also" class="level2 doc-section doc-section-see-also">
 <h2 class="doc-section doc-section-see-also anchored" data-anchor-id="see-also">See Also</h2>
@@ -404,9 +422,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="references" class="level2 doc-section doc-section-references">
 <h2 class="doc-section doc-section-references anchored" data-anchor-id="references">References</h2>
 <p>Truong, C., et al.&nbsp;(2020). Selective review of offline change point detection methods. Signal Processing, 167, 107299.</p>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/utils/ruptures_transitions.py#L23-L351" class="source-link" target="_blank">[source]</a></p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

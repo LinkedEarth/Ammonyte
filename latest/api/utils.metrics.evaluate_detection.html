@@ -299,23 +299,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ammonyte.utils.metrics.evaluate_detection" id="toc-ammonyte.utils.metrics.evaluate_detection" class="nav-link active" data-scroll-target="#ammonyte.utils.metrics.evaluate_detection">utils.metrics.evaluate_detection</a>
-  <ul>
-  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
+  <li><a href="#parameters" id="toc-parameters" class="nav-link active" data-scroll-target="#parameters">Parameters</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples">Examples</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../api/utils.ks.KS_test.html">Utilities</a></li><li class="breadcrumb-item"><a href="../api/utils.metrics.evaluate_detection.html">utils.metrics.evaluate_detection</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../api/utils.ks.KS_test.html">Utilities</a></li><li class="breadcrumb-item"><a href="../api/utils.metrics.evaluate_detection.html">utils.metrics.evaluate_detection</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">utils.metrics.evaluate_detection</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="ammonyte.utils.metrics.evaluate_detection" class="level1">
-<h1>utils.metrics.evaluate_detection</h1>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>utils.metrics.evaluate_detection(detected, ground_truth, tolerance<span class="op">=</span><span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Complete evaluation of transition detection performance</p>
 <p>Calculates precision, recall, F1 score, and detailed counts (true positives, false positives, false negatives) in a single pass to ensure consistency. Uses one-to-one closest matching where each ground truth point matches only one detected point.</p>
@@ -348,27 +359,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
 <p>Basic usage:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ammonyte.utils.metrics <span class="im">import</span> evaluate_detection</span>
+<div id="bb0c6ee5" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ammonyte.utils.metrics <span class="im">import</span> evaluate_detection</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>detected <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>]</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ground_truth <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">26</span>, <span class="dv">60</span>]</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>metrics <span class="op">=</span> evaluate_detection(detected, ground_truth, tolerance<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(metrics)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Detection Evaluation Metrics
+============================
+Metrics calculated within tolerance = 2
+
+Performance Scores:
++-----------+---------+
+| Metric    |   Value |
++===========+=========+
+| Precision |  0.5    |
++-----------+---------+
+| Recall    |  0.6667 |
++-----------+---------+
+| F1 Score  |  0.5714 |
++-----------+---------+
+
+Detection Counts:
++-----------------+---------+
+| Category        |   Count |
++=================+=========+
+| True Positives  |       2 |
++-----------------+---------+
+| False Positives |       2 |
++-----------------+---------+
+| False Negatives |       1 |
++-----------------+---------+
+
+Summary:
+  Detected: 4 | Ground Truth: 3
+</code></pre>
+</div>
+</div>
 <p>Access individual metrics:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ammonyte.utils.metrics <span class="im">import</span> evaluate_detection</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>detected <span class="op">=</span> [<span class="fl">9.8</span>, <span class="fl">23.5</span>, <span class="fl">45.2</span>]</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ground_truth <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">60</span>]</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>metrics <span class="op">=</span> evaluate_detection(detected, ground_truth, tolerance<span class="op">=</span><span class="fl">1.0</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Precision: </span><span class="sc">{</span>metrics<span class="sc">.</span>precision<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Recall: </span><span class="sc">{</span>metrics<span class="sc">.</span>recall<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"F1 Score: </span><span class="sc">{</span>metrics<span class="sc">.</span>f1_score<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="afbd3779" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ammonyte.utils.metrics <span class="im">import</span> evaluate_detection</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>detected <span class="op">=</span> [<span class="fl">9.8</span>, <span class="fl">23.5</span>, <span class="fl">45.2</span>]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>ground_truth <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">40</span>, <span class="dv">60</span>]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>metrics <span class="op">=</span> evaluate_detection(detected, ground_truth, tolerance<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Precision: </span><span class="sc">{</span>metrics<span class="sc">.</span>precision<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Recall: </span><span class="sc">{</span>metrics<span class="sc">.</span>recall<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"F1 Score: </span><span class="sc">{</span>metrics<span class="sc">.</span>f1_score<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Precision: 0.333
+Recall: 0.250
+F1 Score: 0.286</code></pre>
+</div>
+</div>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/utils/metrics.py#L126-L280" class="source-link" target="_blank">[source]</a></p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
