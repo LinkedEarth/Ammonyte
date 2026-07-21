@@ -60,7 +60,7 @@ Applies sliding window KS test to detect abrupt transitions using the method of 
 
 Basic usage (typically called via Series.kstest):
 
-```python
+```{python}
 import os, ammonyte as amt
 from ammonyte.utils.ks import KS_test
 ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
@@ -75,3 +75,5 @@ Series.kstest : High-level interface to this function
 ## References {.doc-section .doc-section-references}
 
 Bagniewski, W., et al. (2021). Automatic detection of abrupt transitions in paleoclimate records. Chaos, 31(11), 113129.
+
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/utils/ks.py#L24-L379){.source-link target="_blank"}

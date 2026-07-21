@@ -19,6 +19,8 @@ core.rqa_res.RQARes(
 )
 ```
 
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/rqa_res.py#L20-L861){.source-link target="_blank"}
+
 Class for storing the result of various RQA techniques
 
 ## Methods
@@ -163,6 +165,8 @@ Function for plotting rqa results with confidence bounds
 
 ammonyte.utils.sampling.confidence_interval
 
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/rqa_res.py#L211-L414){.source-link target="_blank"}
+
 ### confidence_smooth_plot { #ammonyte.core.rqa_res.RQARes.confidence_smooth_plot }
 
 ```python
@@ -269,6 +273,8 @@ matplotlib.axes.Axes.hlines
 
 matplotlib.axes.Axes.fill_between
 
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/rqa_res.py#L416-L606){.source-link target="_blank"}
+
 ### lerm_transitions { #ammonyte.core.rqa_res.RQARes.lerm_transitions }
 
 ```python
@@ -318,7 +324,7 @@ obtained from LERM analysis, typically after smoothing.
 
 Complete LERM workflow:
 
-```python
+```{python}
 import os, ammonyte as amt
 
 # Load data
@@ -339,11 +345,13 @@ transitions.plot()
 
 Custom confidence bounds:
 
-```python
+```{python}
 transitions = NGRIP_lp_smooth.lerm_transitions(
     transition_interval=(0.025, 0.010)
 )
 ```
+
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/rqa_res.py#L117-L209){.source-link target="_blank"}
 
 ### plot_eigenmaps { #ammonyte.core.rqa_res.RQARes.plot_eigenmaps }
 
@@ -411,6 +419,8 @@ Only works when the RQARes has been created via RecurrenceMatrix.laplacian_eigen
 
 
 ammonyte.RecurrenceMatrix.laplacian_eigenmaps
+
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/rqa_res.py#L608-L719){.source-link target="_blank"}
 
 ### plot_eigenmaps_FI { #ammonyte.core.rqa_res.RQARes.plot_eigenmaps_FI }
 
@@ -496,6 +506,8 @@ ammonyte.RecurrenceMatrix.laplacian_eigenmaps
 
 ammonyte.RQARes.plot_eigenmaps
 
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/rqa_res.py#L722-L861){.source-link target="_blank"}
+
 ### smooth { #ammonyte.core.rqa_res.RQARes.smooth }
 
 ```python
@@ -520,3 +532,5 @@ Function to perform block smoothing on your RQA result
 
 
 ammonyte.utils.fisher.smooth_series
+
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/rqa_res.py#L88-L115){.source-link target="_blank"}

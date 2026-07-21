@@ -68,3 +68,5 @@ Plot RQA results with bootstrap confidence bounds as a filled region
 
 
 ammonyte.utils.sampling.confidence_interval
+
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/utils/plotting.py#L57-L191){.source-link target="_blank"}

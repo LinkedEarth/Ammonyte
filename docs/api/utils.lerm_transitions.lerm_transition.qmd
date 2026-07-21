@@ -65,7 +65,7 @@ dynamical system.
 
 Basic usage (typically called via Series.lerm_transitions):
 
-```python
+```{python}
 import os, ammonyte as amt
 from ammonyte.utils.lerm_transitions import lerm_transition
 
@@ -102,3 +102,5 @@ confidence threshold to the other. The algorithm:
    - Upward (+1): from below lower bound to above upper bound
    - Downward (-1): from above upper bound to below lower bound
 6. Assigns transition time at the midpoint between threshold crossings
+
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/utils/lerm_transitions.py#L23-L178){.source-link target="_blank"}

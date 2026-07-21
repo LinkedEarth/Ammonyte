@@ -14,6 +14,8 @@ core.recurrence_network.RecurrenceNetwork(
 )
 ```
 
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/recurrence_network.py#L6-L63){.source-link target="_blank"}
+
 Recurrence network object. Used for Recurrence Network Analysis (RNA).
 
 Child of ammonyte.RecurrenceMatrix, so it has all of the RecurrenceMatrix methods

@@ -4,6 +4,8 @@
 core.series.Series()
 ```
 
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L24-L489){.source-link target="_blank"}
+
 Ammonyte series object, launching point for most ammonyte analysis.
 
 Child of pyleoclim.Series, so shares all methods with pyleoclim.Series plus those
@@ -59,6 +61,8 @@ See interp, bin, and gkernel methods in parent class pyleoclim.Series for detail
 
 :   Ammonyte.Series object containing time series of the determinism statistic
 
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L126-L204){.source-link target="_blank"}
+
 ### embed { #ammonyte.core.series.Series.embed }
 
 ```python
@@ -90,6 +94,8 @@ ammonyte.utils.parameters.tau_search
 
 ammonyte.TimeEmbeddedSeries
 
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L72-L124){.source-link target="_blank"}
+
 ### from_csv { #ammonyte.core.series.Series.from_csv }
 
 ```python
@@ -115,6 +121,8 @@ Load an ammonyte Series from a CSV file with pyleoclim metadata format.
 ```python
 >>> ts = ammonyte.Series.from_csv('data/NGRIP.csv')
 ```
+
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L31-L70){.source-link target="_blank"}
 
 ### kstest { #ammonyte.core.series.Series.kstest }
 
@@ -174,7 +182,7 @@ Applies sliding window KS test to detect abrupt transitions in time series data 
 
 Basic tipping point detection:
 
-```python
+```{python}
 import os, ammonyte as amt
 ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
 transitions = ngrip.kstest(w_min=0.12, w_max=2.5, n_w=15, d_c=0.77, n_c=3, s_c=2, x_c=0.8)
@@ -183,14 +191,14 @@ print(transitions)
 
 Access transition statistics:
 
-```python
+```{python}
 print(f"D-statistics: {transitions.d_statistics}")
 print(f"P-values: {transitions.p_values}")
 ```
 
 Plot the results:
 
-```python
+```{python}
 transitions.plot()
 ```
 
@@ -212,6 +220,8 @@ DeterministicTransitions.plot : Visualize detected transitions
 
 .. [3] Smirnov, N. (1948). Table for estimating the goodness of fit of 
        empirical distributions. The Annals of Mathematical Statistics, 19(2), 279-281.
+
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L286-L384){.source-link target="_blank"}
 
 ### laminarity { #ammonyte.core.series.Series.laminarity }
 
@@ -251,6 +261,8 @@ See interp, bin, and gkernel methods in parent class pyleoclim.Series for detail
 <code>[**lam_series**]{.parameter-name} [:]{.parameter-annotation-sep} [[ammonyte](`ammonyte`).[Series](`ammonyte.Series`)]{.parameter-annotation}</code>
 
 :   Ammonyte.Series object containing time series of the laminarity statistic
+
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L206-L284){.source-link target="_blank"}
 
 ### ruptures { #ammonyte.core.series.Series.ruptures }
 
@@ -315,7 +327,7 @@ Applies ruptures algorithms for offline change point detection.
 
 Basic transition detection:
 
-```python
+```{python}
 import os, ammonyte as amt
 ngrip = amt.Series.from_csv(os.path.join(os.path.dirname(amt.__file__), 'data', 'NGRIP.csv'))
 transitions = ngrip.ruptures(algo='Pelt', cost='rbf', pen=5)
@@ -324,7 +336,7 @@ print(transitions)
 
 Plot the results:
 
-```python
+```{python}
 transitions.plot()
 ```
 
@@ -334,3 +346,5 @@ transitions.plot()
 .. [1] Truong, C., Oudre, L., & Vayatis, N. (2020).
        Selective review of offline change point detection methods.
        Signal Processing, 167, 107299.
+
+[[source]](https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L386-L489){.source-link target="_blank"}
