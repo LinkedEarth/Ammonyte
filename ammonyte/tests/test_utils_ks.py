@@ -16,9 +16,9 @@ Notes on how to test:
 import pytest
 import numpy as np
 import ammonyte as amt
-from ammonyte.utils.ks import KS_test
-
 import pyleoclim as pyleo
+from ammonyte.utils.ks import KS_test
+from ammonyte.core.transitions import DeterministicTransitions
 
 
 class TestUtilsKsBasic:
@@ -66,11 +66,11 @@ class TestUtilsKsIntegration:
     def test_series_kstest_integration_t0(self, gen_series_with_transitions):
         '''Test integration between KS_test function and Series.kstest method'''
         ts = gen_series_with_transitions(add_transitions=True)
-        
+        assert ts.is_evenly_spaced()
+
         transitions = ts.kstest(w_min=0.5, w_max=2.0, n_w=15, d_c=0.75, n_c=3, s_c=1.5, x_c=None)
         
         # Check result is DeterministicTransitions object
-        from ammonyte.core.transitions import DeterministicTransitions
         assert isinstance(transitions, DeterministicTransitions)
         
         # Check new statistical attributes exist
@@ -82,6 +82,31 @@ class TestUtilsKsIntegration:
         # Check method metadata
         assert transitions.method == 'KS test'
         assert 'w_min' in transitions.method_args
+
+    def test_kstest_unevenly_spaced_raises_t0(self, gen_unevenly_spaced_series):
+        '''Test Series.kstest raises ValueError for non-evenly spaced data'''
+        ts = gen_unevenly_spaced_series()
+        assert not ts.is_evenly_spaced()
+
+        with pytest.raises(ValueError):
+            ts.kstest(w_min=0.5, w_max=2.0, n_w=15, d_c=0.75, n_c=3, s_c=1.5, x_c=None)
+
+    def test_kstest_flat_finds_nothing_t0(self, gen_flat_series):
+        '''Test Series.kstest detects no transitions on a flat, zero-variance series'''
+        ts = gen_flat_series()
+
+        result = ts.kstest(w_min=5, w_max=20)
+
+        assert len(result.jump_times) == 1
+        assert np.isnan(result.jump_times[0])
+
+    def test_kstest_detects_injected_transitions_t0(self, gen_series_with_transitions):
+        '''Test Series.kstest finds the injected transitions on a series with known transitions'''
+        ts = gen_series_with_transitions(add_transitions=True)
+
+        result = ts.kstest(w_min=5, w_max=20)
+
+        assert len(result.jump_times) > 0
 
     def test_direct_vs_series_consistency_t0(self, gen_series_with_transitions):
         '''Test consistency between KS_test function and Series.kstest method'''

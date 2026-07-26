@@ -70,3 +70,24 @@ class TestUtilsLermBasic:
 
         assert upper_bound == 0.8
         assert lower_bound == 0.2
+
+    def test_lerm_flat_finds_nothing_t0(self, gen_flat_series):
+        '''Test lerm_transition detects no transitions on a flat, zero-variance series'''
+        ts = gen_flat_series(nt=300)
+
+        jump_times, jump_directions, upper_bound, lower_bound = lerm_transition(
+            ts, upper=95, lower=5, w=50, n_samples=500
+        )
+
+        assert len(jump_times) == 0
+
+    def test_lerm_detects_injected_transitions_t0(self, gen_smooth_series):
+        '''Test lerm_transition finds the injected transitions on a smoothed series'''
+        ts = gen_smooth_series(add_transitions=True, nt=300)
+
+        jump_times, jump_directions, upper_bound, lower_bound = lerm_transition(
+            ts, upper=95, lower=5, w=50, n_samples=500
+        )
+
+        assert len(jump_times) > 0
+        assert np.all(np.isin(jump_directions, [-1, 1]))

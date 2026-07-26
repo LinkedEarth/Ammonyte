@@ -68,9 +68,14 @@ def tau_search(series,num_lags=30,return_MI = False):
             best_tau = extrema[0] + 1
         elif 0 in MI:
             best_tau = min(np.where(MI==0)[0]) + 1
-    except:
+        else:
+            raise ValueError(
+                "Could not find a local minimum or zero in the mutual information "
+                "values within num_lags; try increasing num_lags."
+            )
+    except Exception:
         print(MI)
-        raise ValueError()
+        raise
 
     if return_MI is True:
         return best_tau,MI

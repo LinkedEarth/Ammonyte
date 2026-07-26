@@ -14,25 +14,55 @@ Notes on how to test:
 '''
 
 import pytest
-import pyleoclim as pyleo
 import ammonyte as amt
 import numpy as np
-
-def gen_normal(loc=0, scale=1, nt=100):
-    ''' Generate random data with a Gaussian distribution
-    '''
-    t = np.arange(nt)
-    np.random.seed(42)
-    v = np.random.normal(loc=loc, scale=scale, size=nt)
-    ts = amt.Series(t,v)
-    return ts
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 class TestCoreRecurrenceMatrixLaplacianEigenmaps:
     '''Tests for laplacian eigenmaps function'''
 
-    #@pytest.mark.parametrize('smooth',['True','False'])
-    def test_laplacian_eigenmaps_t0(self):
-        ts_normal = gen_normal()
-        td_sst = ts_normal.embed(3,1)
-        rm_sst = td_sst.create_recurrence_matrix(1) 
-        rm_sst.laplacian_eigenmaps(w_size=50,w_incre=5,)
+    def test_laplacian_eigenmaps_t0(self, gen_series_with_transitions):
+        '''laplacian_eigenmaps returns an RQARes carrying the Fisher Information series and propagated metadata'''
+        ts_normal = gen_series_with_transitions(add_transitions=False, nt=100)
+        td_sst = ts_normal.embed(3, 1)
+        rm_sst = td_sst.create_recurrence_matrix(1)
+
+        result = rm_sst.laplacian_eigenmaps(w_size=50, w_incre=5)
+
+        # Check return type
+        assert isinstance(result, amt.RQARes)
+
+        # Check embedding/recurrence metadata is propagated
+        assert result.m == 3
+        assert result.tau == 1
+        assert result.eps == 1
+        assert result.w_size == 50
+        assert result.w_incre == 5
+        assert result.value_name == 'Fisher Information'
+        assert result.series is ts_normal
+
+        # Check Fisher Information series structure
+        assert len(result.time) == len(result.value)
+        assert len(result.time) > 0
+        assert np.all(np.isfinite(result.value))
+
+        # Check eigenmap is square and matches the recurrence matrix shape
+        assert result.eigenmap.shape == rm_sst.matrix.shape
+
+
+class TestCoreRecurrenceMatrixPlot:
+    '''Tests for RecurrenceMatrix.plot'''
+
+    def test_plot_returns_figure_axes_t0(self, gen_series_with_transitions):
+        '''Test that plot runs without error and returns a figure and axes'''
+        ts_normal = gen_series_with_transitions(add_transitions=False, nt=100)
+        td_sst = ts_normal.embed(3, 1)
+        rm_sst = td_sst.create_recurrence_matrix(1)
+
+        fig, ax = rm_sst.plot()
+
+        assert isinstance(fig, plt.Figure)
+        assert isinstance(ax, plt.Axes)
+        plt.close('all')

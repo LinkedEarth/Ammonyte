@@ -17,6 +17,7 @@ import pytest
 import numpy as np
 import ammonyte as amt
 from ammonyte.utils.ruptures_transitions import ruptures_transition
+from ammonyte.core.transitions import DeterministicTransitions
 
 
 class TestUtilsRupturesBasic:
@@ -33,7 +34,6 @@ class TestUtilsRupturesBasic:
         result = ruptures_transition(ts, algo='Pelt', cost='rbf', pen=5)
 
         # Check return type
-        from ammonyte.core.transitions import DeterministicTransitions
         assert isinstance(result, DeterministicTransitions)
 
         # Check attributes exist
@@ -55,17 +55,35 @@ class TestUtilsRupturesBasic:
             assert result.method == 'ruptures'
 
 
+class TestUtilsRupturesValidation:
+    '''Tests for invalid parameter combinations raising ValueError'''
+
+    @pytest.mark.parametrize('kwargs,match', [
+        (dict(algo='Pelt', cost='rbf', pen=5, n_bkps=2), "Cannot provide both"),
+        (dict(algo='Pelt', cost='rbf'), "requires 'pen'"),
+        (dict(algo='Dynp', cost='l2'), "requires 'n_bkps'"),
+        (dict(algo='Window', cost='l2', n_bkps=2), "requires 'width'"),
+        (dict(algo='KernelCPD', cost='l1', n_bkps=2), "only supports"),
+        (dict(algo='NotARealAlgo', cost='rbf', pen=5), "Unknown algorithm"),
+    ])
+    def test_ruptures_invalid_params_raise_t0(self, gen_series_with_transitions, kwargs, match):
+        '''Test that invalid parameter combinations raise ValueError with a helpful message'''
+        ts = gen_series_with_transitions(add_transitions=True)
+        with pytest.raises(ValueError, match=match):
+            ruptures_transition(ts, **kwargs)
+
+
 class TestUtilsRupturesIntegration:
     '''Essential integration tests'''
 
     def test_series_ruptures_integration_t0(self, gen_series_with_transitions):
         '''Test integration between ruptures_transition function and Series.ruptures method'''
         ts = gen_series_with_transitions(add_transitions=True)
+        assert ts.is_evenly_spaced()
 
         transitions = ts.ruptures(algo='Pelt', cost='rbf', pen=5)
 
         # Check result is DeterministicTransitions object
-        from ammonyte.core.transitions import DeterministicTransitions
         assert isinstance(transitions, DeterministicTransitions)
 
         # Check method metadata
@@ -76,6 +94,32 @@ class TestUtilsRupturesIntegration:
 
         # Check statistics exist
         assert 'breakpoint_indices' in transitions.statistics
+
+    def test_ruptures_unevenly_spaced_raises_t0(self, gen_unevenly_spaced_series):
+        '''Test Series.ruptures raises ValueError for non-evenly spaced data'''
+        ts = gen_unevenly_spaced_series()
+        assert not ts.is_evenly_spaced()
+
+        with pytest.raises(ValueError):
+            ts.ruptures(algo='Pelt', cost='rbf', pen=5)
+
+    def test_ruptures_flat_finds_nothing_t0(self, gen_flat_series):
+        '''Test Series.ruptures detects no transitions on a flat, zero-variance series'''
+        ts = gen_flat_series()
+
+        result = ts.ruptures(algo='Pelt', cost='rbf', pen=5)
+
+        assert len(result.jump_times) == 1
+        assert np.isnan(result.jump_times[0])
+
+    def test_ruptures_detects_injected_transitions_t0(self, gen_series_with_transitions):
+        '''Test Series.ruptures finds the injected transitions on a series with known transitions'''
+        ts = gen_series_with_transitions(add_transitions=True)
+
+        result = ts.ruptures(algo='Pelt', cost='rbf', pen=10)
+
+        assert len(result.jump_times) > 0
+        assert np.all(np.isin(result.jump_values, [-1, 0, 1]))
 
     def test_direct_vs_series_consistency_t0(self, gen_series_with_transitions):
         '''Test consistency between ruptures_transition function and Series.ruptures method'''

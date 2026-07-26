@@ -101,20 +101,24 @@ class TimeEmbeddedSeries:
             self.embedded_data = manifold
             self.embedded_time = time_axis
 
-        if self.value_name is None:
-            self.value_name = self.series.value_name
-        
-        if self.value_unit is None:
-            self.value_unit = self.series.value_unit
+        if isinstance(self.series, (pyleo.Series, pyleo.GeoSeries)):
+            # Only pyleoclim/ammonyte Series carry this metadata; a plain pandas.Series
+            # has no equivalent, so value_name/value_unit/time_name/time_unit/label are
+            # left as explicitly passed (None if not given) in that case.
+            if self.value_name is None:
+                self.value_name = self.series.value_name
 
-        if self.time_name is None:
-            self.time_name = self.series.time_name
-        
-        if self.time_unit is None:
-            self.time_unit = self.series.time_unit
-        
-        if self.label is None:
-            self.label = self.series.label
+            if self.value_unit is None:
+                self.value_unit = self.series.value_unit
+
+            if self.time_name is None:
+                self.time_name = self.series.time_name
+
+            if self.time_unit is None:
+                self.time_unit = self.series.time_unit
+
+            if self.label is None:
+                self.label = self.series.label
 
     def create_recurrence_matrix(self,epsilon):
         '''Function to create Recurrence Matrix object

@@ -72,6 +72,11 @@ class Series(pyleo.Series):
     def embed(self,m,tau=None,):
         '''Create a time delay embedding from an ammonyte.Series object
 
+        Note that series must be evenly spaced for this method, since the delay
+        tau is applied as a fixed index stride and only corresponds to a fixed
+        time delay when samples are uniformly spaced.
+        See interp, bin, and gkernel methods in parent class pyleoclim.Series for details.
+
         Parameters
         ----------
 
@@ -95,6 +100,9 @@ class Series(pyleo.Series):
 
         ammonyte.TimeEmbeddedSeries
         '''
+        if not self.is_evenly_spaced():
+            raise ValueError('This method requires evenly spaced data. '
+                             'Use .interp(), .bin(), or .gkernel() prior to calling .embed().')
 
         if tau is None:
             tau = tau_search(self)
@@ -155,6 +163,10 @@ class Series(pyleo.Series):
         det_series : ammonyte.Series
             Ammonyte.Series object containing time series of the determinism statistic
         '''
+        if not self.is_evenly_spaced():
+            raise ValueError('This method requires evenly spaced data. '
+                             'Use .interp(), .bin(), or .gkernel() prior to calling .determinism().')
+
         from ..core.rqa_res import RQARes
 
         series = self
@@ -235,6 +247,10 @@ class Series(pyleo.Series):
         lam_series : ammonyte.Series
             Ammonyte.Series object containing time series of the laminarity statistic
         '''
+        if not self.is_evenly_spaced():
+            raise ValueError('This method requires evenly spaced data. '
+                             'Use .interp(), .bin(), or .gkernel() prior to calling .laminarity().')
+
         from ..core.rqa_res import RQARes
 
         series = self
