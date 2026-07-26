@@ -17,6 +17,7 @@ ammonyte.core.time_embedded_series.TimeEmbeddedSeries py:class 1 api/core.time_e
 ammonyte.core.recurrence_matrix.RecurrenceMatrix.laplacian_eigenmaps py:function 1 api/core.recurrence_matrix.RecurrenceMatrix.html#ammonyte.core.recurrence_matrix.RecurrenceMatrix.laplacian_eigenmaps -
 ammonyte.core.recurrence_matrix.RecurrenceMatrix.plot py:function 1 api/core.recurrence_matrix.RecurrenceMatrix.html#ammonyte.core.recurrence_matrix.RecurrenceMatrix.plot -
 ammonyte.core.recurrence_matrix.RecurrenceMatrix py:class 1 api/core.recurrence_matrix.RecurrenceMatrix.html#ammonyte.core.recurrence_matrix.RecurrenceMatrix -
+ammonyte.core.recurrence_network.RecurrenceNetwork.laplacian_eigenmaps py:function 1 api/core.recurrence_network.RecurrenceNetwork.html#ammonyte.core.recurrence_network.RecurrenceNetwork.laplacian_eigenmaps -
 ammonyte.core.recurrence_network.RecurrenceNetwork py:class 1 api/core.recurrence_network.RecurrenceNetwork.html#ammonyte.core.recurrence_network.RecurrenceNetwork -
 ammonyte.core.rqa_res.RQARes.confidence_fill_plot py:function 1 api/core.rqa_res.RQARes.html#ammonyte.core.rqa_res.RQARes.confidence_fill_plot -
 ammonyte.core.rqa_res.RQARes.confidence_smooth_plot py:function 1 api/core.rqa_res.RQARes.html#ammonyte.core.rqa_res.RQARes.confidence_smooth_plot -

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -76,10 +79,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-c98d9d0b3b0a085d3ddf71e6e91476d8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-6ac2aec46ad7f46b16024ee4409aa65c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -299,7 +302,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ammonyte.core.recurrence_network.RecurrenceNetwork" id="toc-ammonyte.core.recurrence_network.RecurrenceNetwork" class="nav-link active" data-scroll-target="#ammonyte.core.recurrence_network.RecurrenceNetwork">core.recurrence_network.RecurrenceNetwork</a></li>
+  <li><a href="#ammonyte.core.recurrence_network.RecurrenceNetwork" id="toc-ammonyte.core.recurrence_network.RecurrenceNetwork" class="nav-link active" data-scroll-target="#ammonyte.core.recurrence_network.RecurrenceNetwork">core.recurrence_network.RecurrenceNetwork</a>
+  <ul>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
+  <ul>
+  <li><a href="#ammonyte.core.recurrence_network.RecurrenceNetwork.laplacian_eigenmaps" id="toc-ammonyte.core.recurrence_network.RecurrenceNetwork.laplacian_eigenmaps" class="nav-link" data-scroll-target="#ammonyte.core.recurrence_network.RecurrenceNetwork.laplacian_eigenmaps">laplacian_eigenmaps</a>
+  <ul class="collapse">
+  <li><a href="#raises" id="toc-raises" class="nav-link" data-scroll-target="#raises">Raises</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -322,11 +334,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    time_unit<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    label<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/recurrence_network.py#L6-L63" class="source-link" target="_blank">[source]</a></p>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/recurrence_network.py#L6-L84" class="source-link" target="_blank">[source]</a></p>
 <p>Recurrence network object. Used for Recurrence Network Analysis (RNA).</p>
 <p>Child of ammonyte.RecurrenceMatrix, so it has all of the RecurrenceMatrix methods plus additional methods defined here</p>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#ammonyte.core.recurrence_network.RecurrenceNetwork.laplacian_eigenmaps">laplacian_eigenmaps</a></td>
+<td>Not supported on RecurrenceNetwork.</td>
+</tr>
+</tbody>
+</table>
+<section id="ammonyte.core.recurrence_network.RecurrenceNetwork.laplacian_eigenmaps" class="level3">
+<h3 class="anchored" data-anchor-id="ammonyte.core.recurrence_network.RecurrenceNetwork.laplacian_eigenmaps">laplacian_eigenmaps</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>core.recurrence_network.RecurrenceNetwork.laplacian_eigenmaps(w_size, w_incre)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Not supported on RecurrenceNetwork.</p>
+<p>laplacian_eigenmaps is an RQA-specific method (see ammonyte.RecurrenceMatrix) that requires the embedding parameters (m, tau). RecurrenceNetwork does not store these, since it is intended for Recurrence Network Analysis (RNA) rather than RQA.</p>
+<section id="raises" class="level4 doc-section doc-section-raises">
+<h4 class="doc-section doc-section-raises anchored" data-anchor-id="raises">Raises</h4>
+<dl>
+<dt><code><span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/exceptions.html#NotImplementedError">NotImplementedError</a></span></code></dt>
+<dd>
+<p>Always. Use TimeEmbeddedSeries.create_recurrence_matrix to create a RecurrenceMatrix if you need laplacian_eigenmaps.</p>
+</dd>
+</dl>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/recurrence_network.py#L65-L84" class="source-link" target="_blank">[source]</a></p>
 
 
+</section>
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
