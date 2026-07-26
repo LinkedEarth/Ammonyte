@@ -18,6 +18,11 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install OpenCL runtime (required by PyRQA/pyopencl)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pocl-opencl-icd ocl-icd-libopencl1
+
       - name: Install dependencies
         run: |
           pip install -e .
