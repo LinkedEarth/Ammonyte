@@ -5,14 +5,14 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "ammonyte"
 version = "0.0.8"
-description = "A Python package for nonlinear paleoclimate data analysis"
+description = "A Python Package for Multi-Method Detection of Transitions in Paleoclimate Time Series"
 readme = "README.md"
 license = {text = "GPL-3.0-or-later"}
 authors = [
-    {name = "Alexander James", email = "akjames@usc.edu"},
     {name = "Maryam Niati", email = "niati@usc.edu"},
+    {name = "Alexander James", email = "akjames@usc.edu"},
     {name = "Julien Emile-Geay", email = "julieneg@usc.edu"},
-    {name = "Deborah Khider"},
+    {name = "Deborah Khider", email = "khider@usc.edu"},
 ]
 keywords = ["paleoclimate", "data analysis", "nonlinear", "recurrence analysis", "time series"]
 classifiers = [
@@ -42,9 +42,9 @@ dependencies = [
 dev = ["pytest", "pytest-cov"]
 
 [project.urls]
-Homepage = "https://github.com/alexkjames/Ammonyte"
-Repository = "https://github.com/alexkjames/Ammonyte"
-"Bug Tracker" = "https://github.com/alexkjames/Ammonyte/issues"
+Homepage = "https://github.com/LinkedEarth/Ammonyte"
+Repository = "https://github.com/LinkedEarth/Ammonyte"
+"Bug Tracker" = "https://github.com/LinkedEarth/Ammonyte/issues"
 
 [tool.setuptools.packages.find]
 include = ["ammonyte*"]
