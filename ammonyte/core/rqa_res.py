@@ -666,15 +666,16 @@ class RQARes(Series):
         else:
             colors = cmap
 
+        for idx,group in enumerate(groups):
+            if not isinstance(group,(list,tuple)) or len(group) != 2:
+                raise ValueError(f'Group [{idx}] format is not recognized. Please use [(start,stop),(start,stop),etc.] format for groups.')
+
         cmap_kwargs = {} if cmap_kwargs is None else cmap_kwargs.copy()
         cmap_plot = mpl.colors.LinearSegmentedColormap.from_list(f'{self.time_name} [{self.time_unit}]',colors=colors,N=len(groups))
         norm = mpl.colors.BoundaryNorm(boundaries=(groups[0][0],*[group[0] for group in groups[1:]],groups[-1][-1]),ncolors=len(groups))
         eigvec = self.eigenmap
 
         for idx,group in enumerate(groups):
-
-            if not isinstance(group,(list,tuple)) or len(group) != 2:
-                raise ValueError(f'Group [{idx}] format is not recognized. Please use [(start,stop),(start,stop),etc.] format for groups.')
 
             start = group[0]
             stop = group[1]
@@ -796,15 +797,16 @@ class RQARes(Series):
         else:
             colors = cmap
 
+        for idx,group in enumerate(groups):
+            if not isinstance(group,(list,tuple)) or len(group) != 2:
+                raise ValueError(f'Group [{idx}] format is not recognized. Please use [(start,stop),(start,stop),etc.] format for groups.')
+
         cmap_kwargs = {} if cmap_kwargs is None else cmap_kwargs.copy()
         cmap_plot = mpl.colors.LinearSegmentedColormap.from_list(f'{self.time_name} [{self.time_unit}]',colors=colors,N=len(groups))
         norm = mpl.colors.BoundaryNorm(boundaries=(groups[0][0],*[group[0] for group in groups[1:]],groups[-1][-1]),ncolors=len(groups))
         eigvec = self.eigenmap
 
         for idx,group in enumerate(groups):
-
-            if not isinstance(group,(list,tuple)) or len(group) != 2:
-                raise ValueError(f'Group [{idx}] format is not recognized. Please use [(start,stop),(start,stop),etc.] format for groups.')
 
             start = group[0]
             stop = group[1]

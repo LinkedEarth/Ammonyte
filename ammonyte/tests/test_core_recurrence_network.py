@@ -19,42 +19,64 @@ import ammonyte as amt
 from ammonyte.core.recurrence_network import RecurrenceNetwork
 
 
-def gen_normal(loc=0, scale=1, nt=100):
-    '''Generate random data with a Gaussian distribution'''
-    t = np.arange(nt)
-    np.random.seed(42)
-    v = np.random.normal(loc=loc, scale=scale, size=nt)
-    return amt.Series(t, v)
-
-
 class TestCoreRecurrenceNetworkInit:
     '''Tests for RecurrenceNetwork initialization and attributes'''
 
-    def test_create_recurrence_network_t0(self):
+    def test_create_recurrence_network_t0(self, gen_series_with_transitions):
         '''Test that create_recurrence_network returns a RecurrenceNetwork object'''
-        ts = gen_normal()
+        ts = gen_series_with_transitions(add_transitions=False, nt=100)
         td = ts.embed(3, 1)
 
         rn = td.create_recurrence_network(1)
 
         assert isinstance(rn, RecurrenceNetwork)
 
-    def test_recurrence_network_attributes_t0(self):
-        '''Test that RecurrenceNetwork has expected attributes'''
-        ts = gen_normal()
+    def test_recurrence_network_attributes_t0(self, gen_series_with_transitions):
+        '''Test that RecurrenceNetwork stores the correct matrix, time, epsilon, and series'''
+        ts = gen_series_with_transitions(add_transitions=False, nt=100)
         td = ts.embed(3, 1)
 
         rn = td.create_recurrence_network(1)
 
-        assert hasattr(rn, 'matrix')
-        assert hasattr(rn, 'time')
-        assert hasattr(rn, 'epsilon')
+        assert rn.epsilon == 1
+        assert rn.series is ts
+        assert np.array_equal(rn.time, td.embedded_time)
+        assert rn.matrix.shape == (len(rn.time), len(rn.time))
 
-    def test_recurrence_network_matrix_is_binary_t0(self):
+    def test_recurrence_network_no_embedding_params_t0(self, gen_series_with_transitions):
+        '''Test that RecurrenceNetwork does not store m/tau, unlike RecurrenceMatrix
+
+        This is a deliberate design choice (see RecurrenceNetwork docstring), and is the
+        reason laplacian_eigenmaps must be blocked on RecurrenceNetwork (see
+        TestCoreRecurrenceNetworkLaplacianEigenmaps below).'''
+        ts = gen_series_with_transitions(add_transitions=False, nt=100)
+        td = ts.embed(3, 1)
+
+        rn = td.create_recurrence_network(1)
+
+        assert not hasattr(rn, 'm')
+        assert not hasattr(rn, 'tau')
+
+    def test_recurrence_network_matrix_is_binary_t0(self, gen_series_with_transitions):
         '''Test that RecurrenceNetwork matrix contains only 0s and 1s'''
-        ts = gen_normal()
+        ts = gen_series_with_transitions(add_transitions=False, nt=100)
         td = ts.embed(3, 1)
 
         rn = td.create_recurrence_network(1)
 
         assert np.all(np.isin(rn.matrix, [0, 1]))
+
+
+class TestCoreRecurrenceNetworkLaplacianEigenmaps:
+    '''Tests for laplacian_eigenmaps on RecurrenceNetwork'''
+
+    def test_laplacian_eigenmaps_not_implemented_t0(self, gen_series_with_transitions):
+        '''Test that laplacian_eigenmaps raises NotImplementedError on RecurrenceNetwork,
+        since RecurrenceNetwork does not store the embedding parameters (m, tau) it needs'''
+        ts = gen_series_with_transitions(add_transitions=False, nt=100)
+        td = ts.embed(3, 1)
+
+        rn = td.create_recurrence_network(1)
+
+        with pytest.raises(NotImplementedError):
+            rn.laplacian_eigenmaps(w_size=50, w_incre=5)

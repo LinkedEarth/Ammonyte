@@ -19,47 +19,87 @@ import pyleoclim as pyleo
 import ammonyte as amt
 import numpy as np
 
-def gen_normal(loc=0, scale=1, nt=100):
-    ''' Generate random data with a Gaussian distribution
-    '''
-    t = np.arange(nt)
-    np.random.seed(42)
-    v = np.random.normal(loc=loc, scale=scale, size=nt)
-    ts = amt.Series(t,v)
-    return ts
-
 class TestCoreSeriesEmbed:
     '''Tests for embed function
     '''
 
     @pytest.mark.parametrize('m,tau',[(10,5),(10,None)])
-    def test_embed_t0(self,m,tau):
-        '''Test embed function with and without a tau value'''
+    def test_embed_t0(self,m,tau, gen_series_with_transitions):
+        '''Test embed function with and without a tau value, on evenly spaced data'''
 
-        ts = gen_normal()
+        ts = gen_series_with_transitions(add_transitions=False, nt=100)
+        assert ts.is_evenly_spaced()
 
-        ts.embed(m,tau)
+        result = ts.embed(m,tau)
+
+        assert isinstance(result, amt.TimeEmbeddedSeries)
+        assert result.series is ts
+        assert result.m == m
+        if tau is None:
+            assert result.tau is not None
+        else:
+            assert result.tau == tau
+
+    def test_embed_unevenly_spaced_raises_t0(self, gen_unevenly_spaced_series):
+        '''Test embed raises ValueError for non-evenly spaced data'''
+        ts = gen_unevenly_spaced_series()
+        assert not ts.is_evenly_spaced()
+
+        with pytest.raises(ValueError):
+            ts.embed(3, 1)
 
 class TestCoreSeriesDeterminism:
     '''Tests for determinism function
     '''
 
     @pytest.mark.parametrize('window_size,overlap,radius,m,tau',[(10,5,1,5,2),(12,4,.1,8,4)])
-    def test_determinism_t0(self,window_size,overlap,m,tau,radius):
+    def test_determinism_t0(self,window_size,overlap,m,tau,radius, gen_series_with_transitions):
+        '''Test that determinism returns a well-formed RQARes'''
+        ts = gen_series_with_transitions(add_transitions=False, nt=100)
 
-        ts = gen_normal()
+        result = ts.determinism(window_size,overlap,m,tau,radius)
 
-        ts.determinism(window_size,overlap,m,tau,radius)
+        assert isinstance(result, amt.RQARes)
+        assert result.value_name == 'DET'
+        assert result.m == m
+        assert result.tau == tau
+        assert result.eps == radius
+        assert len(result.time) == len(result.value)
+        assert len(result.time) > 0
+
+    def test_determinism_unevenly_spaced_raises_t0(self, gen_unevenly_spaced_series):
+        '''Test determinism raises ValueError for non-evenly spaced data'''
+        ts = gen_unevenly_spaced_series()
+        assert not ts.is_evenly_spaced()
+
+        with pytest.raises(ValueError):
+            ts.determinism(10,5,5,2,1)
 
 class TestCoreSeriesLaminarity:
     '''Tests for laminarity function'''
 
     @pytest.mark.parametrize('window_size,overlap,radius,m,tau',[(10,5,1,5,2),(12,4,.1,8,4)])
-    def test_laminarity_t0(self,window_size,overlap,m,tau,radius):
+    def test_laminarity_t0(self,window_size,overlap,m,tau,radius, gen_series_with_transitions):
+        '''Test that laminarity returns a well-formed RQARes'''
+        ts = gen_series_with_transitions(add_transitions=False, nt=100)
 
-        ts = gen_normal()
+        result = ts.laminarity(window_size,overlap,m,tau,radius)
 
-        ts.laminarity(window_size,overlap,m,tau,radius)
+        assert isinstance(result, amt.RQARes)
+        assert result.value_name == 'LAM'
+        assert result.m == m
+        assert result.tau == tau
+        assert result.eps == radius
+        assert len(result.time) == len(result.value)
+        assert len(result.time) > 0
+
+    def test_laminarity_unevenly_spaced_raises_t0(self, gen_unevenly_spaced_series):
+        '''Test laminarity raises ValueError for non-evenly spaced data'''
+        ts = gen_unevenly_spaced_series()
+        assert not ts.is_evenly_spaced()
+
+        with pytest.raises(ValueError):
+            ts.laminarity(10,5,5,2,1)
 
 
 class TestCoreSeriesFromCsv:

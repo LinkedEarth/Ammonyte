@@ -61,3 +61,24 @@ class RecurrenceNetwork(RecurrenceMatrix):
         self.time_name = time_name
         self.time_unit = time_unit
         self.label = label
+
+    def laplacian_eigenmaps(self, w_size, w_incre):
+        '''Not supported on RecurrenceNetwork.
+
+        laplacian_eigenmaps is an RQA-specific method (see ammonyte.RecurrenceMatrix)
+        that requires the embedding parameters (m, tau). RecurrenceNetwork does not
+        store these, since it is intended for Recurrence Network Analysis (RNA)
+        rather than RQA.
+
+        Raises
+        ------
+
+        NotImplementedError
+            Always. Use TimeEmbeddedSeries.create_recurrence_matrix to create a
+            RecurrenceMatrix if you need laplacian_eigenmaps.
+        '''
+        raise NotImplementedError(
+            'laplacian_eigenmaps is not supported on RecurrenceNetwork, since it requires '
+            'the embedding parameters (m, tau), which RecurrenceNetwork does not store. '
+            'Use TimeEmbeddedSeries.create_recurrence_matrix() to create a RecurrenceMatrix instead.'
+        )

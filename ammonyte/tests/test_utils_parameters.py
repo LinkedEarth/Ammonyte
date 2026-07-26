@@ -20,27 +20,37 @@ import numpy as np
 
 from ..utils.parameters import tau_search
 
-def gen_normal(loc=0, scale=1, nt=100):
-    ''' Generate random data with a Gaussian distribution
-    '''
-    t = np.arange(nt)
-    np.random.seed(42)
-    v = np.random.normal(loc=loc, scale=scale, size=nt)
-    ts = amt.Series(t,v)
-    return ts
-
 class TestUtilsTauSearch:
     '''Tests for tau_search function, try a few different argument combinations
     '''
 
     @pytest.mark.parametrize('num_lags,return_MI',[(30,False),(30,True),(10,False)])
-    def test_tau_search_t0(self,num_lags,return_MI):
+    def test_tau_search_t0(self,num_lags,return_MI, gen_series_with_transitions):
         '''Test tau search on gaussian series
         '''
 
-        ts = gen_normal()
+        ts = gen_series_with_transitions(add_transitions=False, nt=100)
 
         if return_MI is False:
             tau = tau_search(ts,num_lags,return_MI)
         else:
             tau, MI = tau_search(ts,num_lags,return_MI)
+            assert isinstance(MI, np.ndarray)
+            assert len(MI) == num_lags - 1
+
+        assert isinstance(tau, (int, np.integer))
+        assert 1 <= tau <= num_lags - 1
+
+    def test_tau_search_no_minimum_raises_t0(self):
+        '''Test tau_search raises a clear ValueError when the mutual information
+        curve has no local minimum and never reaches zero (e.g. a smooth,
+        monotonically decaying series), instead of crashing with an
+        UnboundLocalError.
+        '''
+        t = np.arange(300, dtype=float)
+        v = np.exp(-t / 100.0)
+        ts = amt.Series(time=t, value=v, time_unit='years', value_unit='x',
+                        label='decay', auto_time_params=False)
+
+        with pytest.raises(ValueError):
+            tau_search(ts, num_lags=30)
