@@ -662,7 +662,7 @@ class RQARes(Series):
             fig, ax = plt.subplots(figsize=figsize)
 
         if isinstance(cmap,str):
-            colors = plt.cm.get_cmap(cmap).colors
+            colors = plt.get_cmap(cmap).colors
         else:
             colors = cmap
 
@@ -792,7 +792,7 @@ class RQARes(Series):
             ax = fig.add_subplot(projection='3d')
 
         if isinstance(cmap,str):
-            colors = plt.cm.get_cmap(cmap).colors
+            colors = plt.get_cmap(cmap).colors
         else:
             colors = cmap
 
