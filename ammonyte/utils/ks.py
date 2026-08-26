@@ -47,10 +47,13 @@ def KS_test(series, w_min, w_max, n_w, d_c, n_c, s_c, x_c=None):
         Minimum sample size per window
         
     s_c : float
-        Standard deviation ratio threshold
+        Minimum difference between the mean values of the two adjacent
+        windows, expressed as a multiple of each window's standard deviation
         
     x_c : float
-        Change threshold. If None, auto-calculated
+        Minimum difference between the mean values of the two adjacent
+        windows, in the same units as the data. Not scaled by standard
+        deviation. If None, auto-calculated from the data's spread
     
     Returns
     -------
