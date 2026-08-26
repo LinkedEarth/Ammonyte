@@ -364,11 +364,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </dd>
 <dt><code><span class="parameter-name"><strong>s_c</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#float">float</a></span></code></dt>
 <dd>
-<p>Standard deviation ratio threshold</p>
+<p>Minimum difference between the mean values of the two adjacent windows, expressed as a multiple of each window’s standard deviation</p>
 </dd>
 <dt><code><span class="parameter-name"><strong>x_c</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#float">float</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>
-<p>Change threshold. If None, auto-calculated</p>
+<p>Minimum difference between the mean values of the two adjacent windows, in the same units as the data. Not scaled by standard deviation. If None, auto-calculated from the data’s spread</p>
 </dd>
 </dl>
 </section>
@@ -392,7 +392,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
 <p>Basic usage (typically called via Series.kstest):</p>
-<div id="87513840" class="cell" data-execution_count="1">
+<div id="11b20b7a" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, ammonyte <span class="im">as</span> amt</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ammonyte.utils.ks <span class="im">import</span> KS_test</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ngrip <span class="op">=</span> amt.Series.from_csv(os.path.join(os.path.dirname(amt.<span class="va">__file__</span>), <span class="st">'data'</span>, <span class="st">'NGRIP.csv'</span>))</span>
@@ -412,7 +412,7 @@ Detected 104 transitions</code></pre>
 <section id="references" class="level2 doc-section doc-section-references">
 <h2 class="doc-section doc-section-references anchored" data-anchor-id="references">References</h2>
 <p>Bagniewski, W., et al.&nbsp;(2021). Automatic detection of abrupt transitions in paleoclimate records. Chaos, 31(11), 113129.</p>
-<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/utils/ks.py#L24-L379" class="source-link" target="_blank">[source]</a></p>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/utils/ks.py#L24-L382" class="source-link" target="_blank">[source]</a></p>
 
 
 </section>

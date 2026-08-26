@@ -368,7 +368,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>core.series.Series()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L24-L489" class="source-link" target="_blank">[source]</a></p>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L24-L509" class="source-link" target="_blank">[source]</a></p>
 <p>Ammonyte series object, launching point for most ammonyte analysis.</p>
 <p>Child of pyleoclim.Series, so shares all methods with pyleoclim.Series plus those defined here.</p>
 <section id="methods" class="level2">
@@ -445,13 +445,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Ammonyte.Series object containing time series of the determinism statistic</p>
 </dd>
 </dl>
-<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L126-L204" class="source-link" target="_blank">[source]</a></p>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L134-L216" class="source-link" target="_blank">[source]</a></p>
 </section>
 </section>
 <section id="ammonyte.core.series.Series.embed" class="level3">
 <h3 class="anchored" data-anchor-id="ammonyte.core.series.Series.embed">embed</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>core.series.Series.embed(m, tau<span class="op">=</span><span class="va">None</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Create a time delay embedding from an ammonyte.Series object</p>
+<p>Note that series must be evenly spaced for this method, since the delay tau is applied as a fixed index stride and only corresponds to a fixed time delay when samples are uniformly spaced. See interp, bin, and gkernel methods in parent class pyleoclim.Series for details.</p>
 <section id="parameters-1" class="level4 doc-section doc-section-parameters">
 <h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-1">Parameters</h4>
 <dl>
@@ -478,7 +479,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h4 class="doc-section doc-section-see-also anchored" data-anchor-id="see-also">See Also</h4>
 <p>ammonyte.utils.parameters.tau_search</p>
 <p>ammonyte.TimeEmbeddedSeries</p>
-<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L72-L124" class="source-link" target="_blank">[source]</a></p>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L72-L132" class="source-link" target="_blank">[source]</a></p>
 </section>
 </section>
 <section id="ammonyte.core.series.Series.from_csv" class="level3">
@@ -547,11 +548,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </dd>
 <dt><code><span class="parameter-name"><strong>s_c</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#float">float</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">1.5</span></code></dt>
 <dd>
-<p>Standard deviation ratio threshold. Default is 1.5</p>
+<p>Minimum difference between the mean values of the two adjacent windows, expressed as a multiple of each window’s standard deviation. Default is 1.5</p>
 </dd>
 <dt><code><span class="parameter-name"><strong>x_c</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#float">float</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>
-<p>Change threshold. If None, auto-calculated</p>
+<p>Minimum difference between the mean values of the two adjacent windows, in the same units as the data. Not scaled by standard deviation. If None, auto-calculated from the data’s spread</p>
 </dd>
 </dl>
 </section>
@@ -567,7 +568,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="examples-1" class="level4 doc-section doc-section-examples">
 <h4 class="doc-section doc-section-examples anchored" data-anchor-id="examples-1">Examples</h4>
 <p>Basic tipping point detection:</p>
-<div id="c5866547" class="cell" data-execution_count="1">
+<div id="170b0af2" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, ammonyte <span class="im">as</span> amt</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ngrip <span class="op">=</span> amt.Series.from_csv(os.path.join(os.path.dirname(amt.<span class="va">__file__</span>), <span class="st">'data'</span>, <span class="st">'NGRIP.csv'</span>))</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>transitions <span class="op">=</span> ngrip.kstest(w_min<span class="op">=</span><span class="fl">0.12</span>, w_max<span class="op">=</span><span class="fl">2.5</span>, n_w<span class="op">=</span><span class="dv">15</span>, d_c<span class="op">=</span><span class="fl">0.77</span>, n_c<span class="op">=</span><span class="dv">3</span>, s_c<span class="op">=</span><span class="dv">2</span>, x_c<span class="op">=</span><span class="fl">0.8</span>)</span>
@@ -701,7 +702,7 @@ Method Parameters:
 </div>
 </div>
 <p>Access transition statistics:</p>
-<div id="41f210d0" class="cell" data-execution_count="2">
+<div id="93651ea9" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"D-statistics: </span><span class="sc">{</span>transitions<span class="sc">.</span>d_statistics<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"P-values: </span><span class="sc">{</span>transitions<span class="sc">.</span>p_values<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -752,7 +753,7 @@ P-values: [1.08287576e-09 2.93267890e-08 1.58548319e-57 3.48395121e-66
 </div>
 </div>
 <p>Plot the results:</p>
-<div id="5b47408b" class="cell" data-execution_count="3">
+<div id="937d5d61" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>transitions.plot()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>(&lt;Figure size 1152x768 with 1 Axes&gt;,
@@ -761,7 +762,7 @@ P-values: [1.08287576e-09 2.93267890e-08 1.58548319e-57 3.48395121e-66
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="core.series.Series_files/figure-html/cell-4-output-2.png" width="1143" height="757" class="figure-img"></p>
+<p><img src="core.series.Series_files/figure-html/cell-4-output-2.png" width="1144" height="758" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -776,7 +777,7 @@ P-values: [1.08287576e-09 2.93267890e-08 1.58548319e-57 3.48395121e-66
 <p>.. [1] Bagniewski, W., Ghil, M., &amp; Rousseau, D. D. (2021). Automatic detection of abrupt transitions in paleoclimate records. Chaos: An Interdisciplinary Journal of Nonlinear Science, 31(11), 113129. https://doi.org/10.1063/5.0062543</p>
 <p>.. [2] Kolmogorov, A. (1933). Sulla determinazione empirica di una legge di distribuzione. Giornale dell’Istituto Italiano degli Attuari, 4, 83-91.</p>
 <p>.. [3] Smirnov, N. (1948). Table for estimating the goodness of fit of empirical distributions. The Annals of Mathematical Statistics, 19(2), 279-281.</p>
-<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L286-L384" class="source-link" target="_blank">[source]</a></p>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L302-L404" class="source-link" target="_blank">[source]</a></p>
 </section>
 </section>
 <section id="ammonyte.core.series.Series.laminarity" class="level3">
@@ -817,7 +818,7 @@ P-values: [1.08287576e-09 2.93267890e-08 1.58548319e-57 3.48395121e-66
 <p>Ammonyte.Series object containing time series of the laminarity statistic</p>
 </dd>
 </dl>
-<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L206-L284" class="source-link" target="_blank">[source]</a></p>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L218-L300" class="source-link" target="_blank">[source]</a></p>
 </section>
 </section>
 <section id="ammonyte.core.series.Series.ruptures" class="level3">
@@ -883,7 +884,7 @@ P-values: [1.08287576e-09 2.93267890e-08 1.58548319e-57 3.48395121e-66
 <section id="examples-2" class="level4 doc-section doc-section-examples">
 <h4 class="doc-section doc-section-examples anchored" data-anchor-id="examples-2">Examples</h4>
 <p>Basic transition detection:</p>
-<div id="1984083a" class="cell" data-execution_count="4">
+<div id="ceae8765" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, ammonyte <span class="im">as</span> amt</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ngrip <span class="op">=</span> amt.Series.from_csv(os.path.join(os.path.dirname(amt.<span class="va">__file__</span>), <span class="st">'data'</span>, <span class="st">'NGRIP.csv'</span>))</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>transitions <span class="op">=</span> ngrip.ruptures(algo<span class="op">=</span><span class="st">'Pelt'</span>, cost<span class="op">=</span><span class="st">'rbf'</span>, pen<span class="op">=</span><span class="dv">5</span>)</span>
@@ -977,7 +978,7 @@ Method Parameters:
 </div>
 </div>
 <p>Plot the results:</p>
-<div id="ce043dac" class="cell" data-execution_count="5">
+<div id="94e4f73c" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>transitions.plot()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>(&lt;Figure size 1152x768 with 1 Axes&gt;,
@@ -986,7 +987,7 @@ Method Parameters:
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="core.series.Series_files/figure-html/cell-6-output-2.png" width="1143" height="757" class="figure-img"></p>
+<p><img src="core.series.Series_files/figure-html/cell-6-output-2.png" width="1144" height="758" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -995,7 +996,7 @@ Method Parameters:
 <section id="references-1" class="level4 doc-section doc-section-references">
 <h4 class="doc-section doc-section-references anchored" data-anchor-id="references-1">References</h4>
 <p>.. [1] Truong, C., Oudre, L., &amp; Vayatis, N. (2020). Selective review of offline change point detection methods. Signal Processing, 167, 107299.</p>
-<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L386-L489" class="source-link" target="_blank">[source]</a></p>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/series.py#L406-L509" class="source-link" target="_blank">[source]</a></p>
 
 
 </section>

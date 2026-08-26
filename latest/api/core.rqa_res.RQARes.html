@@ -382,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    w_size<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    w_incre<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/rqa_res.py#L20-L861" class="source-link" target="_blank">[source]</a></p>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/rqa_res.py#L20-L863" class="source-link" target="_blank">[source]</a></p>
 <p>Class for storing the result of various RQA techniques</p>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
@@ -709,7 +709,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="examples" class="level4 doc-section doc-section-examples">
 <h4 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h4>
 <p>Complete LERM workflow:</p>
-<div id="0ca652d1" class="cell" data-execution_count="1">
+<div id="f58af6af" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, ammonyte <span class="im">as</span> amt</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
@@ -781,7 +781,7 @@ Transition Details:
   29. Time: 119.43 kyr b2k, Direction: Downward
 
 Method Parameters:
-  transition_interval: (1.2015639672583995, 0.8601078400645489)
+  transition_interval: (np.float64(1.2015639672583995), np.float64(0.8601078400645489))
   upper_bound: 1.2015639672583995
   lower_bound: 0.8601078400645489
   upper_percentile: 95
@@ -797,13 +797,13 @@ Method Parameters:
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="core.rqa_res.RQARes_files/figure-html/cell-2-output-3.png" width="1143" height="757" class="figure-img"></p>
+<p><img src="core.rqa_res.RQARes_files/figure-html/cell-2-output-3.png" width="1143" height="758" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Custom confidence bounds:</p>
-<div id="d3d01f8b" class="cell" data-execution_count="2">
+<div id="641ea835" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>transitions <span class="op">=</span> NGRIP_lp_smooth.lerm_transitions(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    transition_interval<span class="op">=</span>(<span class="fl">0.025</span>, <span class="fl">0.010</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -874,7 +874,7 @@ Method Parameters:
 <section id="see-also-2" class="level4 doc-section doc-section-see-also">
 <h4 class="doc-section doc-section-see-also anchored" data-anchor-id="see-also-2">See Also</h4>
 <p>ammonyte.RecurrenceMatrix.laplacian_eigenmaps</p>
-<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/rqa_res.py#L608-L719" class="source-link" target="_blank">[source]</a></p>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/rqa_res.py#L608-L720" class="source-link" target="_blank">[source]</a></p>
 </section>
 </section>
 <section id="ammonyte.core.rqa_res.RQARes.plot_eigenmaps_FI" class="level3">
@@ -956,7 +956,7 @@ Method Parameters:
 <h4 class="doc-section doc-section-see-also anchored" data-anchor-id="see-also-3">See Also</h4>
 <p>ammonyte.RecurrenceMatrix.laplacian_eigenmaps</p>
 <p>ammonyte.RQARes.plot_eigenmaps</p>
-<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/rqa_res.py#L722-L861" class="source-link" target="_blank">[source]</a></p>
+<p><a href="https://github.com/LinkedEarth/Ammonyte/blob/main/ammonyte/core/rqa_res.py#L723-L863" class="source-link" target="_blank">[source]</a></p>
 </section>
 </section>
 <section id="ammonyte.core.rqa_res.RQARes.smooth" class="level3">
