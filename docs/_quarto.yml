@@ -33,7 +33,7 @@ interlinks:
     pandas: pd
 
 execute:
-  freeze: true
+  freeze: auto
 
 website:
   title: "Ammonyte"
