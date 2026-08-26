@@ -322,10 +322,14 @@ class Series(pyleo.Series):
             Minimum sample size per window. Default is 3
             
         s_c : float
-            Standard deviation ratio threshold. Default is 1.5
+            Minimum difference between the mean values of the two adjacent
+            windows, expressed as a multiple of each window's standard
+            deviation. Default is 1.5
             
         x_c : float
-            Change threshold. If None, auto-calculated
+            Minimum difference between the mean values of the two adjacent
+            windows, in the same units as the data. Not scaled by standard
+            deviation. If None, auto-calculated from the data's spread
         
         Returns
         -------
