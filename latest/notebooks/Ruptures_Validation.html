@@ -81,7 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-e3adbaa939bcd423dddc8c8a834270b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-55617497126496852ff9f5a59253c640.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -325,7 +325,7 @@ window.Quarto = {
 </header>
 
 
-<div id="cell-1" class="cell" data-execution_count="1">
+<div id="cell-1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:04:56.057077Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:04:56.056931Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:04:57.921170Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:04:57.920947Z&quot;}}" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import libraries and packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ammonyte <span class="im">as</span> amt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -342,7 +342,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="dataset-overview">Dataset Overview</h3>
 <p>The <strong>North Greenland Ice Core Project (NGRIP)</strong> dataset contains high-resolution paleoclimate proxy data from Greenland ice cores. This dataset is particularly valuable for studying abrupt climate transitions and tipping points in the Earth’s climate system.</p>
 <p><strong>Key Dataset Features:</strong> - <strong>Proxy Variable</strong>: <span class="math inline">\(\mathrm{\delta^{18}O}\)</span> isotope measurements - <strong>Units</strong>: per mil - <strong>Time Scale</strong>: Thousands of years before present (kyr b2k)</p>
-<div id="cell-3" class="cell" data-execution_count="2">
+<div id="cell-3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:04:57.922733Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:04:57.922594Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:04:57.926769Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:04:57.926573Z&quot;}}" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load NGRIP dataset</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ngrip <span class="op">=</span> amt.Series.from_csv(<span class="st">'../ammonyte/data/NGRIP.csv'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -354,7 +354,7 @@ Time axis values sorted in ascending order</code></pre>
 <section id="dataset-metadata-summary" class="level3">
 <h3 class="anchored" data-anchor-id="dataset-metadata-summary">Dataset Metadata Summary</h3>
 <p>Display key metadata information from the loaded NGRIP time series to understand the dataset characteristics.</p>
-<div id="cell-5" class="cell" data-execution_count="3">
+<div id="cell-5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:04:57.941657Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:04:57.941568Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:04:57.945259Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:04:57.945071Z&quot;}}" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display metadata</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Loaded NGRIP dataset: </span><span class="sc">{</span>ngrip<span class="sc">.</span>label<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Time range: </span><span class="sc">{</span>ngrip<span class="sc">.</span>time<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.2f}</span><span class="ss"> - </span><span class="sc">{</span>ngrip<span class="sc">.</span>time<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.2f}</span><span class="ss"> </span><span class="sc">{</span>ngrip<span class="sc">.</span>time_unit<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -373,7 +373,7 @@ Evenly spaced: True</code></pre>
 <section id="ngrip-mathrmdelta18o-record-visualization" class="level3">
 <h3 class="anchored" data-anchor-id="ngrip-mathrmdelta18o-record-visualization">NGRIP <span class="math inline">\(\mathrm{\delta^{18}O}\)</span> Record Visualization</h3>
 <p>The plot below shows the complete NGRIP ice core record, where: - <strong>X-axis</strong>: Time in thousands of years before present (kyr b2k) - <strong>Y-axis</strong>: <span class="math inline">\(\mathrm{\delta^{18}O}\)</span> isotope values in per mil - <strong>Interpretation</strong>: More negative values indicate colder conditions</p>
-<div id="cell-7" class="cell" data-execution_count="4">
+<div id="cell-7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:04:57.946132Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:04:57.946068Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:04:58.228808Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:04:58.210779Z&quot;}}" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The NGRIP series is already loaded with proper metadata</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#plot the time series to visualize the data</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> ngrip.plot(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">6</span>))</span>
@@ -395,7 +395,7 @@ Evenly spaced: True</code></pre>
 <section id="step-1-apply-rupture-detection-default-configuration" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-apply-rupture-detection-default-configuration">Step 1: Apply Rupture Detection (Default Configuration)</h2>
 <p><strong>Recommended Configuration:</strong> - <strong>Algorithm</strong>: <code>Pelt</code> - <strong>Cost function</strong>: <code>l2</code> - <strong>Penalty</strong>: <code>10</code></p>
-<div id="cell-10" class="cell" data-execution_count="5">
+<div id="cell-10" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:04:58.230163Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:04:58.230072Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:03.542819Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:03.542490Z&quot;}}" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply Rupture detection with recommended settings</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>transitions <span class="op">=</span> ngrip.ruptures(algo<span class="op">=</span><span class="st">'Pelt'</span>, cost<span class="op">=</span><span class="st">'l2'</span>, pen<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -403,7 +403,7 @@ Evenly spaced: True</code></pre>
 <section id="step-2-results-summary" class="level2">
 <h2 class="anchored" data-anchor-id="step-2-results-summary">Step 2: Results Summary</h2>
 <p>The output shows the number of detected change-points and details for each transition including timing, direction, and location in the time series.</p>
-<div id="cell-12" class="cell" data-execution_count="6">
+<div id="cell-12" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:03.544081Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:03.543952Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:03.546400Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:03.546196Z&quot;}}" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print transition results</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(transitions)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>detected_times <span class="op">=</span> transitions.jump_times[<span class="op">~</span>np.isnan(transitions.jump_times)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -541,7 +541,7 @@ Method Parameters:
 <section id="step-3-transition-visualization" class="level2">
 <h2 class="anchored" data-anchor-id="step-3-transition-visualization">Step 3: Transition Visualization</h2>
 <p>Display the NGRIP time series with detected change-points marked by vertical lines: - <strong>Red lines</strong>: Upward transitions (warming events) - <strong>Blue lines</strong>: Downward transitions (cooling events)</p>
-<div id="cell-14" class="cell" data-execution_count="7">
+<div id="cell-14" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:03.547402Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:03.547341Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:03.716602Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:03.716392Z&quot;}}" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize detected transitions</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">6</span>))</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>transitions.plot(ax<span class="op">=</span>ax, title<span class="op">=</span><span class="st">'Rupture (PELT) Detection Results on NGRIP Ice Core Data'</span>)</span>
@@ -561,25 +561,25 @@ Method Parameters:
 <p>To validate our detection results, we compare against published <strong>Dansgaard-Oeschger (DO) events</strong>, well-documented abrupt climate transitions in the NGRIP record. These events represent rapid warming episodes followed by gradual cooling during the last glacial period.</p>
 <p><strong>Reference:</strong> <a href="(https://doi.org/10.1016/j.quascirev.2014.09.007)">Rasmussen et al.(2014)</a>, A stratigraphic framework for abrupt climatic changes during the Last Glacial period based on three synchronized Greenland ice-core records</p>
 <p><strong>Note:</strong> Event timings are subject to chronological uncertainties from annual layer counting and dating techniques, which increase with depth.</p>
-<div id="cell-16" class="cell" data-execution_count="8">
+<div id="cell-16" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:03.717735Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:03.717663Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:03.720987Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:03.720802Z&quot;}}" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define D/O event chronologies as numpy arrays for analysis</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>do_events <span class="op">=</span> pd.read_csv(<span class="st">'../ammonyte/data/DO_events.csv'</span>, comment <span class="op">=</span> <span class="st">'#'</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>do_events <span class="op">=</span> pd.read_csv(<span class="st">'../ammonyte/data/DO_onsets_Rasmussen2014.csv'</span>, comment <span class="op">=</span> <span class="st">'#'</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>main_do_events <span class="op">=</span> do_events[<span class="st">'main_kyr_b2k'</span>].dropna().values</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>main_do_events <span class="op">=</span> do_events[<span class="st">'main25_kyr_b2k'</span>].dropna().values</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(main_do_events)) <span class="co"># The length of main DO events </span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>all_do_events <span class="op">=</span> do_events[<span class="st">'all_kyr_b2k'</span>].dropna().values</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>all_do_events <span class="op">=</span> do_events[<span class="st">'all34_kyr_b2k'</span>].dropna().values</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(all_do_events))  <span class="co"># The length of all DO events</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>25
-73</code></pre>
+34</code></pre>
 </div>
 </div>
 </section>
 <section id="step-5-quantitative-validation-against-known-do-events" class="level2">
 <h2 class="anchored" data-anchor-id="step-5-quantitative-validation-against-known-do-events">Step 5: Quantitative Validation Against Known DO Events</h2>
 <p>Dansgaard-Oeschger (DO) events are abrupt <strong>warming</strong> transitions, so we compare only detected <strong>upward</strong> transitions against the 25 main DO onset times from Rasmussen et al.&nbsp;(2014), using a ±500-year tolerance window.</p>
-<div id="cell-18" class="cell" data-execution_count="9">
+<div id="cell-18" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:03.721945Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:03.721886Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:03.723995Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:03.723826Z&quot;}}" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter to upward transitions only (DO events are abrupt warmings)</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>upward_mask <span class="op">=</span> transitions.jump_values <span class="op">==</span> <span class="dv">1</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>detected_upward <span class="op">=</span> transitions.jump_times[upward_mask]</span>
@@ -597,22 +597,22 @@ Performance Scores:
 +-----------+---------+
 | Metric    |   Value |
 +===========+=========+
-| Precision |  0.3415 |
+| Precision |  0.6098 |
 +-----------+---------+
-| Recall    |  0.56   |
+| Recall    |  1      |
 +-----------+---------+
-| F1 Score  |  0.4242 |
+| F1 Score  |  0.7576 |
 +-----------+---------+
 
 Detection Counts:
 +-----------------+---------+
 | Category        |   Count |
 +=================+=========+
-| True Positives  |      14 |
+| True Positives  |      25 |
 +-----------------+---------+
-| False Positives |      27 |
+| False Positives |      16 |
 +-----------------+---------+
-| False Negatives |      11 |
+| False Negatives |       0 |
 +-----------------+---------+
 
 Summary:
@@ -628,7 +628,7 @@ Summary:
 <li><strong>Red lines</strong>: Detected upward transitions</li>
 <li><strong>Green dashed lines</strong>: Known DO warming events (Rasmussen et al., 2014)</li>
 </ul>
-<div id="cell-20" class="cell" data-execution_count="10">
+<div id="cell-20" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:03.724886Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:03.724832Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:03.874680Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:03.874467Z&quot;}}" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">8</span>))</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>ax.plot(ngrip.time, ngrip.value, color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>, label<span class="op">=</span><span class="st">'NGRIP $</span><span class="er">\</span><span class="st">delta^</span><span class="sc">{18}</span><span class="er">\</span><span class="st">mathrm</span><span class="sc">{O}</span><span class="st">$'</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -666,7 +666,7 @@ Summary:
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>We see that the Pelt algorithm (l2 cost, penalty = 10) is able to identify <strong>14 of 25 (56%)</strong> of the DO warming events documented by <a href="https://doi.org/10.1016/j.quascirev.2014.09.007">Rasmussen et al.&nbsp;(2014)</a>, with a precision of 34% (F1 = 0.42).</p>
+<p>We see that the Pelt algorithm (l2 cost, penalty = 10) is able to identify <strong>25 of 25 (100%)</strong> of the DO warming events documented by <a href="https://doi.org/10.1016/j.quascirev.2014.09.007">Rasmussen et al.&nbsp;(2014)</a>, with a precision of 61% (F1 = 0.76).</p>
 <p><strong>Pros:</strong> Highly flexible, <code>Series.ruptures()</code> exposes six search algorithms and multiple cost functions for different data types. Pelt automatically determines the number of change-points, so no fixed count is needed.</p>
 <p><strong>Major drawback:</strong> Like the KS test, ruptures algorithms detect structural breaks in statistical properties (mean, variance). They are well-suited to sharp amplitude shifts but say nothing about the dynamics. For dynamically-sensitive detection, see the <a href="../notebooks/LERM_validation.html">LERM tutorial</a>.</p>
 <p>For the original ruptures library, see <a href="https://doi.org/10.1016/j.sigpro.2019.107299">Truong et al.&nbsp;(2020)</a>.</p>

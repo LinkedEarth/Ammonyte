@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e3adbaa939bcd423dddc8c8a834270b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-55617497126496852ff9f5a59253c640.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -218,7 +218,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A few paths are hardcoded in the scripts rather than read from <code>_quarto.yml</code> or a config file. If you rename or add notebook subdirectories, or rename the <code>tutorials/</code> directory, update these:</p>
 <ul>
 <li><strong><code>docs/scripts/sync_notebooks.py</code></strong>: <code>NOTEBOOK_DIR</code> (currently <code>'notebooks'</code>) and <code>NOTEBOOK_SUBDIRS</code> (currently <code>["model_demos", "functionality_demos", "base_classes"]</code>) — only notebooks inside the listed subdirectories get mirrored into <code>docs/notebooks/</code> before each render. A new subdirectory under <code>notebooks/</code> will be silently skipped until it’s added here.</li>
-<li><strong><code>docs/scripts/generate_tutorials_index.py</code></strong>: the sidebar lookup hardcodes <code>sidebar.get("id") == "tutorials"</code> and writes its output to <code>DOCS_DIR / "tutorials" / "_tutorials_table.qmd"</code>. If you rename the <code>tutorials/</code> directory or its sidebar <a href="https://docs.python.org/3/library/functions.html#id" title="1"><code>id</code></a> in <code>_quarto.yml</code>, update both of these to match.</li>
+<li><strong><code>docs/scripts/generate_tutorials_index.py</code></strong>: the sidebar lookup hardcodes <code>sidebar.get("id") == "tutorials"</code> and writes its output to <code>DOCS_DIR / "tutorials" / "_tutorials_table.qmd"</code>. If you rename the <code>tutorials/</code> directory or its sidebar <a href="https://docs.python.org/3/builtins/functions.html#id" title="1"><code>id</code></a> in <code>_quarto.yml</code>, update both of these to match.</li>
 <li><strong><code>docs/scripts/sync_notebooks.py</code></strong>: <code>GITHUB_REPO</code> and <code>GITHUB_BRANCH</code> drive the generated “Launch on Binder” / “Download notebook” links — keep these in sync if the repo moves or the default branch changes (they are set from the <code>docsmith</code> spec at generation time, but won’t auto-update afterward).</li>
 </ul>
 

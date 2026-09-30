@@ -82,7 +82,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-e3adbaa939bcd423dddc8c8a834270b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-55617497126496852ff9f5a59253c640.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -342,31 +342,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dd>
 <p>Series object containing time and value data</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>w_min</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#float">float</a></span></code></dt>
+<dt><code><span class="parameter-name"><strong>w_min</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#float">float</a></span></code></dt>
 <dd>
 <p>Size of smallest sliding window in time units</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>w_max</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#float">float</a></span></code></dt>
+<dt><code><span class="parameter-name"><strong>w_max</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#float">float</a></span></code></dt>
 <dd>
 <p>Size of largest sliding window in time units</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>n_w</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#int">int</a></span></code></dt>
+<dt><code><span class="parameter-name"><strong>n_w</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#int">int</a></span></code></dt>
 <dd>
 <p>Number of window sizes to test</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>d_c</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#float">float</a></span></code></dt>
+<dt><code><span class="parameter-name"><strong>d_c</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#float">float</a></span></code></dt>
 <dd>
 <p>Cut-off threshold for KS statistic</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>n_c</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#int">int</a></span></code></dt>
+<dt><code><span class="parameter-name"><strong>n_c</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#int">int</a></span></code></dt>
 <dd>
 <p>Minimum sample size per window</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>s_c</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#float">float</a></span></code></dt>
+<dt><code><span class="parameter-name"><strong>s_c</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#float">float</a></span></code></dt>
 <dd>
 <p>Minimum difference between the mean values of the two adjacent windows, expressed as a multiple of each window’s standard deviation</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>x_c</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#float">float</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dt><code><span class="parameter-name"><strong>x_c</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#float">float</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>
 <p>Minimum difference between the mean values of the two adjacent windows, in the same units as the data. Not scaled by standard deviation. If None, auto-calculated from the data’s spread</p>
 </dd>
@@ -392,7 +392,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="examples" class="level2 doc-section doc-section-examples">
 <h2 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h2>
 <p>Basic usage (typically called via Series.kstest):</p>
-<div id="11b20b7a" class="cell" data-execution_count="1">
+<div id="5a08d9fe" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os, ammonyte <span class="im">as</span> amt</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ammonyte.utils.ks <span class="im">import</span> KS_test</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ngrip <span class="op">=</span> amt.Series.from_csv(os.path.join(os.path.dirname(amt.<span class="va">__file__</span>), <span class="st">'data'</span>, <span class="st">'NGRIP.csv'</span>))</span>

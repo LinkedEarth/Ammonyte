@@ -82,7 +82,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-e3adbaa939bcd423dddc8c8a834270b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-55617497126496852ff9f5a59253c640.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -349,23 +349,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dd>
 <p>Fisher Information series from LERM analysis (typically smoothed)</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>transition_interval</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dt><code><span class="parameter-name"><strong>transition_interval</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/stdtypes.html#tuple">tuple</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>
 <p>(upper_bound, lower_bound) for detecting transitions. If None, automatically computes via bootstrapping using the parameters below.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>upper</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">95</span></code></dt>
+<dt><code><span class="parameter-name"><strong>upper</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">95</span></code></dt>
 <dd>
 <p>Upper percentile for confidence interval. Default is 95 Only used if transition_interval is None.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>lower</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">5</span></code></dt>
+<dt><code><span class="parameter-name"><strong>lower</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">5</span></code></dt>
 <dd>
 <p>Lower percentile for confidence interval. Default is 5 Only used if transition_interval is None.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>w</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">50</span></code></dt>
+<dt><code><span class="parameter-name"><strong>w</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">50</span></code></dt>
 <dd>
 <p>Bootstrap sample size. Default is 50 Only used if transition_interval is None.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>n_samples</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">10000</span></code></dt>
+<dt><code><span class="parameter-name"><strong>n_samples</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">10000</span></code></dt>
 <dd>
 <p>Number of bootstrap samples. Default is 10000 Only used if transition_interval is None.</p>
 </dd>
@@ -382,11 +382,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dd>
 <p>Array of transition directions (+1 for upward, -1 for downward)</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>upper_bound</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#float">float</a></span></code></dt>
+<dt><code><span class="parameter-name"><strong>upper_bound</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#float">float</a></span></code></dt>
 <dd>
 <p>Upper confidence bound used for detection</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>lower_bound</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#float">float</a></span></code></dt>
+<dt><code><span class="parameter-name"><strong>lower_bound</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#float">float</a></span></code></dt>
 <dd>
 <p>Lower confidence bound used for detection</p>
 </dd>

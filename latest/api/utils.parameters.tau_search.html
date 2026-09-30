@@ -82,7 +82,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-e3adbaa939bcd423dddc8c8a834270b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-55617497126496852ff9f5a59253c640.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -329,11 +329,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dd>
 <p>Series for which we’d like to find the optimal tau value</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>num_lags</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">30</span></code></dt>
+<dt><code><span class="parameter-name"><strong>num_lags</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">30</span></code></dt>
 <dd>
 <p>Number of time delays to consider. Default is 30</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>return_MI</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">(<a href="https://docs.python.org/3/library/functions.html#bool">bool</a>, {True, False})</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">False</span></code></dt>
+<dt><code><span class="parameter-name"><strong>return_MI</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation">(<a href="https://docs.python.org/3/builtins/functions.html#bool">bool</a>, {True, False})</span> <span class="parameter-default-sep">=</span> <span class="parameter-default">False</span></code></dt>
 <dd>
 <p>Whether or not to return the list of mutual information values. Useful if the first minimum seems spurious and you’d like to inspect the results.</p>
 </dd>
@@ -342,11 +342,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="returns" class="level2 doc-section doc-section-returns">
 <h2 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h2>
 <dl>
-<dt><code><span class="parameter-name"><strong>tau</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#int">int</a></span></code></dt>
+<dt><code><span class="parameter-name"><strong>tau</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#int">int</a></span></code></dt>
 <dd>
 <p>Optimal time delay parameter according to first minimum of mutual information</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>MI</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/stdtypes.html#list">list</a></span></code></dt>
+<dt><code><span class="parameter-name"><strong>MI</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/stdtypes.html#list">list</a></span></code></dt>
 <dd>
 <p>List of mutual information values. Indices + 1 correspond to amount of lag (index 0 is lag 1, index 1 is lag 2, etc.). Only returned if return_MI is set to True.</p>
 </dd>

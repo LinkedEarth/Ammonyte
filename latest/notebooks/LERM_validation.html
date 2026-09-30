@@ -80,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-e3adbaa939bcd423dddc8c8a834270b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-55617497126496852ff9f5a59253c640.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -252,7 +252,7 @@ window.Quarto = {
 </header>
 
 
-<div id="d917985c-7a9a-4c4e-aff1-71a77afabf0a" class="cell" data-execution_count="37">
+<div id="d917985c-7a9a-4c4e-aff1-71a77afabf0a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:05.622348Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:05.622035Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:07.398251Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:07.398005Z&quot;}}" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import libraries and packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ammonyte <span class="im">as</span> amt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -267,14 +267,14 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="dataset-overview">Dataset Overview</h3>
 <p>The <strong>North Greenland Ice Core Project (NGRIP)</strong> dataset contains high-resolution paleoclimate proxy data from Greenland ice cores. This dataset is particularly valuable for studying abrupt climate transitions and tipping points in the Earth’s climate system.</p>
 <p><strong>Key Dataset Features:</strong> - <strong>Proxy Variable</strong>: <span class="math inline">\(\mathrm{\delta^{18}O}\)</span> isotope measurements - <strong>Units</strong>: per mil - <strong>Time Scale</strong>: Thousands of years before present (kyr b2k)</p>
-<div id="33ad5808-28ce-4fb2-8e2c-d1a3b7066c60" class="cell" data-execution_count="38">
+<div id="33ad5808-28ce-4fb2-8e2c-d1a3b7066c60" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:07.399562Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:07.399419Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:07.403467Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:07.403282Z&quot;}}" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ngrip <span class="op">=</span> amt.Series.from_csv(<span class="st">'../ammonyte/data/NGRIP.csv'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Time axis values sorted in ascending order
 Time axis values sorted in ascending order</code></pre>
 </div>
 </div>
-<div id="80e66717" class="cell" data-execution_count="39">
+<div id="80e66717" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:07.404368Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:07.404284Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:07.405728Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:07.405558Z&quot;}}" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store original arrays for reuse</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ngrip_time_original <span class="op">=</span> ngrip.time.copy()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ngrip_value_original <span class="op">=</span> ngrip.value.copy()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -283,7 +283,7 @@ Time axis values sorted in ascending order</code></pre>
 <section id="dataset-metadata-summary" class="level3">
 <h3 class="anchored" data-anchor-id="dataset-metadata-summary">Dataset Metadata Summary</h3>
 <p>Display key metadata information from the loaded NGRIP time series to understand the dataset characteristics.</p>
-<div id="ba6c9ffe" class="cell" data-execution_count="40">
+<div id="ba6c9ffe" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:07.406580Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:07.406510Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:07.408067Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:07.407910Z&quot;}}" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The metadata</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Loaded NGRIP dataset: </span><span class="sc">{</span>ngrip<span class="sc">.</span>label<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Time range: </span><span class="sc">{</span>ngrip<span class="sc">.</span>time<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.2f}</span><span class="ss"> - </span><span class="sc">{</span>ngrip<span class="sc">.</span>time<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.2f}</span><span class="ss"> </span><span class="sc">{</span>ngrip<span class="sc">.</span>time_unit<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -300,10 +300,10 @@ Value range: -46.50 - -32.11 ‰</code></pre>
 <section id="ngrip-mathrmdelta18o-record-visualization" class="level3">
 <h3 class="anchored" data-anchor-id="ngrip-mathrmdelta18o-record-visualization">NGRIP <span class="math inline">\(\mathrm{\delta^{18}O}\)</span> Record Visualization</h3>
 <p>The plot below shows the complete NGRIP ice core record, where: - <strong>X-axis</strong>: Time in thousands of years before present (kyr b2k) - <strong>Y-axis</strong>: <span class="math inline">\(\mathrm{\delta^{18}O}\)</span> isotope values in per mil - <strong>Interpretation</strong>: More negative values indicate colder conditions</p>
-<div id="8376a48f-d8f4-4da9-8da0-f4690530b195" class="cell" data-execution_count="41">
+<div id="8376a48f-d8f4-4da9-8da0-f4690530b195" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:07.408966Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:07.408887Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:07.593965Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:07.583142Z&quot;}}" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot NGRIP series</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ngrip.plot() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="41">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>(&lt;Figure size 1000x400 with 1 Axes&gt;,
  &lt;Axes: xlabel='Age [kyr b2k]', ylabel='δ¹⁸O [‰]'&gt;)</code></pre>
 </div>
@@ -326,13 +326,13 @@ Value range: -46.50 - -32.11 ‰</code></pre>
 <h4 class="anchored" data-anchor-id="phase-space-reconstruction">Phase Space Reconstruction</h4>
 <p>To apply the LERM method, we first transform the 1-dimensional time series into a <strong>multi-dimensional phase space</strong>.</p>
 <p><strong>Key Parameters:</strong> - <strong><code>m</code> (embedding dimension)</strong>: The number of dimensions in the reconstructed phase space - <strong><code>tau</code> (time delay)</strong>: The lag between successive coordinates in the embedded space - Automatically computed to optimize reconstruction - Represents the decorrelation timescale of the system</p>
-<div id="ba1fef2d-ffc1-4402-ade5-771cc34b125b" class="cell" data-execution_count="42">
+<div id="ba1fef2d-ffc1-4402-ade5-771cc34b125b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:07.607410Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:07.605947Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:07.926861Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:07.926648Z&quot;}}" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#series to time embedded series</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="dv">12</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>NGRIP_td <span class="op">=</span> amt.TimeEmbeddedSeries(ngrip , m)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>NGRIP_td.tau</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="42">
-<pre><code>9</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>11</code></pre>
 </div>
 </div>
 </section>
@@ -344,15 +344,15 @@ Value range: -46.50 - -32.11 ‰</code></pre>
 <p>Before constructing the recurrence network, we need to determine the optimal <strong>epsilon (ε)</strong> value, which defines the neighborhood radius for connecting points in the phase space. The algorithm iteratively adjusts epsilon until the recurrence network achieves the target density.</p>
 <p><strong>Method:</strong> Adaptive epsilon search to achieve target network density</p>
 <p><strong>Parameters:</strong> - <strong><code>eps</code></strong>: Initial epsilon value to start the search (1.0) - <strong><code>target_density</code></strong>: Desired density of the recurrence network (0.05 = 5%) - <strong><code>tolerance</code></strong>: Acceptable deviation from target density (0.01 = 1%, meaning it Stops search when density is within [4%, 6%]) - <strong><code>amp</code></strong>: Amplitude scaling factor for the search (30, Controls the step size during epsilon optimization)</p>
-<div id="bb17caef-6724-4109-9a08-b05d54a690b9" class="cell" data-execution_count="43">
+<div id="bb17caef-6724-4109-9a08-b05d54a690b9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:07.928007Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:07.927938Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:08.651758Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:08.651462Z&quot;}}" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>NGRIP_epsilon <span class="op">=</span> NGRIP_td.find_epsilon(eps<span class="op">=</span><span class="dv">1</span>,target_density<span class="op">=</span><span class="fl">.05</span>,tolerance<span class="op">=</span><span class="fl">.01</span>,amp<span class="op">=</span><span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Initial density is 0.0003
+<pre><code>Initial density is 0.0002
 Initial density is not within the tolerance window, searching...
-Epsilon: 2.4915, Density: 0.0126
-Epsilon: 3.6123, Density: 0.0335
-Epsilon: 4.1062, Density: 0.0464
-Epsilon: 4.1062, Density: 0.0464.</code></pre>
+Epsilon: 2.4926, Density: 0.0108
+Epsilon: 3.6675, Density: 0.0305
+Epsilon: 4.2539, Density: 0.0444
+Epsilon: 4.2539, Density: 0.0444.</code></pre>
 </div>
 </div>
 </section>
@@ -362,11 +362,11 @@ Epsilon: 4.1062, Density: 0.0464.</code></pre>
 <h4 class="anchored" data-anchor-id="extracting-and-visualizing-the-recurrence-network">Extracting and Visualizing the Recurrence Network</h4>
 <p><strong>What is a Recurrence Matrices?</strong> - A binary Matrices where entry (i,j) = 1 if points i and j are “close” in phase space (within epsilon distance)</p>
 <p><strong>Interpretation</strong> - <strong>Dense black regions</strong>: Stable climate states with high recurrence (stadials or interstadials) - <strong>White/sparse regions</strong>: Transitional periods, rapid changes, or unique states <strong>Tipping points occur here</strong> - <strong>Black diagonal lines</strong>: Similar evolution patterns at different times - <strong>Black vertical/horizontal lines</strong>: Frequently recurring climate states</p>
-<div id="186df876-e473-4f35-bc1e-ad3e4b43294a" class="cell" data-execution_count="44">
+<div id="186df876-e473-4f35-bc1e-ad3e4b43294a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:08.652982Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:08.652912Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:09.410405Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:09.410195Z&quot;}}" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>NGRIP_rm <span class="op">=</span> NGRIP_epsilon[<span class="st">'Output'</span>]</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the recurrence Matrices</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>NGRIP_rm.plot(title <span class="op">=</span> <span class="st">'Recurrence Matrices'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="44">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>(&lt;Figure size 800x800 with 1 Axes&gt;,
  &lt;Axes: title={'center': 'Recurrence Matrices'}, xlabel='Age kyr b2k', ylabel='Age kyr b2k'&gt;)</code></pre>
 </div>
@@ -388,7 +388,7 @@ Epsilon: 4.1062, Density: 0.0464.</code></pre>
 <p>The <strong>Laplacian Eigenmaps</strong> method computes <strong>Fisher Information</strong> from the recurrence network using a sliding window approach. Fisher Information quantifies how much information the system’s trajectory carries about its underlying dynamics and serves as an early warning signal for tipping points.</p>
 <p><strong>Parameters:</strong> - <strong><code>w_size</code></strong>: Window size (20 time steps) - Size of the sliding window for local Fisher Information computation - <strong><code>w_incre</code></strong>: Window increment (4 time steps) - Step size for moving the window along the time series</p>
 <p><strong>Fisher Information Interpretation:</strong> - <strong>High Fisher Information</strong>: System is near a critical transition - <strong>Low Fisher Information</strong>: System is stable</p>
-<div id="21f31b6c-4f89-440a-8d83-eb50f7d7000d" class="cell" data-execution_count="45">
+<div id="21f31b6c-4f89-440a-8d83-eb50f7d7000d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:09.411532Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:09.411442Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:30.491807Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:30.491221Z&quot;}}" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>NGRIP_lp <span class="op">=</span> NGRIP_rm.laplacian_eigenmaps(w_size<span class="op">=</span><span class="dv">20</span>,w_incre<span class="op">=</span><span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -398,7 +398,7 @@ Epsilon: 4.1062, Density: 0.0464.</code></pre>
 <p>The raw Fisher Information signal can contain high-frequency noise that may lead to false positive transition detections. We apply <strong>block averaging</strong> to smooth the series while preserving the timing and magnitude of genuine transitions.</p>
 <p><strong>Method:</strong> Block averaging with sliding window</p>
 <p><strong>Parameters:</strong> - <strong><code>block_size</code></strong>: Size of the averaging window (2 time steps)</p>
-<div id="9bc5c0ed" class="cell" data-execution_count="46">
+<div id="9bc5c0ed" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:30.494515Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:30.494256Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:30.497161Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:30.496955Z&quot;}}" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>NGRIP_lp_smooth <span class="op">=</span> amt.utils.fisher.smooth_series(series<span class="op">=</span>NGRIP_lp, block_size<span class="op">=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -406,7 +406,7 @@ Epsilon: 4.1062, Density: 0.0464.</code></pre>
 <h2 class="anchored" data-anchor-id="step-5-visualizing-smoothed-fisher-information">Step 5: Visualizing Smoothed Fisher Information</h2>
 <p>This visualization displays the <strong>smoothed Fisher Information</strong>.</p>
 <p><strong>Plot elements:</strong> - <strong>Blue line</strong>: Smoothed Fisher Information signal - <strong>X-axis</strong>: Time in kyr b2k - <strong>Y-axis</strong>: Fisher Information values</p>
-<div id="c44174b6-9e90-4f4c-a69a-a51aec4907c6" class="cell" data-execution_count="47">
+<div id="c44174b6-9e90-4f4c-a69a-a51aec4907c6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:30.498203Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:30.498112Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:30.550278Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:30.550074Z&quot;}}" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">6</span>))</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>NGRIP_lp_smooth.plot(ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'blue'</span>,linewidth<span class="op">=</span><span class="fl">1.5</span>, label <span class="op">=</span> <span class="st">'Smoothed Fisher Information'</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -433,7 +433,7 @@ Epsilon: 4.1062, Density: 0.0464.</code></pre>
 <li><strong>Output</strong>: Specific times where the system crosses critical thresholds</li>
 </ul>
 <p>The LERM method identifies transitions by: 1. Computing <strong>adaptive thresholds</strong> from the Fisher Information distribution - Upper threshold (95th percentile): Marks significant upward changes - Lower threshold (5th percentile): Marks significant downward changes 2. Detecting <strong>crossings</strong> where Fisher Information exceeds these bounds 3. Classifying each transition as: - <strong>Upward (+1)</strong>: System moving toward instability or rapid change - <strong>Downward (-1)</strong>: System returning to stability</p>
-<div id="9a4c83bd" class="cell" data-execution_count="48">
+<div id="9a4c83bd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:30.551389Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:30.551322Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:30.925209Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:30.924992Z&quot;}}" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>transitions <span class="op">=</span> NGRIP_lp_smooth.lerm_transitions()</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(transitions)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -442,39 +442,41 @@ Epsilon: 4.1062, Density: 0.0464.</code></pre>
 +----------+---------------------+----------------+------------------+---------------------+
 | Method   |   Total Transitions |   Upward Jumps |   Downward Jumps | Series Label        |
 +==========+=====================+================+==================+=====================+
-| LERM     |                  24 |             12 |               12 | NGRIP Ice Core Data |
+| LERM     |                  26 |             13 |               13 | NGRIP Ice Core Data |
 +----------+---------------------+----------------+------------------+---------------------+
 
 Transition Details:
   1. Time: 9.43 kyr b2k, Direction: Upward
   2. Time: 10.43 kyr b2k, Direction: Downward
-  3. Time: 12.43 kyr b2k, Direction: Upward
+  3. Time: 11.43 kyr b2k, Direction: Upward
   4. Time: 13.43 kyr b2k, Direction: Downward
   5. Time: 15.43 kyr b2k, Direction: Upward
-  6. Time: 26.43 kyr b2k, Direction: Downward
-  7. Time: 29.43 kyr b2k, Direction: Upward
-  8. Time: 31.43 kyr b2k, Direction: Downward
-  9. Time: 36.43 kyr b2k, Direction: Upward
-  10. Time: 37.43 kyr b2k, Direction: Downward
-  11. Time: 38.43 kyr b2k, Direction: Downward
-  12. Time: 43.43 kyr b2k, Direction: Upward
-  13. Time: 45.43 kyr b2k, Direction: Downward
-  14. Time: 47.43 kyr b2k, Direction: Upward
-  15. Time: 53.43 kyr b2k, Direction: Downward
-  16. Time: 56.43 kyr b2k, Direction: Upward
-  17. Time: 57.43 kyr b2k, Direction: Downward
-  18. Time: 60.43 kyr b2k, Direction: Upward
-  19. Time: 63.43 kyr b2k, Direction: Downward
-  20. Time: 64.43 kyr b2k, Direction: Upward
-  21. Time: 71.43 kyr b2k, Direction: Downward
-  22. Time: 74.43 kyr b2k, Direction: Upward
-  23. Time: 75.43 kyr b2k, Direction: Downward
-  24. Time: 77.43 kyr b2k, Direction: Upward
+  6. Time: 21.43 kyr b2k, Direction: Downward
+  7. Time: 22.43 kyr b2k, Direction: Upward
+  8. Time: 27.43 kyr b2k, Direction: Downward
+  9. Time: 28.43 kyr b2k, Direction: Upward
+  10. Time: 30.43 kyr b2k, Direction: Downward
+  11. Time: 40.43 kyr b2k, Direction: Upward
+  12. Time: 41.43 kyr b2k, Direction: Downward
+  13. Time: 43.43 kyr b2k, Direction: Upward
+  14. Time: 45.43 kyr b2k, Direction: Downward
+  15. Time: 47.43 kyr b2k, Direction: Upward
+  16. Time: 52.43 kyr b2k, Direction: Downward
+  17. Time: 55.43 kyr b2k, Direction: Upward
+  18. Time: 57.43 kyr b2k, Direction: Downward
+  19. Time: 59.43 kyr b2k, Direction: Upward
+  20. Time: 68.43 kyr b2k, Direction: Downward
+  21. Time: 74.43 kyr b2k, Direction: Upward
+  22. Time: 75.43 kyr b2k, Direction: Downward
+  23. Time: 77.43 kyr b2k, Direction: Upward
+  24. Time: 107.43 kyr b2k, Direction: Downward
+  25. Time: 108.43 kyr b2k, Direction: Upward
+  26. Time: 119.43 kyr b2k, Direction: Downward
 
 Method Parameters:
-  transition_interval: (1.1123137817166013, 0.7915562801803566)
-  upper_bound: 1.1123137817166013
-  lower_bound: 0.7915562801803566
+  transition_interval: (1.3232017591020484, 0.9434775220511809)
+  upper_bound: 1.3232017591020484
+  lower_bound: 0.9434775220511809
   upper_percentile: 95
   lower_percentile: 5
   bootstrap_window: 50
@@ -482,15 +484,15 @@ Method Parameters:
 </code></pre>
 </div>
 </div>
-<div id="f13ec55f" class="cell" data-execution_count="49">
+<div id="f13ec55f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:30.926362Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:30.926274Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:30.929864Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:30.929711Z&quot;}}" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define D/O event chronologies as numpy arrays for analysis</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>do_events <span class="op">=</span> pd.read_csv(<span class="st">'../ammonyte/data/DO_events.csv'</span>, comment <span class="op">=</span> <span class="st">'#'</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>do_events <span class="op">=</span> pd.read_csv(<span class="st">'../ammonyte/data/DO_onsets_Rasmussen2014.csv'</span>, comment <span class="op">=</span> <span class="st">'#'</span>)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>main_do_events <span class="op">=</span> do_events[<span class="st">'main_kyr_b2k'</span>].dropna().values</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>main_do_events <span class="op">=</span> do_events[<span class="st">'main25_kyr_b2k'</span>].dropna().values</span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(main_do_events)) <span class="co"># The length of main DO events </span></span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>all_do_events <span class="op">=</span> do_events[<span class="st">'all_kyr_b2k'</span>].dropna().values</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>all_do_events <span class="op">=</span> do_events[<span class="st">'all34_kyr_b2k'</span>].dropna().values</span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(all_do_events))  <span class="co"># The length of all DO events</span></span>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>upward_mask <span class="op">=</span> transitions.jump_values <span class="op">==</span> <span class="dv">1</span></span>
@@ -502,7 +504,7 @@ Method Parameters:
 <span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>25
-73
+34
 Detection Evaluation Metrics
 ============================
 Metrics calculated within tolerance = 0.5
@@ -511,26 +513,26 @@ Performance Scores:
 +-----------+---------+
 | Metric    |   Value |
 +===========+=========+
-| Precision |  0.3333 |
+| Precision |  0.4615 |
 +-----------+---------+
-| Recall    |  0.16   |
+| Recall    |  0.24   |
 +-----------+---------+
-| F1 Score  |  0.2162 |
+| F1 Score  |  0.3158 |
 +-----------+---------+
 
 Detection Counts:
 +-----------------+---------+
 | Category        |   Count |
 +=================+=========+
-| True Positives  |       4 |
+| True Positives  |       6 |
 +-----------------+---------+
-| False Positives |       8 |
+| False Positives |       7 |
 +-----------------+---------+
-| False Negatives |      21 |
+| False Negatives |      19 |
 +-----------------+---------+
 
 Summary:
-  Detected: 12 | Ground Truth: 25
+  Detected: 13 | Ground Truth: 25
 </code></pre>
 </div>
 </div>
@@ -544,7 +546,7 @@ Summary:
 <li><strong>Green line (right y-axis)</strong>: Smoothed Fisher Information — high values indicate the system is undergoing rapid dynamical changes</li>
 <li><strong>Red vertical lines</strong>: Upward transitions</li>
 </ul>
-<div id="3623b331" class="cell" data-execution_count="50">
+<div id="3623b331" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:30.930835Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:30.930736Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:31.144874Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:31.144656Z&quot;}}" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>fig, ax1 <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">6</span>))                                                    </span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>ax1.plot(ngrip.time, ngrip.value, color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>, label<span class="op">=</span><span class="st">'NGRIP $</span><span class="er">\</span><span class="st">delta^</span><span class="sc">{18}</span><span class="er">\</span><span class="st">mathrm</span><span class="sc">{O}</span><span class="st">$'</span>)                                                                  </span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                                                                                            </span>
@@ -587,7 +589,7 @@ Summary:
 <section id="step-8-alternative-detection-method-kolmogorov-smirnov-test" class="level2">
 <h2 class="anchored" data-anchor-id="step-8-alternative-detection-method-kolmogorov-smirnov-test">Step 8: Alternative Detection Method (Kolmogorov-Smirnov Test)</h2>
 <p>The <code>kstest()</code> method applies the augmented <strong>Kolmogorov-Smirnov (KS) test</strong> to the smoothed Fisher Information series to detect statistically significant transitions. This is a complementary approach to the deterministic LERM method.</p>
-<div id="bd302b4c" class="cell" data-execution_count="51">
+<div id="bd302b4c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:31.145915Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:31.145850Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:34.094400Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:34.094109Z&quot;}}" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>transitions_ks <span class="op">=</span> NGRIP_lp_smooth.kstest(w_min<span class="op">=</span><span class="fl">0.12</span>, w_max<span class="op">=</span><span class="fl">2.5</span>, n_w<span class="op">=</span><span class="dv">15</span>,</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                                        d_c<span class="op">=</span><span class="fl">0.77</span>, n_c<span class="op">=</span><span class="dv">3</span>, s_c<span class="op">=</span><span class="dv">2</span>, x_c<span class="op">=</span><span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -595,7 +597,7 @@ Summary:
 <h3 class="anchored" data-anchor-id="ks-test-results">KS Test Results</h3>
 <p>The <code>print(transitions_ks)</code> command displays a <strong>comprehensive summary</strong> of all detected transitions from the KS test analysis.</p>
 <p>The output below shows all transitions detected by the KS test, including: - Statistical measures: D-statistics and p-values for each transition - Transition count: 52 total (compared to 31 from LERM method) - Direction classification: Upward vs.&nbsp;downward transitions</p>
-<div id="b9dd6eee" class="cell" data-execution_count="52">
+<div id="b9dd6eee" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:34.095573Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:34.095500Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:34.097453Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:34.097260Z&quot;}}" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(transitions_ks)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Deterministic Transition Detection Results - NGRIP Ice Core Data
@@ -603,59 +605,70 @@ Summary:
 +----------+---------------------+----------------+------------------+---------------------+
 | Method   |   Total Transitions |   Upward Jumps |   Downward Jumps | Series Label        |
 +==========+=====================+================+==================+=====================+
-| KS test  |                  49 |             24 |               25 | NGRIP Ice Core Data |
+| KS test  |                  60 |             26 |               34 | NGRIP Ice Core Data |
 +----------+---------------------+----------------+------------------+---------------------+
 
 Transition Details:
-  1. Time: 3.11 kyr b2k, Direction: Upward, d_statistics: 0.7177, p_values: &lt; 1e-7
-  2. Time: 6.79 kyr b2k, Direction: Downward, d_statistics: 0.7742, p_values: &lt; 1e-8
-  3. Time: 8.87 kyr b2k, Direction: Upward, d_statistics: 0.8125, p_values: &lt; 1e-10
-  4. Time: 11.75 kyr b2k, Direction: Upward, d_statistics: 0.2258, p_values: 0.34
-  5. Time: 13.51 kyr b2k, Direction: Downward, d_statistics: 0.4567, p_values: &lt; 1e-2
-  6. Time: 14.15 kyr b2k, Direction: Downward, d_statistics: 0.4355, p_values: &lt; 1e-2
-  7. Time: 14.79 kyr b2k, Direction: Upward, d_statistics: 0.4960, p_values: &lt; 1e-3
-  8. Time: 15.11 kyr b2k, Direction: Upward, d_statistics: 0.7500, p_values: &lt; 1e-8
-  9. Time: 25.99 kyr b2k, Direction: Downward, d_statistics: 0.9688, p_values: &lt; 1e-16
-  10. Time: 26.79 kyr b2k, Direction: Downward, d_statistics: 0.7097, p_values: &lt; 1e-7
-  11. Time: 28.55 kyr b2k, Direction: Upward, d_statistics: 0.8427, p_values: &lt; 1e-11
-  12. Time: 30.47 kyr b2k, Direction: Downward, d_statistics: 0.5625, p_values: &lt; 1e-4
-  13. Time: 30.95 kyr b2k, Direction: Downward, d_statistics: 0.8125, p_values: &lt; 1e-10
-  14. Time: 32.71 kyr b2k, Direction: Upward, d_statistics: 0.2500, p_values: 0.21
-  15. Time: 33.99 kyr b2k, Direction: Downward, d_statistics: 0.3548, p_values: 0.03
-  16. Time: 35.27 kyr b2k, Direction: Upward, d_statistics: 0.6532, p_values: &lt; 1e-6
-  17. Time: 35.59 kyr b2k, Direction: Upward, d_statistics: 0.6210, p_values: &lt; 1e-5
-  18. Time: 36.87 kyr b2k, Direction: Downward, d_statistics: 0.2500, p_values: 0.21
-  19. Time: 38.47 kyr b2k, Direction: Upward, d_statistics: 0.2500, p_values: 0.21
-  20. Time: 39.59 kyr b2k, Direction: Downward, d_statistics: 0.4355, p_values: &lt; 1e-2
-  21. Time: 40.23 kyr b2k, Direction: Upward, d_statistics: 0.4355, p_values: &lt; 1e-2
-  22. Time: 43.27 kyr b2k, Direction: Upward, d_statistics: 0.8387, p_values: &lt; 1e-10
-  23. Time: 45.51 kyr b2k, Direction: Downward, d_statistics: 0.7802, p_values: &lt; 1e-9
-  24. Time: 48.55 kyr b2k, Direction: Upward, d_statistics: 1.0000, p_values: &lt; 1e-17
-  25. Time: 52.55 kyr b2k, Direction: Downward, d_statistics: 1.0000, p_values: &lt; 1e-17
-  26. Time: 53.51 kyr b2k, Direction: Downward, d_statistics: 0.7117, p_values: &lt; 1e-7
-  27. Time: 54.63 kyr b2k, Direction: Upward, d_statistics: 0.4375, p_values: &lt; 1e-2
-  28. Time: 55.43 kyr b2k, Direction: Upward, d_statistics: 0.6472, p_values: &lt; 1e-5
-  29. Time: 57.19 kyr b2k, Direction: Downward, d_statistics: 0.9032, p_values: &lt; 1e-13
-  30. Time: 58.63 kyr b2k, Direction: Upward, d_statistics: 0.4355, p_values: &lt; 1e-2
-  31. Time: 59.59 kyr b2k, Direction: Upward, d_statistics: 0.9375, p_values: &lt; 1e-14
-  32. Time: 62.63 kyr b2k, Direction: Downward, d_statistics: 0.6794, p_values: &lt; 1e-6
-  33. Time: 67.91 kyr b2k, Direction: Downward, d_statistics: 0.7742, p_values: &lt; 1e-8
-  34. Time: 69.03 kyr b2k, Direction: Downward, d_statistics: 0.3901, p_values: 0.01
-  35. Time: 69.35 kyr b2k, Direction: Upward, d_statistics: 0.3569, p_values: 0.03
-  36. Time: 70.79 kyr b2k, Direction: Downward, d_statistics: 0.7782, p_values: &lt; 1e-9
-  37. Time: 72.39 kyr b2k, Direction: Upward, d_statistics: 0.5605, p_values: &lt; 1e-4
-  38. Time: 73.51 kyr b2k, Direction: Upward, d_statistics: 0.5827, p_values: &lt; 1e-4
-  39. Time: 74.95 kyr b2k, Direction: Downward, d_statistics: 0.3427, p_values: 0.03
-  40. Time: 76.07 kyr b2k, Direction: Downward, d_statistics: 0.3024, p_values: 0.09
-  41. Time: 76.39 kyr b2k, Direction: Upward, d_statistics: 0.4980, p_values: &lt; 1e-3
-  42. Time: 76.71 kyr b2k, Direction: Upward, d_statistics: 0.6875, p_values: &lt; 1e-7
-  43. Time: 83.59 kyr b2k, Direction: Downward, d_statistics: 0.7127, p_values: &lt; 1e-7
-  44. Time: 83.91 kyr b2k, Direction: Downward, d_statistics: 0.5544, p_values: &lt; 1e-4
-  45. Time: 85.03 kyr b2k, Direction: Upward, d_statistics: 0.6250, p_values: &lt; 1e-5
-  46. Time: 107.27 kyr b2k, Direction: Downward, d_statistics: 0.5292, p_values: &lt; 1e-4
-  47. Time: 107.59 kyr b2k, Direction: Downward, d_statistics: 0.3397, p_values: 0.03
-  48. Time: 108.55 kyr b2k, Direction: Upward, d_statistics: 0.7500, p_values: &lt; 1e-8
-  49. Time: 119.59 kyr b2k, Direction: Downward, d_statistics: 0.0000, p_values: 1.00
+  1. Time: 4.07 kyr b2k, Direction: Upward, d_statistics: 0.9375, p_values: &lt; 1e-14
+  2. Time: 6.15 kyr b2k, Direction: Downward, d_statistics: 0.4012, p_values: &lt; 1e-2
+  3. Time: 7.91 kyr b2k, Direction: Downward, d_statistics: 0.4839, p_values: &lt; 1e-3
+  4. Time: 8.39 kyr b2k, Direction: Upward, d_statistics: 0.7097, p_values: &lt; 1e-7
+  5. Time: 8.71 kyr b2k, Direction: Upward, d_statistics: 0.7772, p_values: &lt; 1e-9
+  6. Time: 9.67 kyr b2k, Direction: Downward, d_statistics: 0.5000, p_values: &lt; 1e-3
+  7. Time: 11.11 kyr b2k, Direction: Upward, d_statistics: 0.3387, p_values: 0.03
+  8. Time: 13.03 kyr b2k, Direction: Downward, d_statistics: 0.7742, p_values: &lt; 1e-8
+  9. Time: 13.99 kyr b2k, Direction: Downward, d_statistics: 0.3730, p_values: 0.01
+  10. Time: 14.79 kyr b2k, Direction: Upward, d_statistics: 0.6210, p_values: &lt; 1e-5
+  11. Time: 21.19 kyr b2k, Direction: Downward, d_statistics: 0.2681, p_values: 0.17
+  12. Time: 26.79 kyr b2k, Direction: Downward, d_statistics: 0.7137, p_values: &lt; 1e-7
+  13. Time: 27.59 kyr b2k, Direction: Downward, d_statistics: 0.1714, p_values: 0.67
+  14. Time: 28.07 kyr b2k, Direction: Upward, d_statistics: 0.4375, p_values: &lt; 1e-2
+  15. Time: 28.87 kyr b2k, Direction: Upward, d_statistics: 0.5161, p_values: &lt; 1e-3
+  16. Time: 30.15 kyr b2k, Direction: Downward, d_statistics: 0.7500, p_values: &lt; 1e-8
+  17. Time: 30.47 kyr b2k, Direction: Downward, d_statistics: 0.8125, p_values: &lt; 1e-10
+  18. Time: 31.11 kyr b2k, Direction: Downward, d_statistics: 0.6250, p_values: &lt; 1e-5
+  19. Time: 32.23 kyr b2k, Direction: Upward, d_statistics: 0.2188, p_values: 0.34
+  20. Time: 33.19 kyr b2k, Direction: Downward, d_statistics: 0.2944, p_values: 0.11
+  21. Time: 33.83 kyr b2k, Direction: Upward, d_statistics: 0.5605, p_values: &lt; 1e-4
+  22. Time: 34.95 kyr b2k, Direction: Upward, d_statistics: 0.3881, p_values: 0.01
+  23. Time: 36.23 kyr b2k, Direction: Downward, d_statistics: 0.4315, p_values: &lt; 1e-2
+  24. Time: 38.47 kyr b2k, Direction: Upward, d_statistics: 0.4899, p_values: &lt; 1e-3
+  25. Time: 38.95 kyr b2k, Direction: Downward, d_statistics: 0.3952, p_values: 0.01
+  26. Time: 39.75 kyr b2k, Direction: Upward, d_statistics: 0.4919, p_values: &lt; 1e-3
+  27. Time: 41.35 kyr b2k, Direction: Downward, d_statistics: 0.2258, p_values: 0.34
+  28. Time: 43.11 kyr b2k, Direction: Upward, d_statistics: 0.6472, p_values: &lt; 1e-5
+  29. Time: 45.03 kyr b2k, Direction: Downward, d_statistics: 0.7137, p_values: &lt; 1e-7
+  30. Time: 45.67 kyr b2k, Direction: Upward, d_statistics: 0.4375, p_values: &lt; 1e-2
+  31. Time: 46.63 kyr b2k, Direction: Downward, d_statistics: 0.4940, p_values: &lt; 1e-3
+  32. Time: 47.11 kyr b2k, Direction: Upward, d_statistics: 0.8750, p_values: &lt; 1e-12
+  33. Time: 47.59 kyr b2k, Direction: Upward, d_statistics: 0.9688, p_values: &lt; 1e-16
+  34. Time: 52.07 kyr b2k, Direction: Downward, d_statistics: 1.0000, p_values: &lt; 1e-17
+  35. Time: 53.35 kyr b2k, Direction: Downward, d_statistics: 0.5161, p_values: &lt; 1e-3
+  36. Time: 54.63 kyr b2k, Direction: Upward, d_statistics: 0.5927, p_values: &lt; 1e-5
+  37. Time: 57.03 kyr b2k, Direction: Downward, d_statistics: 0.7762, p_values: &lt; 1e-8
+  38. Time: 57.99 kyr b2k, Direction: Upward, d_statistics: 0.4335, p_values: &lt; 1e-2
+  39. Time: 59.11 kyr b2k, Direction: Upward, d_statistics: 0.8750, p_values: &lt; 1e-12
+  40. Time: 61.83 kyr b2k, Direction: Downward, d_statistics: 0.7762, p_values: &lt; 1e-8
+  41. Time: 68.23 kyr b2k, Direction: Downward, d_statistics: 0.8105, p_values: &lt; 1e-10
+  42. Time: 69.03 kyr b2k, Direction: Downward, d_statistics: 0.5857, p_values: &lt; 1e-4
+  43. Time: 69.67 kyr b2k, Direction: Upward, d_statistics: 0.5544, p_values: &lt; 1e-4
+  44. Time: 70.31 kyr b2k, Direction: Downward, d_statistics: 0.7812, p_values: &lt; 1e-9
+  45. Time: 70.63 kyr b2k, Direction: Downward, d_statistics: 0.7117, p_values: &lt; 1e-7
+  46. Time: 71.75 kyr b2k, Direction: Downward, d_statistics: 0.3226, p_values: 0.06
+  47. Time: 72.55 kyr b2k, Direction: Upward, d_statistics: 0.5625, p_values: &lt; 1e-4
+  48. Time: 73.67 kyr b2k, Direction: Upward, d_statistics: 0.3992, p_values: &lt; 1e-2
+  49. Time: 74.63 kyr b2k, Direction: Downward, d_statistics: 0.3387, p_values: 0.03
+  50. Time: 75.75 kyr b2k, Direction: Downward, d_statistics: 0.4859, p_values: &lt; 1e-3
+  51. Time: 76.71 kyr b2k, Direction: Upward, d_statistics: 0.9042, p_values: &lt; 1e-13
+  52. Time: 82.95 kyr b2k, Direction: Downward, d_statistics: 1.0000, p_values: &lt; 1e-17
+  53. Time: 83.43 kyr b2k, Direction: Downward, d_statistics: 0.6522, p_values: &lt; 1e-6
+  54. Time: 84.87 kyr b2k, Direction: Upward, d_statistics: 0.6240, p_values: &lt; 1e-5
+  55. Time: 85.19 kyr b2k, Direction: Upward, d_statistics: 0.8125, p_values: &lt; 1e-10
+  56. Time: 106.47 kyr b2k, Direction: Downward, d_statistics: 0.8387, p_values: &lt; 1e-10
+  57. Time: 107.27 kyr b2k, Direction: Downward, d_statistics: 0.5312, p_values: &lt; 1e-4
+  58. Time: 108.55 kyr b2k, Direction: Upward, d_statistics: 0.9375, p_values: &lt; 1e-14
+  59. Time: 117.67 kyr b2k, Direction: Downward, d_statistics: 0.0000, p_values: 1.00
+  60. Time: 118.47 kyr b2k, Direction: Downward, d_statistics: 0.0000, p_values: 1.00
 
 Method Parameters:
   w_min: 0.12
@@ -668,7 +681,7 @@ Method Parameters:
 </code></pre>
 </div>
 </div>
-<div id="2710870c" class="cell" data-execution_count="53">
+<div id="2710870c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:34.098376Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:34.098318Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:34.100441Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:34.100242Z&quot;}}" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter to upward transitions only (DO events are abrupt warmings)</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>upward_mask_ks <span class="op">=</span> transitions_ks.jump_values <span class="op">==</span> <span class="dv">1</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>detected_upward_ks <span class="op">=</span> transitions_ks.jump_times[upward_mask_ks]</span>
@@ -686,26 +699,26 @@ Performance Scores:
 +-----------+---------+
 | Metric    |   Value |
 +===========+=========+
-| Precision |  0.2917 |
+| Precision |  0.6154 |
 +-----------+---------+
-| Recall    |  0.28   |
+| Recall    |  0.64   |
 +-----------+---------+
-| F1 Score  |  0.2857 |
+| F1 Score  |  0.6275 |
 +-----------+---------+
 
 Detection Counts:
 +-----------------+---------+
 | Category        |   Count |
 +=================+=========+
-| True Positives  |       7 |
+| True Positives  |      16 |
 +-----------------+---------+
-| False Positives |      17 |
+| False Positives |      10 |
 +-----------------+---------+
-| False Negatives |      18 |
+| False Negatives |       9 |
 +-----------------+---------+
 
 Summary:
-  Detected: 24 | Ground Truth: 25
+  Detected: 26 | Ground Truth: 25
 </code></pre>
 </div>
 </div>
@@ -718,7 +731,7 @@ Summary:
 <li><strong>Green line (right y-axis)</strong>: Smoothed Fisher Information used for transition detection</li>
 <li><strong>Red vertical lines</strong>: Upward transitions detected by KS test</li>
 </ul>
-<div id="3a19bf62" class="cell" data-execution_count="54">
+<div id="3a19bf62" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-09-30T17:05:34.101473Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-09-30T17:05:34.101418Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-09-30T17:05:34.213762Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-09-30T17:05:34.213548Z&quot;}}" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fig, ax1 <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">6</span>))                                                    </span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>ax1.plot(ngrip.time, ngrip.value, color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>, label<span class="op">=</span><span class="st">'NGRIP $</span><span class="er">\</span><span class="st">delta^</span><span class="sc">{18}</span><span class="er">\</span><span class="st">mathrm</span><span class="sc">{O}</span><span class="st">$'</span>)                                                                  </span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                                                                                            </span>
@@ -761,7 +774,7 @@ Summary:
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>LERM alone identifies <strong>4 of 25 (16%)</strong> of the DO warming events documented by <a href="https://doi.org/10.1016/j.quascirev.2014.09.007">Rasmussen et al.&nbsp;(2014)</a>, with a precision of 33% (F1 = 0.21). Applying the KS test to the Fisher Information series (Step 8) improves this to <strong>7 of 25 (28%)</strong>, with precision 29% (F1 = 0.28).</p>
+<p>LERM alone identifies <strong>6 of 25 (24%)</strong> of the DO warming events documented by <a href="https://doi.org/10.1016/j.quascirev.2014.09.007">Rasmussen et al.&nbsp;(2014)</a>, with a precision of 46% (F1 = 0.32). Applying the KS test to the Fisher Information series (Step 8) improves this to <strong>16 of 25 (64%)</strong>, with precision 62% (F1 = 0.63).</p>
 <p><strong>Pros:</strong> LERM operates in the system’s reconstructed phase space rather than on raw values. This makes it sensitive to dynamical transitions that are invisible to amplitude-based methods, regime shifts where the climate changes state even without a large jump in <span class="math inline">\(\delta^{18}\mathrm{O}(\u2030)\)</span>.</p>
 <p><strong>Major drawback:</strong> The pipeline is more complex and computationally heavier than the KS test or ruptures. Several parameters need to be set (embedding dimension, epsilon, window size), and results can vary between runs due to bootstrap sampling.</p>
 <p>For the original method, see <a href="https://doi.org/10.1029/2023PA004700">James et al.&nbsp;(2024)</a>.</p>

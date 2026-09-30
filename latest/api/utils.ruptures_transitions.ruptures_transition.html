@@ -82,7 +82,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-e3adbaa939bcd423dddc8c8a834270b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-55617497126496852ff9f5a59253c640.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -353,19 +353,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dd>
 <p>Series object containing time and value data</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>algo</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'Pelt'</span></code></dt>
+<dt><code><span class="parameter-name"><strong>algo</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/stdtypes.html#str">str</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'Pelt'</span></code></dt>
 <dd>
 <p>Search algorithm: ‘Pelt’, ‘Dynp’, ‘Binseg’, ‘BottomUp’, ‘Window’, ‘KernelCPD’ Default is ‘Pelt’</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>cost</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'rbf'</span></code></dt>
+<dt><code><span class="parameter-name"><strong>cost</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/stdtypes.html#str">str</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">'rbf'</span></code></dt>
 <dd>
 <p>Cost function: ‘l1’, ‘l2’, ‘rbf’, ‘normal’, ‘ar’, ‘linear’, ‘rank’, ‘mahalanobis’, ‘cosine’, ‘clinear’ Default is ‘rbf’ (Radial Basis Function - good for nonlinear patterns) For KernelCPD, use ‘linear’, ‘rbf’, or ‘cosine’ (these are kernel functions)</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>pen</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#float">float</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dt><code><span class="parameter-name"><strong>pen</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#float">float</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>
 <p>Penalty parameter controlling sensitivity to changepoints (higher = fewer changepoints) <strong>What is penalty?</strong> The algorithm minimizes: [fit error] + [number of changepoints × pen] - Low penalty → more changepoints (risk: overfitting, detecting noise as transitions) - High penalty → fewer changepoints (risk: missing real transitions) <strong>Choosing penalty is a user decision</strong> based on your data characteristics, expected transition frequency, and tolerance for false positives vs.&nbsp;false negatives. There is no single “correct” penalty value. <strong>Example approaches for selecting penalty:</strong> 1. <strong>Fixed empirical values</strong>: pen = 5, 10, 20, etc. (experiment to find what works) 2. <strong>Information criteria</strong> (linear penalties that balance fit vs.&nbsp;complexity): - AIC (Akaike Information Criterion) - more liberal, detects more changepoints - BIC (Bayesian Information Criterion) - more conservative, sample-size dependent - mBIC (modified BIC) - even more conservative <strong>Note</strong>: The exact formula for each criterion depends on the statistical model and cost function used.</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>n_bkps</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dt><code><span class="parameter-name"><strong>n_bkps</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>
 <p>Exact number of breakpoints to detect (alternative to penalty-based approach) Use when you know how many transitions to expect <strong>Note</strong>: Cannot be used together with ‘pen’ - choose one or the other</p>
 </dd>
@@ -375,19 +375,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Pelt: requires ‘pen’ (penalty) - Dynp: requires ‘n_bkps’ (number of breakpoints) - Binseg, BottomUp, Window, KernelCPD: requires either ‘pen’ or ‘n_bkps’ (not both)</li>
 </ul>
 </dd>
-<dt><code><span class="parameter-name"><strong>min_size</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">2</span></code></dt>
+<dt><code><span class="parameter-name"><strong>min_size</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">2</span></code></dt>
 <dd>
 <p>Minimum samples between change points. Default is 2</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>jump</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">1</span></code></dt>
+<dt><code><span class="parameter-name"><strong>jump</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">1</span></code></dt>
 <dd>
 <p>Subsample (1=all data, 5=every 5th point). Default is 1</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>width</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dt><code><span class="parameter-name"><strong>width</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/functions.html#int">int</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>
 <p>Window size (required for Window algorithm)</p>
 </dd>
-<dt><code><span class="parameter-name"><strong>params</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
+<dt><code><span class="parameter-name"><strong>params</strong></span> <span class="parameter-annotation-sep">:</span> <span class="parameter-annotation"><a href="https://docs.python.org/3/builtins/stdtypes.html#dict">dict</a></span> <span class="parameter-default-sep">=</span> <span class="parameter-default">None</span></code></dt>
 <dd>
 <p>Additional algorithm-specific parameters</p>
 </dd>
